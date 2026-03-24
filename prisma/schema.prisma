@@ -1,0 +1,28 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Post {
+  id         Int      @id @default(autoincrement())
+  source     String
+  externalId String
+  title      String
+  createdAt  DateTime?
+  fetchedAt  DateTime @default(now())
+
+  @@unique([source, externalId])
+}
+
+model TopicCount {
+  id         Int      @id @default(autoincrement())
+  topic      String
+  bucketTime DateTime
+  count      Int
+
+  @@unique([topic, bucketTime])
+}

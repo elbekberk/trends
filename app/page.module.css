@@ -1,0 +1,59 @@
+.page {
+  padding: 16px;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.title {
+  font-size: 1.6rem;
+  margin-bottom: 6px;
+}
+
+.subtitle {
+  color: #666;
+  margin-bottom: 16px;
+}
+
+.empty {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 14px;
+  line-height: 1.5;
+}
+
+.list {
+  display: grid;
+  gap: 10px;
+}
+
+.card {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.card h2 {
+  font-size: 1.05rem;
+  margin-bottom: 8px;
+}
+
+.metrics {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  font-size: 0.92rem;
+}
+
+@media (max-width: 640px) {
+  .title {
+    font-size: 1.4rem;
+  }
+
+  .metrics {
+    display: grid;
+    gap: 4px;
+  }
+}
