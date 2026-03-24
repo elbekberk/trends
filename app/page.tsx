@@ -1,6 +1,7 @@
 import styles from "./page.module.css";
 import { getRisingTopics } from "@/src/lib/ingest";
 import Link from "next/link";
+import { TopicCard } from "./TopicCard";
 
 export const dynamic = "force-dynamic";
 
@@ -10,24 +11,35 @@ type HomeProps = {
 
 const CATEGORIES = ["all", "geopolitics", "technology", "economy", "general"] as const;
 
+const LANE_TITLES: Record<Exclude<(typeof CATEGORIES)[number], "all">, string> = {
+  geopolitics: "Top geopolitics",
+  technology: "Top technology",
+  economy: "Top economy",
+  general: "Top general",
+};
+
 export default async function Home({ searchParams }: HomeProps) {
   const params = (await searchParams) ?? {};
-  const activeCategory = CATEGORIES.includes((params.category as typeof CATEGORIES[number]) ?? "all")
-    ? ((params.category as typeof CATEGORIES[number]) ?? "all")
+  const activeCategory = CATEGORIES.includes(
+    (params.category as (typeof CATEGORIES)[number]) ?? "all",
+  )
+    ? ((params.category as (typeof CATEGORIES)[number]) ?? "all")
     : "all";
 
-  const radar = await getRisingTopics(30);
-  const topics =
+  const radar = await getRisingTopics(80);
+  const filteredTopics =
     activeCategory === "all"
-      ? radar.topics
-      : radar.topics.filter((topic) => topic.category === activeCategory);
+      ? []
+      : radar.allTopics.filter((topic) => topic.category === activeCategory).slice(0, 40);
+
+  const empty = !radar.bucketTime || radar.allTopics.length === 0;
 
   return (
     <main className={styles.page}>
       <div className={styles.container}>
         <h1 className={styles.title}>Trend Radar</h1>
         <p className={styles.subtitle}>
-          Parent topics with child developments and evidence from Reddit and Hacker News.
+          Canonical parent topics with child developments and evidence from Reddit and Hacker News.
         </p>
         <nav className={styles.filters}>
           {CATEGORIES.map((category) => (
@@ -41,63 +53,62 @@ export default async function Home({ searchParams }: HomeProps) {
           ))}
         </nav>
 
-        {topics.length === 0 ? (
+        {empty ? (
           <div className={styles.empty}>
             <p>No data yet.</p>
             <p>Run a POST request to /api/ingest, then refresh this page.</p>
           </div>
+        ) : activeCategory === "all" ? (
+          <>
+            <section className={styles.laneSection}>
+              <h2 className={styles.laneHeading}>{LANE_TITLES.geopolitics}</h2>
+              <div className={styles.list}>
+                {radar.lanes.geopolitics.map((item) => (
+                  <TopicCard key={item.parentKey} item={item} />
+                ))}
+              </div>
+            </section>
+            <section className={styles.laneSection}>
+              <h2 className={styles.laneHeading}>{LANE_TITLES.technology}</h2>
+              <div className={styles.list}>
+                {radar.lanes.technology.map((item) => (
+                  <TopicCard key={item.parentKey} item={item} />
+                ))}
+              </div>
+            </section>
+            <section className={styles.laneSection}>
+              <h2 className={styles.laneHeading}>{LANE_TITLES.economy}</h2>
+              <div className={styles.list}>
+                {radar.lanes.economy.map((item) => (
+                  <TopicCard key={item.parentKey} item={item} />
+                ))}
+              </div>
+            </section>
+            <section className={styles.laneSection}>
+              <h2 className={styles.laneHeading}>{LANE_TITLES.general}</h2>
+              <div className={styles.list}>
+                {radar.lanes.general.map((item) => (
+                  <TopicCard key={item.parentKey} item={item} />
+                ))}
+              </div>
+            </section>
+
+            <section className={styles.laneSection}>
+              <h2 className={styles.laneHeading}>All topics (top {radar.topics.length})</h2>
+              <div className={styles.list}>
+                {radar.topics.map((item) => (
+                  <TopicCard key={`all-${item.parentKey}`} item={item} />
+                ))}
+              </div>
+            </section>
+          </>
         ) : (
           <div className={styles.list}>
-            {topics.map((item) => (
-              <article key={item.parentKey} className={styles.card}>
-                <h2>{item.parentLabel}</h2>
-                <div className={styles.metrics}>
-                  <span>Current: {item.current}</span>
-                  <span>Previous: {item.previous}</span>
-                  <span>Score: {item.score}</span>
-                </div>
-                <div className={styles.meta}>
-                  <span>Category: {item.category}</span>
-                  <span>
-                    Sources:{" "}
-                    {Object.entries(item.sourceBreakdown)
-                      .map(([source, count]) => `${source} (${count})`)
-                      .join(", ") || "n/a"}
-                  </span>
-                  <span>Last seen: {item.lastSeenAt ?? "n/a"}</span>
-                </div>
-                <details className={styles.details}>
-                  <summary>Child developments ({item.children.length})</summary>
-                  {item.children.length === 0 ? (
-                    <p className={styles.noChildren}>No child developments yet.</p>
-                  ) : (
-                    <div className={styles.children}>
-                      {item.children.map((child) => (
-                        <section key={`${item.parentKey}-${child.childKey}`} className={styles.childBlock}>
-                          <h3>{child.childLabel}</h3>
-                          <p className={styles.childCount}>Mentions: {child.count}</p>
-                          <ul className={styles.evidence}>
-                            {child.evidence.map((e, index) => (
-                              <li key={`${child.childKey}-${index}`}>
-                                <strong>[{e.source}]</strong>{" "}
-                                {e.url ? (
-                                  <a href={e.url} target="_blank" rel="noreferrer">
-                                    {e.title}
-                                  </a>
-                                ) : (
-                                  e.title
-                                )}{" "}
-                                <span className={styles.timestamp}>({e.timestamp})</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </section>
-                      ))}
-                    </div>
-                  )}
-                </details>
-              </article>
-            ))}
+            {filteredTopics.length === 0 ? (
+              <p className={styles.empty}>No topics in this category for the latest bucket.</p>
+            ) : (
+              filteredTopics.map((item) => <TopicCard key={item.parentKey} item={item} />)
+            )}
           </div>
         )}
       </div>

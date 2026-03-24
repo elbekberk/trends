@@ -22,17 +22,20 @@ model Post {
 }
 
 model TopicHit {
-  id          Int      @id @default(autoincrement())
-  bucketTime  DateTime
-  category    String
-  parentKey   String
-  parentLabel String
-  childKey    String?
-  childLabel  String?
-  postId      Int
-  createdAt   DateTime @default(now())
-  post        Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  id                   Int      @id @default(autoincrement())
+  bucketTime           DateTime
+  category             String
+  parentKey            String
+  parentLabel          String
+  canonicalParentKey   String?
+  canonicalParentLabel String?
+  childKey             String?
+  childLabel           String?
+  postId               Int
+  createdAt            DateTime @default(now())
+  post                 Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
 
   @@unique([bucketTime, postId])
   @@index([bucketTime, category, parentKey])
+  @@index([bucketTime, canonicalParentKey])
 }

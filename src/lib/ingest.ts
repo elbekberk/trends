@@ -1,4 +1,5 @@
 import { db } from "@/src/lib/db";
+import { isWeakParentKey, resolveCanonicalParent } from "@/src/lib/canonicalParents";
 
 type SourcePost = {
   source: "reddit" | "hn";
@@ -231,16 +232,15 @@ function hasDomainHint(key: string): boolean {
   return DOMAIN_HINTS.some((hint) => key.includes(hint));
 }
 
-function pickBestParent(
+function rankParentCandidates(
   candidates: PhraseCandidate[],
   frequencyMap: Map<string, number>,
   sourceSpreadMap: Map<string, Set<SourcePost["source"]>>,
-): PhraseCandidate | null {
+): PhraseCandidate[] {
   const parentCandidates = candidates.filter((c) => c.size === 2 || c.size === 3);
-  if (parentCandidates.length === 0) return null;
+  if (parentCandidates.length === 0) return [];
 
-  let best: { candidate: PhraseCandidate; score: number } | null = null;
-  for (const candidate of parentCandidates) {
+  const scored = parentCandidates.map((candidate) => {
     const frequency = frequencyMap.get(candidate.key) ?? 0;
     const sourceSpread = sourceSpreadMap.get(candidate.key)?.size ?? 1;
     const hintBonus = hasDomainHint(candidate.key) ? 1 : 0;
@@ -249,9 +249,45 @@ function pickBestParent(
       frequency * 1.5 +
       sourceSpread * 1.2 +
       hintBonus;
-    if (!best || score > best.score) best = { candidate, score };
+    return { candidate, score };
+  });
+  scored.sort((a, b) => b.score - a.score);
+  return scored.map((s) => s.candidate);
+}
+
+function pickParentWithRetries(
+  candidates: PhraseCandidate[],
+  title: string,
+  frequencyMap: Map<string, number>,
+  sourceSpreadMap: Map<string, Set<SourcePost["source"]>>,
+): { raw: PhraseCandidate; canonical: ReturnType<typeof resolveCanonicalParent> } | null {
+  const ranked = rankParentCandidates(candidates, frequencyMap, sourceSpreadMap);
+  if (ranked.length === 0) return null;
+
+  const titleLower = title.toLowerCase();
+  const normalizedTitleTokens = new Set(tokenizeTitle(title).map(normalizeToken));
+
+  for (const candidate of ranked) {
+    const canonical = resolveCanonicalParent(
+      candidate.key,
+      candidate.label,
+      titleLower,
+      normalizedTitleTokens,
+    );
+    if (canonical.matchedTheme) return { raw: candidate, canonical };
   }
-  return best?.candidate ?? null;
+
+  for (const candidate of ranked) {
+    const canonical = resolveCanonicalParent(
+      candidate.key,
+      candidate.label,
+      titleLower,
+      normalizedTitleTokens,
+    );
+    if (!isWeakParentKey(candidate.key)) return { raw: candidate, canonical };
+  }
+
+  return null;
 }
 
 function pickBestChild(
@@ -269,10 +305,22 @@ function pickBestChild(
   return best?.candidate ?? null;
 }
 
-function assignCategory(parentKey: string): AssignedTopic["category"] {
-  if (CATEGORY_KEYWORDS.geopolitics.some((k) => parentKey.includes(k))) return "geopolitics";
-  if (CATEGORY_KEYWORDS.technology.some((k) => parentKey.includes(k))) return "technology";
-  if (CATEGORY_KEYWORDS.economy.some((k) => parentKey.includes(k))) return "economy";
+function assignCategory(canonicalOrRawKey: string): AssignedTopic["category"] {
+  const k = canonicalOrRawKey.toLowerCase();
+  if (
+    k.startsWith("us-iran") ||
+    k.startsWith("ukraine-russia") ||
+    k.includes("conflict") ||
+    k.includes("sanction")
+  ) {
+    return "geopolitics";
+  }
+  if (k.startsWith("apple-") || k.startsWith("us-router")) return "technology";
+  if (k.startsWith("oil-energy")) return "economy";
+
+  if (CATEGORY_KEYWORDS.geopolitics.some((w) => k.includes(w))) return "geopolitics";
+  if (CATEGORY_KEYWORDS.technology.some((w) => k.includes(w))) return "technology";
+  if (CATEGORY_KEYWORDS.economy.some((w) => k.includes(w))) return "economy";
   return "general";
 }
 
@@ -459,8 +507,16 @@ export async function runIngest() {
 
   let topicHitsSaved = 0;
   for (const item of prepared) {
-    const parent = pickBestParent(item.candidates, candidateFrequency, candidateSourceSpread);
-    if (!parent) continue;
+    const picked = pickParentWithRetries(
+      item.candidates,
+      item.post.title,
+      candidateFrequency,
+      candidateSourceSpread,
+    );
+    if (!picked) continue;
+
+    const parent = picked.raw;
+    const canonical = picked.canonical;
     const child = pickBestChild(item.candidates, parent.key);
     const parentLabel = chooseReadableLabel(
       candidateLabels.get(parent.key) ?? [parent.label],
@@ -473,7 +529,7 @@ export async function runIngest() {
       parentLabel,
       childKey: child?.key ?? null,
       childLabel,
-      category: assignCategory(parent.key),
+      category: assignCategory(canonical.canonicalParentKey),
     };
 
     await db.topicHit.create({
@@ -482,6 +538,8 @@ export async function runIngest() {
         category: assigned.category,
         parentKey: assigned.parentKey,
         parentLabel: assigned.parentLabel,
+        canonicalParentKey: canonical.canonicalParentKey,
+        canonicalParentLabel: canonical.canonicalParentLabel,
         childKey: assigned.childKey,
         childLabel: assigned.childLabel,
         postId: item.postId,
@@ -521,10 +579,10 @@ type TopicHitWithPost = Awaited<ReturnType<typeof db.topicHit.findMany>>[number]
   };
 };
 
-function groupByParent(rows: TopicHitWithPost[]) {
+function groupByCanonicalParent(rows: TopicHitWithPost[]) {
   const map = new Map<string, TopicHitWithPost[]>();
   for (const row of rows) {
-    const key = row.parentKey;
+    const key = row.canonicalParentKey ?? row.parentKey;
     map.set(key, [...(map.get(key) ?? []), row]);
   }
   return map;
@@ -561,7 +619,9 @@ function buildChildren(rows: TopicHitWithPost[]) {
   }
   return [...childMap.entries()]
     .map(([key, childRows]) => {
-      const [childKey, childLabel] = key.split("::");
+      const sep = key.indexOf("::");
+      const childKey = sep === -1 ? key : key.slice(0, sep);
+      const childLabel = sep === -1 ? "" : key.slice(sep + 2);
       return {
         childKey,
         childLabel,
@@ -594,7 +654,20 @@ export async function getRisingTopics(limit = 30) {
   const latest = await db.topicHit.findFirst({
     orderBy: { bucketTime: "desc" },
   });
-  if (!latest) return { bucketTime: null, categories: {}, topics: [] };
+  if (!latest) {
+    return {
+      bucketTime: null,
+      categories: {},
+      topics: [],
+      lanes: {
+        geopolitics: [],
+        technology: [],
+        economy: [],
+        general: [],
+      },
+      allTopics: [],
+    };
+  }
 
   const currentBucket = latest.bucketTime;
   const previousBucket = new Date(currentBucket.getTime() - 2 * 60 * 60 * 1000);
@@ -603,15 +676,17 @@ export async function getRisingTopics(limit = 30) {
     fetchTopicRows(previousBucket),
   ]);
 
-  const currentByParent = groupByParent(currentRows as TopicHitWithPost[]);
-  const previousByParent = groupByParent(previousRows as TopicHitWithPost[]);
+  const currentByParent = groupByCanonicalParent(currentRows as TopicHitWithPost[]);
+  const previousByParent = groupByCanonicalParent(previousRows as TopicHitWithPost[]);
 
-  const topics = [...currentByParent.entries()]
+  const allTopics = [...currentByParent.entries()]
     .map(([parentKey, rows]) => {
       const current = rows.length;
       const previous = previousByParent.get(parentKey)?.length ?? 0;
       const score = current - previous;
-      const parentLabel = chooseReadableLabel(rows.map((r) => r.parentLabel));
+      const parentLabel = chooseReadableLabel(
+        rows.map((r) => r.canonicalParentLabel ?? r.parentLabel),
+      );
       const category = rows[0]?.category ?? "general";
       const sourceBreakdown = rows.reduce(
         (acc, row) => {
@@ -637,12 +712,22 @@ export async function getRisingTopics(limit = 30) {
         children: buildChildren(rows),
       };
     })
-    .sort((a, b) => b.score - a.score || b.current - a.current)
-    .slice(0, limit);
+    .sort((a, b) => b.score - a.score || b.current - a.current);
+
+  const topics = allTopics.slice(0, limit);
+
+  const lanes = {
+    geopolitics: allTopics.filter((t) => t.category === "geopolitics").slice(0, 5),
+    technology: allTopics.filter((t) => t.category === "technology").slice(0, 5),
+    economy: allTopics.filter((t) => t.category === "economy").slice(0, 5),
+    general: allTopics.filter((t) => t.category === "general").slice(0, 5),
+  };
 
   return {
     bucketTime: currentBucket.toISOString(),
-    categories: computeCategoryCounts(topics),
+    categories: computeCategoryCounts(allTopics),
     topics,
+    lanes,
+    allTopics,
   };
 }

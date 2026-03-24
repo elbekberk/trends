@@ -17,6 +17,17 @@
   margin-bottom: 10px;
 }
 
+.laneSection {
+  margin-bottom: 28px;
+}
+
+.laneHeading {
+  font-size: 1.15rem;
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #ddd;
+}
+
 .filters {
   display: flex;
   flex-wrap: wrap;

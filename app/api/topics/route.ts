@@ -3,8 +3,8 @@ import { getRisingTopics } from "@/src/lib/ingest";
 
 export async function GET() {
   try {
-    const topics = await getRisingTopics(40);
-    return NextResponse.json({ ok: true, topics });
+    const radar = await getRisingTopics(40);
+    return NextResponse.json({ ok: true, ...radar });
   } catch (error) {
     return NextResponse.json(
       {

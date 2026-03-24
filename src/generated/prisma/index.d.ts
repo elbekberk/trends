@@ -2138,6 +2138,8 @@ export namespace Prisma {
     category: string | null
     parentKey: string | null
     parentLabel: string | null
+    canonicalParentKey: string | null
+    canonicalParentLabel: string | null
     childKey: string | null
     childLabel: string | null
     postId: number | null
@@ -2150,6 +2152,8 @@ export namespace Prisma {
     category: string | null
     parentKey: string | null
     parentLabel: string | null
+    canonicalParentKey: string | null
+    canonicalParentLabel: string | null
     childKey: string | null
     childLabel: string | null
     postId: number | null
@@ -2162,6 +2166,8 @@ export namespace Prisma {
     category: number
     parentKey: number
     parentLabel: number
+    canonicalParentKey: number
+    canonicalParentLabel: number
     childKey: number
     childLabel: number
     postId: number
@@ -2186,6 +2192,8 @@ export namespace Prisma {
     category?: true
     parentKey?: true
     parentLabel?: true
+    canonicalParentKey?: true
+    canonicalParentLabel?: true
     childKey?: true
     childLabel?: true
     postId?: true
@@ -2198,6 +2206,8 @@ export namespace Prisma {
     category?: true
     parentKey?: true
     parentLabel?: true
+    canonicalParentKey?: true
+    canonicalParentLabel?: true
     childKey?: true
     childLabel?: true
     postId?: true
@@ -2210,6 +2220,8 @@ export namespace Prisma {
     category?: true
     parentKey?: true
     parentLabel?: true
+    canonicalParentKey?: true
+    canonicalParentLabel?: true
     childKey?: true
     childLabel?: true
     postId?: true
@@ -2309,6 +2321,8 @@ export namespace Prisma {
     category: string
     parentKey: string
     parentLabel: string
+    canonicalParentKey: string | null
+    canonicalParentLabel: string | null
     childKey: string | null
     childLabel: string | null
     postId: number
@@ -2340,6 +2354,8 @@ export namespace Prisma {
     category?: boolean
     parentKey?: boolean
     parentLabel?: boolean
+    canonicalParentKey?: boolean
+    canonicalParentLabel?: boolean
     childKey?: boolean
     childLabel?: boolean
     postId?: boolean
@@ -2353,6 +2369,8 @@ export namespace Prisma {
     category?: boolean
     parentKey?: boolean
     parentLabel?: boolean
+    canonicalParentKey?: boolean
+    canonicalParentLabel?: boolean
     childKey?: boolean
     childLabel?: boolean
     postId?: boolean
@@ -2366,6 +2384,8 @@ export namespace Prisma {
     category?: boolean
     parentKey?: boolean
     parentLabel?: boolean
+    canonicalParentKey?: boolean
+    canonicalParentLabel?: boolean
     childKey?: boolean
     childLabel?: boolean
     postId?: boolean
@@ -2379,13 +2399,15 @@ export namespace Prisma {
     category?: boolean
     parentKey?: boolean
     parentLabel?: boolean
+    canonicalParentKey?: boolean
+    canonicalParentLabel?: boolean
     childKey?: boolean
     childLabel?: boolean
     postId?: boolean
     createdAt?: boolean
   }
 
-  export type TopicHitOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "bucketTime" | "category" | "parentKey" | "parentLabel" | "childKey" | "childLabel" | "postId" | "createdAt", ExtArgs["result"]["topicHit"]>
+  export type TopicHitOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "bucketTime" | "category" | "parentKey" | "parentLabel" | "canonicalParentKey" | "canonicalParentLabel" | "childKey" | "childLabel" | "postId" | "createdAt", ExtArgs["result"]["topicHit"]>
   export type TopicHitInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     post?: boolean | PostDefaultArgs<ExtArgs>
   }
@@ -2407,6 +2429,8 @@ export namespace Prisma {
       category: string
       parentKey: string
       parentLabel: string
+      canonicalParentKey: string | null
+      canonicalParentLabel: string | null
       childKey: string | null
       childLabel: string | null
       postId: number
@@ -2840,6 +2864,8 @@ export namespace Prisma {
     readonly category: FieldRef<"TopicHit", 'String'>
     readonly parentKey: FieldRef<"TopicHit", 'String'>
     readonly parentLabel: FieldRef<"TopicHit", 'String'>
+    readonly canonicalParentKey: FieldRef<"TopicHit", 'String'>
+    readonly canonicalParentLabel: FieldRef<"TopicHit", 'String'>
     readonly childKey: FieldRef<"TopicHit", 'String'>
     readonly childLabel: FieldRef<"TopicHit", 'String'>
     readonly postId: FieldRef<"TopicHit", 'Int'>
@@ -3286,6 +3312,8 @@ export namespace Prisma {
     category: 'category',
     parentKey: 'parentKey',
     parentLabel: 'parentLabel',
+    canonicalParentKey: 'canonicalParentKey',
+    canonicalParentLabel: 'canonicalParentLabel',
     childKey: 'childKey',
     childLabel: 'childLabel',
     postId: 'postId',
@@ -3424,6 +3452,8 @@ export namespace Prisma {
     category?: StringFilter<"TopicHit"> | string
     parentKey?: StringFilter<"TopicHit"> | string
     parentLabel?: StringFilter<"TopicHit"> | string
+    canonicalParentKey?: StringNullableFilter<"TopicHit"> | string | null
+    canonicalParentLabel?: StringNullableFilter<"TopicHit"> | string | null
     childKey?: StringNullableFilter<"TopicHit"> | string | null
     childLabel?: StringNullableFilter<"TopicHit"> | string | null
     postId?: IntFilter<"TopicHit"> | number
@@ -3437,6 +3467,8 @@ export namespace Prisma {
     category?: SortOrder
     parentKey?: SortOrder
     parentLabel?: SortOrder
+    canonicalParentKey?: SortOrderInput | SortOrder
+    canonicalParentLabel?: SortOrderInput | SortOrder
     childKey?: SortOrderInput | SortOrder
     childLabel?: SortOrderInput | SortOrder
     postId?: SortOrder
@@ -3454,6 +3486,8 @@ export namespace Prisma {
     category?: StringFilter<"TopicHit"> | string
     parentKey?: StringFilter<"TopicHit"> | string
     parentLabel?: StringFilter<"TopicHit"> | string
+    canonicalParentKey?: StringNullableFilter<"TopicHit"> | string | null
+    canonicalParentLabel?: StringNullableFilter<"TopicHit"> | string | null
     childKey?: StringNullableFilter<"TopicHit"> | string | null
     childLabel?: StringNullableFilter<"TopicHit"> | string | null
     postId?: IntFilter<"TopicHit"> | number
@@ -3467,6 +3501,8 @@ export namespace Prisma {
     category?: SortOrder
     parentKey?: SortOrder
     parentLabel?: SortOrder
+    canonicalParentKey?: SortOrderInput | SortOrder
+    canonicalParentLabel?: SortOrderInput | SortOrder
     childKey?: SortOrderInput | SortOrder
     childLabel?: SortOrderInput | SortOrder
     postId?: SortOrder
@@ -3487,6 +3523,8 @@ export namespace Prisma {
     category?: StringWithAggregatesFilter<"TopicHit"> | string
     parentKey?: StringWithAggregatesFilter<"TopicHit"> | string
     parentLabel?: StringWithAggregatesFilter<"TopicHit"> | string
+    canonicalParentKey?: StringNullableWithAggregatesFilter<"TopicHit"> | string | null
+    canonicalParentLabel?: StringNullableWithAggregatesFilter<"TopicHit"> | string | null
     childKey?: StringNullableWithAggregatesFilter<"TopicHit"> | string | null
     childLabel?: StringNullableWithAggregatesFilter<"TopicHit"> | string | null
     postId?: IntWithAggregatesFilter<"TopicHit"> | number
@@ -3569,6 +3607,8 @@ export namespace Prisma {
     category: string
     parentKey: string
     parentLabel: string
+    canonicalParentKey?: string | null
+    canonicalParentLabel?: string | null
     childKey?: string | null
     childLabel?: string | null
     createdAt?: Date | string
@@ -3581,6 +3621,8 @@ export namespace Prisma {
     category: string
     parentKey: string
     parentLabel: string
+    canonicalParentKey?: string | null
+    canonicalParentLabel?: string | null
     childKey?: string | null
     childLabel?: string | null
     postId: number
@@ -3592,6 +3634,8 @@ export namespace Prisma {
     category?: StringFieldUpdateOperationsInput | string
     parentKey?: StringFieldUpdateOperationsInput | string
     parentLabel?: StringFieldUpdateOperationsInput | string
+    canonicalParentKey?: NullableStringFieldUpdateOperationsInput | string | null
+    canonicalParentLabel?: NullableStringFieldUpdateOperationsInput | string | null
     childKey?: NullableStringFieldUpdateOperationsInput | string | null
     childLabel?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -3604,6 +3648,8 @@ export namespace Prisma {
     category?: StringFieldUpdateOperationsInput | string
     parentKey?: StringFieldUpdateOperationsInput | string
     parentLabel?: StringFieldUpdateOperationsInput | string
+    canonicalParentKey?: NullableStringFieldUpdateOperationsInput | string | null
+    canonicalParentLabel?: NullableStringFieldUpdateOperationsInput | string | null
     childKey?: NullableStringFieldUpdateOperationsInput | string | null
     childLabel?: NullableStringFieldUpdateOperationsInput | string | null
     postId?: IntFieldUpdateOperationsInput | number
@@ -3616,6 +3662,8 @@ export namespace Prisma {
     category: string
     parentKey: string
     parentLabel: string
+    canonicalParentKey?: string | null
+    canonicalParentLabel?: string | null
     childKey?: string | null
     childLabel?: string | null
     postId: number
@@ -3627,6 +3675,8 @@ export namespace Prisma {
     category?: StringFieldUpdateOperationsInput | string
     parentKey?: StringFieldUpdateOperationsInput | string
     parentLabel?: StringFieldUpdateOperationsInput | string
+    canonicalParentKey?: NullableStringFieldUpdateOperationsInput | string | null
+    canonicalParentLabel?: NullableStringFieldUpdateOperationsInput | string | null
     childKey?: NullableStringFieldUpdateOperationsInput | string | null
     childLabel?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -3638,6 +3688,8 @@ export namespace Prisma {
     category?: StringFieldUpdateOperationsInput | string
     parentKey?: StringFieldUpdateOperationsInput | string
     parentLabel?: StringFieldUpdateOperationsInput | string
+    canonicalParentKey?: NullableStringFieldUpdateOperationsInput | string | null
+    canonicalParentLabel?: NullableStringFieldUpdateOperationsInput | string | null
     childKey?: NullableStringFieldUpdateOperationsInput | string | null
     childLabel?: NullableStringFieldUpdateOperationsInput | string | null
     postId?: IntFieldUpdateOperationsInput | number
@@ -3857,6 +3909,8 @@ export namespace Prisma {
     category?: SortOrder
     parentKey?: SortOrder
     parentLabel?: SortOrder
+    canonicalParentKey?: SortOrder
+    canonicalParentLabel?: SortOrder
     childKey?: SortOrder
     childLabel?: SortOrder
     postId?: SortOrder
@@ -3874,6 +3928,8 @@ export namespace Prisma {
     category?: SortOrder
     parentKey?: SortOrder
     parentLabel?: SortOrder
+    canonicalParentKey?: SortOrder
+    canonicalParentLabel?: SortOrder
     childKey?: SortOrder
     childLabel?: SortOrder
     postId?: SortOrder
@@ -3886,6 +3942,8 @@ export namespace Prisma {
     category?: SortOrder
     parentKey?: SortOrder
     parentLabel?: SortOrder
+    canonicalParentKey?: SortOrder
+    canonicalParentLabel?: SortOrder
     childKey?: SortOrder
     childLabel?: SortOrder
     postId?: SortOrder
@@ -4143,6 +4201,8 @@ export namespace Prisma {
     category: string
     parentKey: string
     parentLabel: string
+    canonicalParentKey?: string | null
+    canonicalParentLabel?: string | null
     childKey?: string | null
     childLabel?: string | null
     createdAt?: Date | string
@@ -4154,6 +4214,8 @@ export namespace Prisma {
     category: string
     parentKey: string
     parentLabel: string
+    canonicalParentKey?: string | null
+    canonicalParentLabel?: string | null
     childKey?: string | null
     childLabel?: string | null
     createdAt?: Date | string
@@ -4193,6 +4255,8 @@ export namespace Prisma {
     category?: StringFilter<"TopicHit"> | string
     parentKey?: StringFilter<"TopicHit"> | string
     parentLabel?: StringFilter<"TopicHit"> | string
+    canonicalParentKey?: StringNullableFilter<"TopicHit"> | string | null
+    canonicalParentLabel?: StringNullableFilter<"TopicHit"> | string | null
     childKey?: StringNullableFilter<"TopicHit"> | string | null
     childLabel?: StringNullableFilter<"TopicHit"> | string | null
     postId?: IntFilter<"TopicHit"> | number
@@ -4259,6 +4323,8 @@ export namespace Prisma {
     category: string
     parentKey: string
     parentLabel: string
+    canonicalParentKey?: string | null
+    canonicalParentLabel?: string | null
     childKey?: string | null
     childLabel?: string | null
     createdAt?: Date | string
@@ -4269,6 +4335,8 @@ export namespace Prisma {
     category?: StringFieldUpdateOperationsInput | string
     parentKey?: StringFieldUpdateOperationsInput | string
     parentLabel?: StringFieldUpdateOperationsInput | string
+    canonicalParentKey?: NullableStringFieldUpdateOperationsInput | string | null
+    canonicalParentLabel?: NullableStringFieldUpdateOperationsInput | string | null
     childKey?: NullableStringFieldUpdateOperationsInput | string | null
     childLabel?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -4280,6 +4348,8 @@ export namespace Prisma {
     category?: StringFieldUpdateOperationsInput | string
     parentKey?: StringFieldUpdateOperationsInput | string
     parentLabel?: StringFieldUpdateOperationsInput | string
+    canonicalParentKey?: NullableStringFieldUpdateOperationsInput | string | null
+    canonicalParentLabel?: NullableStringFieldUpdateOperationsInput | string | null
     childKey?: NullableStringFieldUpdateOperationsInput | string | null
     childLabel?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -4291,6 +4361,8 @@ export namespace Prisma {
     category?: StringFieldUpdateOperationsInput | string
     parentKey?: StringFieldUpdateOperationsInput | string
     parentLabel?: StringFieldUpdateOperationsInput | string
+    canonicalParentKey?: NullableStringFieldUpdateOperationsInput | string | null
+    canonicalParentLabel?: NullableStringFieldUpdateOperationsInput | string | null
     childKey?: NullableStringFieldUpdateOperationsInput | string | null
     childLabel?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string

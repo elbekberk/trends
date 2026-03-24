@@ -106,6 +106,8 @@ exports.Prisma.TopicHitScalarFieldEnum = {
   category: 'category',
   parentKey: 'parentKey',
   parentLabel: 'parentLabel',
+  canonicalParentKey: 'canonicalParentKey',
+  canonicalParentLabel: 'canonicalParentLabel',
   childKey: 'childKey',
   childLabel: 'childLabel',
   postId: 'postId',
@@ -175,22 +177,15 @@ const config = {
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Post {\n  id         Int        @id @default(autoincrement())\n  source     String\n  externalId String\n  title      String\n  url        String?\n  createdAt  DateTime?\n  fetchedAt  DateTime   @default(now())\n  topicHits  TopicHit[]\n\n  @@unique([source, externalId])\n}\n\nmodel TopicHit {\n  id          Int      @id @default(autoincrement())\n  bucketTime  DateTime\n  category    String\n  parentKey   String\n  parentLabel String\n  childKey    String?\n  childLabel  String?\n  postId      Int\n  createdAt   DateTime @default(now())\n  post        Post     @relation(fields: [postId], references: [id], onDelete: Cascade)\n\n  @@unique([bucketTime, postId])\n  @@index([bucketTime, category, parentKey])\n}\n",
-  "inlineSchemaHash": "3adcf08a63feebdb700fb6b71209b57d6074effce5e4e387d55a6e59599c549f",
-  "copyEngine": true
+  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Post {\n  id         Int        @id @default(autoincrement())\n  source     String\n  externalId String\n  title      String\n  url        String?\n  createdAt  DateTime?\n  fetchedAt  DateTime   @default(now())\n  topicHits  TopicHit[]\n\n  @@unique([source, externalId])\n}\n\nmodel TopicHit {\n  id                   Int      @id @default(autoincrement())\n  bucketTime           DateTime\n  category             String\n  parentKey            String\n  parentLabel          String\n  canonicalParentKey   String?\n  canonicalParentLabel String?\n  childKey             String?\n  childLabel           String?\n  postId               Int\n  createdAt            DateTime @default(now())\n  post                 Post     @relation(fields: [postId], references: [id], onDelete: Cascade)\n\n  @@unique([bucketTime, postId])\n  @@index([bucketTime, category, parentKey])\n  @@index([bucketTime, canonicalParentKey])\n}\n",
+  "inlineSchemaHash": "7db17244a4252e575ea345e8e5d780a56a5b01e88d79d2562afc0eb3f7b8059b",
+  "copyEngine": false
 }
 config.dirname = '/'
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"Post\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"source\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"externalId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"url\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"fetchedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"topicHits\",\"kind\":\"object\",\"type\":\"TopicHit\",\"relationName\":\"PostToTopicHit\"}],\"dbName\":null},\"TopicHit\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"bucketTime\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"category\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"parentKey\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"parentLabel\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"childKey\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"childLabel\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"postId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"post\",\"kind\":\"object\",\"type\":\"Post\",\"relationName\":\"PostToTopicHit\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"Post\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"source\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"externalId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"url\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"fetchedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"topicHits\",\"kind\":\"object\",\"type\":\"TopicHit\",\"relationName\":\"PostToTopicHit\"}],\"dbName\":null},\"TopicHit\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"bucketTime\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"category\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"parentKey\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"parentLabel\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"canonicalParentKey\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"canonicalParentLabel\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"childKey\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"childLabel\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"postId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"post\",\"kind\":\"object\",\"type\":\"Post\",\"relationName\":\"PostToTopicHit\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
-config.engineWasm = {
-  getRuntime: async () => require('./query_engine_bg.js'),
-  getQueryEngineWasmModule: async () => {
-    const loader = (await import('#wasm-engine-loader')).default
-    const engine = (await loader).default
-    return engine
-  }
-}
+config.engineWasm = undefined
 config.compilerWasm = undefined
 
 config.injectableEdgeEnv = () => ({

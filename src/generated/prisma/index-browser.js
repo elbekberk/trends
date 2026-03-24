@@ -134,6 +134,8 @@ exports.Prisma.TopicHitScalarFieldEnum = {
   category: 'category',
   parentKey: 'parentKey',
   parentLabel: 'parentLabel',
+  canonicalParentKey: 'canonicalParentKey',
+  canonicalParentLabel: 'canonicalParentLabel',
   childKey: 'childKey',
   childLabel: 'childLabel',
   postId: 'postId',
