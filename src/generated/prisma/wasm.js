@@ -95,22 +95,19 @@ exports.Prisma.PostScalarFieldEnum = {
   source: 'source',
   externalId: 'externalId',
   title: 'title',
+  url: 'url',
   createdAt: 'createdAt',
   fetchedAt: 'fetchedAt'
 };
 
-exports.Prisma.TopicCountScalarFieldEnum = {
+exports.Prisma.TopicHitScalarFieldEnum = {
   id: 'id',
-  topic: 'topic',
-  topicLabel: 'topicLabel',
   bucketTime: 'bucketTime',
-  count: 'count'
-};
-
-exports.Prisma.TopicEvidenceScalarFieldEnum = {
-  id: 'id',
-  topic: 'topic',
-  bucketTime: 'bucketTime',
+  category: 'category',
+  parentKey: 'parentKey',
+  parentLabel: 'parentLabel',
+  childKey: 'childKey',
+  childLabel: 'childLabel',
   postId: 'postId',
   createdAt: 'createdAt'
 };
@@ -128,8 +125,7 @@ exports.Prisma.NullsOrder = {
 
 exports.Prisma.ModelName = {
   Post: 'Post',
-  TopicCount: 'TopicCount',
-  TopicEvidence: 'TopicEvidence'
+  TopicHit: 'TopicHit'
 };
 /**
  * Create the Client
@@ -160,7 +156,7 @@ const config = {
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": "../../../.env",
+    "rootEnvPath": null,
     "schemaEnvPath": "../../../.env"
   },
   "relativePath": "../../../prisma",
@@ -179,13 +175,13 @@ const config = {
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Post {\n  id         Int             @id @default(autoincrement())\n  source     String\n  externalId String\n  title      String\n  createdAt  DateTime?\n  fetchedAt  DateTime        @default(now())\n  evidences  TopicEvidence[]\n\n  @@unique([source, externalId])\n}\n\nmodel TopicCount {\n  id         Int      @id @default(autoincrement())\n  topic      String\n  topicLabel String   @default(\"\")\n  bucketTime DateTime\n  count      Int\n\n  @@unique([topic, bucketTime])\n}\n\nmodel TopicEvidence {\n  id         Int      @id @default(autoincrement())\n  topic      String\n  bucketTime DateTime\n  postId     Int\n  createdAt  DateTime @default(now())\n  post       Post     @relation(fields: [postId], references: [id], onDelete: Cascade)\n\n  @@unique([topic, bucketTime, postId])\n  @@index([topic, bucketTime])\n}\n",
-  "inlineSchemaHash": "cc2c99eb769d364fce6052266658a149c3d6fe42dd44ef2564d1e5dbd86cb1b1",
+  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Post {\n  id         Int        @id @default(autoincrement())\n  source     String\n  externalId String\n  title      String\n  url        String?\n  createdAt  DateTime?\n  fetchedAt  DateTime   @default(now())\n  topicHits  TopicHit[]\n\n  @@unique([source, externalId])\n}\n\nmodel TopicHit {\n  id          Int      @id @default(autoincrement())\n  bucketTime  DateTime\n  category    String\n  parentKey   String\n  parentLabel String\n  childKey    String?\n  childLabel  String?\n  postId      Int\n  createdAt   DateTime @default(now())\n  post        Post     @relation(fields: [postId], references: [id], onDelete: Cascade)\n\n  @@unique([bucketTime, postId])\n  @@index([bucketTime, category, parentKey])\n}\n",
+  "inlineSchemaHash": "3adcf08a63feebdb700fb6b71209b57d6074effce5e4e387d55a6e59599c549f",
   "copyEngine": true
 }
 config.dirname = '/'
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"Post\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"source\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"externalId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"fetchedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"evidences\",\"kind\":\"object\",\"type\":\"TopicEvidence\",\"relationName\":\"PostToTopicEvidence\"}],\"dbName\":null},\"TopicCount\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"topic\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"topicLabel\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"bucketTime\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"count\",\"kind\":\"scalar\",\"type\":\"Int\"}],\"dbName\":null},\"TopicEvidence\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"topic\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"bucketTime\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"postId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"post\",\"kind\":\"object\",\"type\":\"Post\",\"relationName\":\"PostToTopicEvidence\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"Post\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"source\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"externalId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"url\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"fetchedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"topicHits\",\"kind\":\"object\",\"type\":\"TopicHit\",\"relationName\":\"PostToTopicHit\"}],\"dbName\":null},\"TopicHit\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"bucketTime\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"category\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"parentKey\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"parentLabel\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"childKey\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"childLabel\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"postId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"post\",\"kind\":\"object\",\"type\":\"Post\",\"relationName\":\"PostToTopicHit\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.engineWasm = {
   getRuntime: async () => require('./query_engine_bg.js'),

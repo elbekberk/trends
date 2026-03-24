@@ -19,15 +19,10 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  */
 export type Post = $Result.DefaultSelection<Prisma.$PostPayload>
 /**
- * Model TopicCount
+ * Model TopicHit
  * 
  */
-export type TopicCount = $Result.DefaultSelection<Prisma.$TopicCountPayload>
-/**
- * Model TopicEvidence
- * 
- */
-export type TopicEvidence = $Result.DefaultSelection<Prisma.$TopicEvidencePayload>
+export type TopicHit = $Result.DefaultSelection<Prisma.$TopicHitPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -158,24 +153,14 @@ export class PrismaClient<
   get post(): Prisma.PostDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.topicCount`: Exposes CRUD operations for the **TopicCount** model.
+   * `prisma.topicHit`: Exposes CRUD operations for the **TopicHit** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more TopicCounts
-    * const topicCounts = await prisma.topicCount.findMany()
+    * // Fetch zero or more TopicHits
+    * const topicHits = await prisma.topicHit.findMany()
     * ```
     */
-  get topicCount(): Prisma.TopicCountDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.topicEvidence`: Exposes CRUD operations for the **TopicEvidence** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more TopicEvidences
-    * const topicEvidences = await prisma.topicEvidence.findMany()
-    * ```
-    */
-  get topicEvidence(): Prisma.TopicEvidenceDelegate<ExtArgs, ClientOptions>;
+  get topicHit(): Prisma.TopicHitDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -618,8 +603,7 @@ export namespace Prisma {
 
   export const ModelName: {
     Post: 'Post',
-    TopicCount: 'TopicCount',
-    TopicEvidence: 'TopicEvidence'
+    TopicHit: 'TopicHit'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -638,7 +622,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "post" | "topicCount" | "topicEvidence"
+      modelProps: "post" | "topicHit"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -716,151 +700,77 @@ export namespace Prisma {
           }
         }
       }
-      TopicCount: {
-        payload: Prisma.$TopicCountPayload<ExtArgs>
-        fields: Prisma.TopicCountFieldRefs
+      TopicHit: {
+        payload: Prisma.$TopicHitPayload<ExtArgs>
+        fields: Prisma.TopicHitFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.TopicCountFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TopicCountPayload> | null
+            args: Prisma.TopicHitFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TopicHitPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.TopicCountFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TopicCountPayload>
+            args: Prisma.TopicHitFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TopicHitPayload>
           }
           findFirst: {
-            args: Prisma.TopicCountFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TopicCountPayload> | null
+            args: Prisma.TopicHitFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TopicHitPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.TopicCountFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TopicCountPayload>
+            args: Prisma.TopicHitFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TopicHitPayload>
           }
           findMany: {
-            args: Prisma.TopicCountFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TopicCountPayload>[]
+            args: Prisma.TopicHitFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TopicHitPayload>[]
           }
           create: {
-            args: Prisma.TopicCountCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TopicCountPayload>
+            args: Prisma.TopicHitCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TopicHitPayload>
           }
           createMany: {
-            args: Prisma.TopicCountCreateManyArgs<ExtArgs>
+            args: Prisma.TopicHitCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.TopicCountCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TopicCountPayload>[]
+            args: Prisma.TopicHitCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TopicHitPayload>[]
           }
           delete: {
-            args: Prisma.TopicCountDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TopicCountPayload>
+            args: Prisma.TopicHitDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TopicHitPayload>
           }
           update: {
-            args: Prisma.TopicCountUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TopicCountPayload>
+            args: Prisma.TopicHitUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TopicHitPayload>
           }
           deleteMany: {
-            args: Prisma.TopicCountDeleteManyArgs<ExtArgs>
+            args: Prisma.TopicHitDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.TopicCountUpdateManyArgs<ExtArgs>
+            args: Prisma.TopicHitUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.TopicCountUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TopicCountPayload>[]
+            args: Prisma.TopicHitUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TopicHitPayload>[]
           }
           upsert: {
-            args: Prisma.TopicCountUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TopicCountPayload>
+            args: Prisma.TopicHitUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TopicHitPayload>
           }
           aggregate: {
-            args: Prisma.TopicCountAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateTopicCount>
+            args: Prisma.TopicHitAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTopicHit>
           }
           groupBy: {
-            args: Prisma.TopicCountGroupByArgs<ExtArgs>
-            result: $Utils.Optional<TopicCountGroupByOutputType>[]
+            args: Prisma.TopicHitGroupByArgs<ExtArgs>
+            result: $Utils.Optional<TopicHitGroupByOutputType>[]
           }
           count: {
-            args: Prisma.TopicCountCountArgs<ExtArgs>
-            result: $Utils.Optional<TopicCountCountAggregateOutputType> | number
-          }
-        }
-      }
-      TopicEvidence: {
-        payload: Prisma.$TopicEvidencePayload<ExtArgs>
-        fields: Prisma.TopicEvidenceFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.TopicEvidenceFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TopicEvidencePayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.TopicEvidenceFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TopicEvidencePayload>
-          }
-          findFirst: {
-            args: Prisma.TopicEvidenceFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TopicEvidencePayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.TopicEvidenceFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TopicEvidencePayload>
-          }
-          findMany: {
-            args: Prisma.TopicEvidenceFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TopicEvidencePayload>[]
-          }
-          create: {
-            args: Prisma.TopicEvidenceCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TopicEvidencePayload>
-          }
-          createMany: {
-            args: Prisma.TopicEvidenceCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.TopicEvidenceCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TopicEvidencePayload>[]
-          }
-          delete: {
-            args: Prisma.TopicEvidenceDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TopicEvidencePayload>
-          }
-          update: {
-            args: Prisma.TopicEvidenceUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TopicEvidencePayload>
-          }
-          deleteMany: {
-            args: Prisma.TopicEvidenceDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.TopicEvidenceUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.TopicEvidenceUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TopicEvidencePayload>[]
-          }
-          upsert: {
-            args: Prisma.TopicEvidenceUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TopicEvidencePayload>
-          }
-          aggregate: {
-            args: Prisma.TopicEvidenceAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateTopicEvidence>
-          }
-          groupBy: {
-            args: Prisma.TopicEvidenceGroupByArgs<ExtArgs>
-            result: $Utils.Optional<TopicEvidenceGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.TopicEvidenceCountArgs<ExtArgs>
-            result: $Utils.Optional<TopicEvidenceCountAggregateOutputType> | number
+            args: Prisma.TopicHitCountArgs<ExtArgs>
+            result: $Utils.Optional<TopicHitCountAggregateOutputType> | number
           }
         }
       }
@@ -961,8 +871,7 @@ export namespace Prisma {
   }
   export type GlobalOmitConfig = {
     post?: PostOmit
-    topicCount?: TopicCountOmit
-    topicEvidence?: TopicEvidenceOmit
+    topicHit?: TopicHitOmit
   }
 
   /* Types for Logging */
@@ -1043,11 +952,11 @@ export namespace Prisma {
    */
 
   export type PostCountOutputType = {
-    evidences: number
+    topicHits: number
   }
 
   export type PostCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    evidences?: boolean | PostCountOutputTypeCountEvidencesArgs
+    topicHits?: boolean | PostCountOutputTypeCountTopicHitsArgs
   }
 
   // Custom InputTypes
@@ -1064,8 +973,8 @@ export namespace Prisma {
   /**
    * PostCountOutputType without action
    */
-  export type PostCountOutputTypeCountEvidencesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: TopicEvidenceWhereInput
+  export type PostCountOutputTypeCountTopicHitsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TopicHitWhereInput
   }
 
 
@@ -1098,6 +1007,7 @@ export namespace Prisma {
     source: string | null
     externalId: string | null
     title: string | null
+    url: string | null
     createdAt: Date | null
     fetchedAt: Date | null
   }
@@ -1107,6 +1017,7 @@ export namespace Prisma {
     source: string | null
     externalId: string | null
     title: string | null
+    url: string | null
     createdAt: Date | null
     fetchedAt: Date | null
   }
@@ -1116,6 +1027,7 @@ export namespace Prisma {
     source: number
     externalId: number
     title: number
+    url: number
     createdAt: number
     fetchedAt: number
     _all: number
@@ -1135,6 +1047,7 @@ export namespace Prisma {
     source?: true
     externalId?: true
     title?: true
+    url?: true
     createdAt?: true
     fetchedAt?: true
   }
@@ -1144,6 +1057,7 @@ export namespace Prisma {
     source?: true
     externalId?: true
     title?: true
+    url?: true
     createdAt?: true
     fetchedAt?: true
   }
@@ -1153,6 +1067,7 @@ export namespace Prisma {
     source?: true
     externalId?: true
     title?: true
+    url?: true
     createdAt?: true
     fetchedAt?: true
     _all?: true
@@ -1249,6 +1164,7 @@ export namespace Prisma {
     source: string
     externalId: string
     title: string
+    url: string | null
     createdAt: Date | null
     fetchedAt: Date
     _count: PostCountAggregateOutputType | null
@@ -1277,9 +1193,10 @@ export namespace Prisma {
     source?: boolean
     externalId?: boolean
     title?: boolean
+    url?: boolean
     createdAt?: boolean
     fetchedAt?: boolean
-    evidences?: boolean | Post$evidencesArgs<ExtArgs>
+    topicHits?: boolean | Post$topicHitsArgs<ExtArgs>
     _count?: boolean | PostCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["post"]>
 
@@ -1288,6 +1205,7 @@ export namespace Prisma {
     source?: boolean
     externalId?: boolean
     title?: boolean
+    url?: boolean
     createdAt?: boolean
     fetchedAt?: boolean
   }, ExtArgs["result"]["post"]>
@@ -1297,6 +1215,7 @@ export namespace Prisma {
     source?: boolean
     externalId?: boolean
     title?: boolean
+    url?: boolean
     createdAt?: boolean
     fetchedAt?: boolean
   }, ExtArgs["result"]["post"]>
@@ -1306,13 +1225,14 @@ export namespace Prisma {
     source?: boolean
     externalId?: boolean
     title?: boolean
+    url?: boolean
     createdAt?: boolean
     fetchedAt?: boolean
   }
 
-  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "source" | "externalId" | "title" | "createdAt" | "fetchedAt", ExtArgs["result"]["post"]>
+  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "source" | "externalId" | "title" | "url" | "createdAt" | "fetchedAt", ExtArgs["result"]["post"]>
   export type PostInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    evidences?: boolean | Post$evidencesArgs<ExtArgs>
+    topicHits?: boolean | Post$topicHitsArgs<ExtArgs>
     _count?: boolean | PostCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type PostIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1321,13 +1241,14 @@ export namespace Prisma {
   export type $PostPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Post"
     objects: {
-      evidences: Prisma.$TopicEvidencePayload<ExtArgs>[]
+      topicHits: Prisma.$TopicHitPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       source: string
       externalId: string
       title: string
+      url: string | null
       createdAt: Date | null
       fetchedAt: Date
     }, ExtArgs["result"]["post"]>
@@ -1724,7 +1645,7 @@ export namespace Prisma {
    */
   export interface Prisma__PostClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    evidences<T extends Post$evidencesArgs<ExtArgs> = {}>(args?: Subset<T, Post$evidencesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TopicEvidencePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    topicHits<T extends Post$topicHitsArgs<ExtArgs> = {}>(args?: Subset<T, Post$topicHitsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TopicHitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1758,6 +1679,7 @@ export namespace Prisma {
     readonly source: FieldRef<"Post", 'String'>
     readonly externalId: FieldRef<"Post", 'String'>
     readonly title: FieldRef<"Post", 'String'>
+    readonly url: FieldRef<"Post", 'String'>
     readonly createdAt: FieldRef<"Post", 'DateTime'>
     readonly fetchedAt: FieldRef<"Post", 'DateTime'>
   }
@@ -2146,27 +2068,27 @@ export namespace Prisma {
   }
 
   /**
-   * Post.evidences
+   * Post.topicHits
    */
-  export type Post$evidencesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Post$topicHitsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the TopicEvidence
+     * Select specific fields to fetch from the TopicHit
      */
-    select?: TopicEvidenceSelect<ExtArgs> | null
+    select?: TopicHitSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the TopicEvidence
+     * Omit specific fields from the TopicHit
      */
-    omit?: TopicEvidenceOmit<ExtArgs> | null
+    omit?: TopicHitOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TopicEvidenceInclude<ExtArgs> | null
-    where?: TopicEvidenceWhereInput
-    orderBy?: TopicEvidenceOrderByWithRelationInput | TopicEvidenceOrderByWithRelationInput[]
-    cursor?: TopicEvidenceWhereUniqueInput
+    include?: TopicHitInclude<ExtArgs> | null
+    where?: TopicHitWhereInput
+    orderBy?: TopicHitOrderByWithRelationInput | TopicHitOrderByWithRelationInput[]
+    cursor?: TopicHitWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: TopicEvidenceScalarFieldEnum | TopicEvidenceScalarFieldEnum[]
+    distinct?: TopicHitScalarFieldEnum | TopicHitScalarFieldEnum[]
   }
 
   /**
@@ -2189,1419 +2111,436 @@ export namespace Prisma {
 
 
   /**
-   * Model TopicCount
+   * Model TopicHit
    */
 
-  export type AggregateTopicCount = {
-    _count: TopicCountCountAggregateOutputType | null
-    _avg: TopicCountAvgAggregateOutputType | null
-    _sum: TopicCountSumAggregateOutputType | null
-    _min: TopicCountMinAggregateOutputType | null
-    _max: TopicCountMaxAggregateOutputType | null
+  export type AggregateTopicHit = {
+    _count: TopicHitCountAggregateOutputType | null
+    _avg: TopicHitAvgAggregateOutputType | null
+    _sum: TopicHitSumAggregateOutputType | null
+    _min: TopicHitMinAggregateOutputType | null
+    _max: TopicHitMaxAggregateOutputType | null
   }
 
-  export type TopicCountAvgAggregateOutputType = {
-    id: number | null
-    count: number | null
-  }
-
-  export type TopicCountSumAggregateOutputType = {
-    id: number | null
-    count: number | null
-  }
-
-  export type TopicCountMinAggregateOutputType = {
-    id: number | null
-    topic: string | null
-    topicLabel: string | null
-    bucketTime: Date | null
-    count: number | null
-  }
-
-  export type TopicCountMaxAggregateOutputType = {
-    id: number | null
-    topic: string | null
-    topicLabel: string | null
-    bucketTime: Date | null
-    count: number | null
-  }
-
-  export type TopicCountCountAggregateOutputType = {
-    id: number
-    topic: number
-    topicLabel: number
-    bucketTime: number
-    count: number
-    _all: number
-  }
-
-
-  export type TopicCountAvgAggregateInputType = {
-    id?: true
-    count?: true
-  }
-
-  export type TopicCountSumAggregateInputType = {
-    id?: true
-    count?: true
-  }
-
-  export type TopicCountMinAggregateInputType = {
-    id?: true
-    topic?: true
-    topicLabel?: true
-    bucketTime?: true
-    count?: true
-  }
-
-  export type TopicCountMaxAggregateInputType = {
-    id?: true
-    topic?: true
-    topicLabel?: true
-    bucketTime?: true
-    count?: true
-  }
-
-  export type TopicCountCountAggregateInputType = {
-    id?: true
-    topic?: true
-    topicLabel?: true
-    bucketTime?: true
-    count?: true
-    _all?: true
-  }
-
-  export type TopicCountAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which TopicCount to aggregate.
-     */
-    where?: TopicCountWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of TopicCounts to fetch.
-     */
-    orderBy?: TopicCountOrderByWithRelationInput | TopicCountOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: TopicCountWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` TopicCounts from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` TopicCounts.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned TopicCounts
-    **/
-    _count?: true | TopicCountCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: TopicCountAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: TopicCountSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: TopicCountMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: TopicCountMaxAggregateInputType
-  }
-
-  export type GetTopicCountAggregateType<T extends TopicCountAggregateArgs> = {
-        [P in keyof T & keyof AggregateTopicCount]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateTopicCount[P]>
-      : GetScalarType<T[P], AggregateTopicCount[P]>
-  }
-
-
-
-
-  export type TopicCountGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: TopicCountWhereInput
-    orderBy?: TopicCountOrderByWithAggregationInput | TopicCountOrderByWithAggregationInput[]
-    by: TopicCountScalarFieldEnum[] | TopicCountScalarFieldEnum
-    having?: TopicCountScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: TopicCountCountAggregateInputType | true
-    _avg?: TopicCountAvgAggregateInputType
-    _sum?: TopicCountSumAggregateInputType
-    _min?: TopicCountMinAggregateInputType
-    _max?: TopicCountMaxAggregateInputType
-  }
-
-  export type TopicCountGroupByOutputType = {
-    id: number
-    topic: string
-    topicLabel: string
-    bucketTime: Date
-    count: number
-    _count: TopicCountCountAggregateOutputType | null
-    _avg: TopicCountAvgAggregateOutputType | null
-    _sum: TopicCountSumAggregateOutputType | null
-    _min: TopicCountMinAggregateOutputType | null
-    _max: TopicCountMaxAggregateOutputType | null
-  }
-
-  type GetTopicCountGroupByPayload<T extends TopicCountGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<TopicCountGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof TopicCountGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], TopicCountGroupByOutputType[P]>
-            : GetScalarType<T[P], TopicCountGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type TopicCountSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    topic?: boolean
-    topicLabel?: boolean
-    bucketTime?: boolean
-    count?: boolean
-  }, ExtArgs["result"]["topicCount"]>
-
-  export type TopicCountSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    topic?: boolean
-    topicLabel?: boolean
-    bucketTime?: boolean
-    count?: boolean
-  }, ExtArgs["result"]["topicCount"]>
-
-  export type TopicCountSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    topic?: boolean
-    topicLabel?: boolean
-    bucketTime?: boolean
-    count?: boolean
-  }, ExtArgs["result"]["topicCount"]>
-
-  export type TopicCountSelectScalar = {
-    id?: boolean
-    topic?: boolean
-    topicLabel?: boolean
-    bucketTime?: boolean
-    count?: boolean
-  }
-
-  export type TopicCountOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "topic" | "topicLabel" | "bucketTime" | "count", ExtArgs["result"]["topicCount"]>
-
-  export type $TopicCountPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "TopicCount"
-    objects: {}
-    scalars: $Extensions.GetPayloadResult<{
-      id: number
-      topic: string
-      topicLabel: string
-      bucketTime: Date
-      count: number
-    }, ExtArgs["result"]["topicCount"]>
-    composites: {}
-  }
-
-  type TopicCountGetPayload<S extends boolean | null | undefined | TopicCountDefaultArgs> = $Result.GetResult<Prisma.$TopicCountPayload, S>
-
-  type TopicCountCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<TopicCountFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: TopicCountCountAggregateInputType | true
-    }
-
-  export interface TopicCountDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['TopicCount'], meta: { name: 'TopicCount' } }
-    /**
-     * Find zero or one TopicCount that matches the filter.
-     * @param {TopicCountFindUniqueArgs} args - Arguments to find a TopicCount
-     * @example
-     * // Get one TopicCount
-     * const topicCount = await prisma.topicCount.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends TopicCountFindUniqueArgs>(args: SelectSubset<T, TopicCountFindUniqueArgs<ExtArgs>>): Prisma__TopicCountClient<$Result.GetResult<Prisma.$TopicCountPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one TopicCount that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {TopicCountFindUniqueOrThrowArgs} args - Arguments to find a TopicCount
-     * @example
-     * // Get one TopicCount
-     * const topicCount = await prisma.topicCount.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends TopicCountFindUniqueOrThrowArgs>(args: SelectSubset<T, TopicCountFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TopicCountClient<$Result.GetResult<Prisma.$TopicCountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first TopicCount that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TopicCountFindFirstArgs} args - Arguments to find a TopicCount
-     * @example
-     * // Get one TopicCount
-     * const topicCount = await prisma.topicCount.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends TopicCountFindFirstArgs>(args?: SelectSubset<T, TopicCountFindFirstArgs<ExtArgs>>): Prisma__TopicCountClient<$Result.GetResult<Prisma.$TopicCountPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first TopicCount that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TopicCountFindFirstOrThrowArgs} args - Arguments to find a TopicCount
-     * @example
-     * // Get one TopicCount
-     * const topicCount = await prisma.topicCount.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends TopicCountFindFirstOrThrowArgs>(args?: SelectSubset<T, TopicCountFindFirstOrThrowArgs<ExtArgs>>): Prisma__TopicCountClient<$Result.GetResult<Prisma.$TopicCountPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more TopicCounts that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TopicCountFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all TopicCounts
-     * const topicCounts = await prisma.topicCount.findMany()
-     * 
-     * // Get first 10 TopicCounts
-     * const topicCounts = await prisma.topicCount.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const topicCountWithIdOnly = await prisma.topicCount.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends TopicCountFindManyArgs>(args?: SelectSubset<T, TopicCountFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TopicCountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a TopicCount.
-     * @param {TopicCountCreateArgs} args - Arguments to create a TopicCount.
-     * @example
-     * // Create one TopicCount
-     * const TopicCount = await prisma.topicCount.create({
-     *   data: {
-     *     // ... data to create a TopicCount
-     *   }
-     * })
-     * 
-     */
-    create<T extends TopicCountCreateArgs>(args: SelectSubset<T, TopicCountCreateArgs<ExtArgs>>): Prisma__TopicCountClient<$Result.GetResult<Prisma.$TopicCountPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many TopicCounts.
-     * @param {TopicCountCreateManyArgs} args - Arguments to create many TopicCounts.
-     * @example
-     * // Create many TopicCounts
-     * const topicCount = await prisma.topicCount.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends TopicCountCreateManyArgs>(args?: SelectSubset<T, TopicCountCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many TopicCounts and returns the data saved in the database.
-     * @param {TopicCountCreateManyAndReturnArgs} args - Arguments to create many TopicCounts.
-     * @example
-     * // Create many TopicCounts
-     * const topicCount = await prisma.topicCount.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many TopicCounts and only return the `id`
-     * const topicCountWithIdOnly = await prisma.topicCount.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends TopicCountCreateManyAndReturnArgs>(args?: SelectSubset<T, TopicCountCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TopicCountPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a TopicCount.
-     * @param {TopicCountDeleteArgs} args - Arguments to delete one TopicCount.
-     * @example
-     * // Delete one TopicCount
-     * const TopicCount = await prisma.topicCount.delete({
-     *   where: {
-     *     // ... filter to delete one TopicCount
-     *   }
-     * })
-     * 
-     */
-    delete<T extends TopicCountDeleteArgs>(args: SelectSubset<T, TopicCountDeleteArgs<ExtArgs>>): Prisma__TopicCountClient<$Result.GetResult<Prisma.$TopicCountPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one TopicCount.
-     * @param {TopicCountUpdateArgs} args - Arguments to update one TopicCount.
-     * @example
-     * // Update one TopicCount
-     * const topicCount = await prisma.topicCount.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends TopicCountUpdateArgs>(args: SelectSubset<T, TopicCountUpdateArgs<ExtArgs>>): Prisma__TopicCountClient<$Result.GetResult<Prisma.$TopicCountPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more TopicCounts.
-     * @param {TopicCountDeleteManyArgs} args - Arguments to filter TopicCounts to delete.
-     * @example
-     * // Delete a few TopicCounts
-     * const { count } = await prisma.topicCount.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends TopicCountDeleteManyArgs>(args?: SelectSubset<T, TopicCountDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more TopicCounts.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TopicCountUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many TopicCounts
-     * const topicCount = await prisma.topicCount.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends TopicCountUpdateManyArgs>(args: SelectSubset<T, TopicCountUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more TopicCounts and returns the data updated in the database.
-     * @param {TopicCountUpdateManyAndReturnArgs} args - Arguments to update many TopicCounts.
-     * @example
-     * // Update many TopicCounts
-     * const topicCount = await prisma.topicCount.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more TopicCounts and only return the `id`
-     * const topicCountWithIdOnly = await prisma.topicCount.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends TopicCountUpdateManyAndReturnArgs>(args: SelectSubset<T, TopicCountUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TopicCountPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one TopicCount.
-     * @param {TopicCountUpsertArgs} args - Arguments to update or create a TopicCount.
-     * @example
-     * // Update or create a TopicCount
-     * const topicCount = await prisma.topicCount.upsert({
-     *   create: {
-     *     // ... data to create a TopicCount
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the TopicCount we want to update
-     *   }
-     * })
-     */
-    upsert<T extends TopicCountUpsertArgs>(args: SelectSubset<T, TopicCountUpsertArgs<ExtArgs>>): Prisma__TopicCountClient<$Result.GetResult<Prisma.$TopicCountPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of TopicCounts.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TopicCountCountArgs} args - Arguments to filter TopicCounts to count.
-     * @example
-     * // Count the number of TopicCounts
-     * const count = await prisma.topicCount.count({
-     *   where: {
-     *     // ... the filter for the TopicCounts we want to count
-     *   }
-     * })
-    **/
-    count<T extends TopicCountCountArgs>(
-      args?: Subset<T, TopicCountCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], TopicCountCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a TopicCount.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TopicCountAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends TopicCountAggregateArgs>(args: Subset<T, TopicCountAggregateArgs>): Prisma.PrismaPromise<GetTopicCountAggregateType<T>>
-
-    /**
-     * Group by TopicCount.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TopicCountGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends TopicCountGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: TopicCountGroupByArgs['orderBy'] }
-        : { orderBy?: TopicCountGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, TopicCountGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTopicCountGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the TopicCount model
-   */
-  readonly fields: TopicCountFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for TopicCount.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__TopicCountClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the TopicCount model
-   */
-  interface TopicCountFieldRefs {
-    readonly id: FieldRef<"TopicCount", 'Int'>
-    readonly topic: FieldRef<"TopicCount", 'String'>
-    readonly topicLabel: FieldRef<"TopicCount", 'String'>
-    readonly bucketTime: FieldRef<"TopicCount", 'DateTime'>
-    readonly count: FieldRef<"TopicCount", 'Int'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * TopicCount findUnique
-   */
-  export type TopicCountFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the TopicCount
-     */
-    select?: TopicCountSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the TopicCount
-     */
-    omit?: TopicCountOmit<ExtArgs> | null
-    /**
-     * Filter, which TopicCount to fetch.
-     */
-    where: TopicCountWhereUniqueInput
-  }
-
-  /**
-   * TopicCount findUniqueOrThrow
-   */
-  export type TopicCountFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the TopicCount
-     */
-    select?: TopicCountSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the TopicCount
-     */
-    omit?: TopicCountOmit<ExtArgs> | null
-    /**
-     * Filter, which TopicCount to fetch.
-     */
-    where: TopicCountWhereUniqueInput
-  }
-
-  /**
-   * TopicCount findFirst
-   */
-  export type TopicCountFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the TopicCount
-     */
-    select?: TopicCountSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the TopicCount
-     */
-    omit?: TopicCountOmit<ExtArgs> | null
-    /**
-     * Filter, which TopicCount to fetch.
-     */
-    where?: TopicCountWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of TopicCounts to fetch.
-     */
-    orderBy?: TopicCountOrderByWithRelationInput | TopicCountOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for TopicCounts.
-     */
-    cursor?: TopicCountWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` TopicCounts from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` TopicCounts.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of TopicCounts.
-     */
-    distinct?: TopicCountScalarFieldEnum | TopicCountScalarFieldEnum[]
-  }
-
-  /**
-   * TopicCount findFirstOrThrow
-   */
-  export type TopicCountFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the TopicCount
-     */
-    select?: TopicCountSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the TopicCount
-     */
-    omit?: TopicCountOmit<ExtArgs> | null
-    /**
-     * Filter, which TopicCount to fetch.
-     */
-    where?: TopicCountWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of TopicCounts to fetch.
-     */
-    orderBy?: TopicCountOrderByWithRelationInput | TopicCountOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for TopicCounts.
-     */
-    cursor?: TopicCountWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` TopicCounts from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` TopicCounts.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of TopicCounts.
-     */
-    distinct?: TopicCountScalarFieldEnum | TopicCountScalarFieldEnum[]
-  }
-
-  /**
-   * TopicCount findMany
-   */
-  export type TopicCountFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the TopicCount
-     */
-    select?: TopicCountSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the TopicCount
-     */
-    omit?: TopicCountOmit<ExtArgs> | null
-    /**
-     * Filter, which TopicCounts to fetch.
-     */
-    where?: TopicCountWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of TopicCounts to fetch.
-     */
-    orderBy?: TopicCountOrderByWithRelationInput | TopicCountOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing TopicCounts.
-     */
-    cursor?: TopicCountWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` TopicCounts from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` TopicCounts.
-     */
-    skip?: number
-    distinct?: TopicCountScalarFieldEnum | TopicCountScalarFieldEnum[]
-  }
-
-  /**
-   * TopicCount create
-   */
-  export type TopicCountCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the TopicCount
-     */
-    select?: TopicCountSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the TopicCount
-     */
-    omit?: TopicCountOmit<ExtArgs> | null
-    /**
-     * The data needed to create a TopicCount.
-     */
-    data: XOR<TopicCountCreateInput, TopicCountUncheckedCreateInput>
-  }
-
-  /**
-   * TopicCount createMany
-   */
-  export type TopicCountCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many TopicCounts.
-     */
-    data: TopicCountCreateManyInput | TopicCountCreateManyInput[]
-  }
-
-  /**
-   * TopicCount createManyAndReturn
-   */
-  export type TopicCountCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the TopicCount
-     */
-    select?: TopicCountSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the TopicCount
-     */
-    omit?: TopicCountOmit<ExtArgs> | null
-    /**
-     * The data used to create many TopicCounts.
-     */
-    data: TopicCountCreateManyInput | TopicCountCreateManyInput[]
-  }
-
-  /**
-   * TopicCount update
-   */
-  export type TopicCountUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the TopicCount
-     */
-    select?: TopicCountSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the TopicCount
-     */
-    omit?: TopicCountOmit<ExtArgs> | null
-    /**
-     * The data needed to update a TopicCount.
-     */
-    data: XOR<TopicCountUpdateInput, TopicCountUncheckedUpdateInput>
-    /**
-     * Choose, which TopicCount to update.
-     */
-    where: TopicCountWhereUniqueInput
-  }
-
-  /**
-   * TopicCount updateMany
-   */
-  export type TopicCountUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update TopicCounts.
-     */
-    data: XOR<TopicCountUpdateManyMutationInput, TopicCountUncheckedUpdateManyInput>
-    /**
-     * Filter which TopicCounts to update
-     */
-    where?: TopicCountWhereInput
-    /**
-     * Limit how many TopicCounts to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * TopicCount updateManyAndReturn
-   */
-  export type TopicCountUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the TopicCount
-     */
-    select?: TopicCountSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the TopicCount
-     */
-    omit?: TopicCountOmit<ExtArgs> | null
-    /**
-     * The data used to update TopicCounts.
-     */
-    data: XOR<TopicCountUpdateManyMutationInput, TopicCountUncheckedUpdateManyInput>
-    /**
-     * Filter which TopicCounts to update
-     */
-    where?: TopicCountWhereInput
-    /**
-     * Limit how many TopicCounts to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * TopicCount upsert
-   */
-  export type TopicCountUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the TopicCount
-     */
-    select?: TopicCountSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the TopicCount
-     */
-    omit?: TopicCountOmit<ExtArgs> | null
-    /**
-     * The filter to search for the TopicCount to update in case it exists.
-     */
-    where: TopicCountWhereUniqueInput
-    /**
-     * In case the TopicCount found by the `where` argument doesn't exist, create a new TopicCount with this data.
-     */
-    create: XOR<TopicCountCreateInput, TopicCountUncheckedCreateInput>
-    /**
-     * In case the TopicCount was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<TopicCountUpdateInput, TopicCountUncheckedUpdateInput>
-  }
-
-  /**
-   * TopicCount delete
-   */
-  export type TopicCountDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the TopicCount
-     */
-    select?: TopicCountSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the TopicCount
-     */
-    omit?: TopicCountOmit<ExtArgs> | null
-    /**
-     * Filter which TopicCount to delete.
-     */
-    where: TopicCountWhereUniqueInput
-  }
-
-  /**
-   * TopicCount deleteMany
-   */
-  export type TopicCountDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which TopicCounts to delete
-     */
-    where?: TopicCountWhereInput
-    /**
-     * Limit how many TopicCounts to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * TopicCount without action
-   */
-  export type TopicCountDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the TopicCount
-     */
-    select?: TopicCountSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the TopicCount
-     */
-    omit?: TopicCountOmit<ExtArgs> | null
-  }
-
-
-  /**
-   * Model TopicEvidence
-   */
-
-  export type AggregateTopicEvidence = {
-    _count: TopicEvidenceCountAggregateOutputType | null
-    _avg: TopicEvidenceAvgAggregateOutputType | null
-    _sum: TopicEvidenceSumAggregateOutputType | null
-    _min: TopicEvidenceMinAggregateOutputType | null
-    _max: TopicEvidenceMaxAggregateOutputType | null
-  }
-
-  export type TopicEvidenceAvgAggregateOutputType = {
+  export type TopicHitAvgAggregateOutputType = {
     id: number | null
     postId: number | null
   }
 
-  export type TopicEvidenceSumAggregateOutputType = {
+  export type TopicHitSumAggregateOutputType = {
     id: number | null
     postId: number | null
   }
 
-  export type TopicEvidenceMinAggregateOutputType = {
+  export type TopicHitMinAggregateOutputType = {
     id: number | null
-    topic: string | null
     bucketTime: Date | null
+    category: string | null
+    parentKey: string | null
+    parentLabel: string | null
+    childKey: string | null
+    childLabel: string | null
     postId: number | null
     createdAt: Date | null
   }
 
-  export type TopicEvidenceMaxAggregateOutputType = {
+  export type TopicHitMaxAggregateOutputType = {
     id: number | null
-    topic: string | null
     bucketTime: Date | null
+    category: string | null
+    parentKey: string | null
+    parentLabel: string | null
+    childKey: string | null
+    childLabel: string | null
     postId: number | null
     createdAt: Date | null
   }
 
-  export type TopicEvidenceCountAggregateOutputType = {
+  export type TopicHitCountAggregateOutputType = {
     id: number
-    topic: number
     bucketTime: number
+    category: number
+    parentKey: number
+    parentLabel: number
+    childKey: number
+    childLabel: number
     postId: number
     createdAt: number
     _all: number
   }
 
 
-  export type TopicEvidenceAvgAggregateInputType = {
+  export type TopicHitAvgAggregateInputType = {
     id?: true
     postId?: true
   }
 
-  export type TopicEvidenceSumAggregateInputType = {
+  export type TopicHitSumAggregateInputType = {
     id?: true
     postId?: true
   }
 
-  export type TopicEvidenceMinAggregateInputType = {
+  export type TopicHitMinAggregateInputType = {
     id?: true
-    topic?: true
     bucketTime?: true
+    category?: true
+    parentKey?: true
+    parentLabel?: true
+    childKey?: true
+    childLabel?: true
     postId?: true
     createdAt?: true
   }
 
-  export type TopicEvidenceMaxAggregateInputType = {
+  export type TopicHitMaxAggregateInputType = {
     id?: true
-    topic?: true
     bucketTime?: true
+    category?: true
+    parentKey?: true
+    parentLabel?: true
+    childKey?: true
+    childLabel?: true
     postId?: true
     createdAt?: true
   }
 
-  export type TopicEvidenceCountAggregateInputType = {
+  export type TopicHitCountAggregateInputType = {
     id?: true
-    topic?: true
     bucketTime?: true
+    category?: true
+    parentKey?: true
+    parentLabel?: true
+    childKey?: true
+    childLabel?: true
     postId?: true
     createdAt?: true
     _all?: true
   }
 
-  export type TopicEvidenceAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TopicHitAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which TopicEvidence to aggregate.
+     * Filter which TopicHit to aggregate.
      */
-    where?: TopicEvidenceWhereInput
+    where?: TopicHitWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of TopicEvidences to fetch.
+     * Determine the order of TopicHits to fetch.
      */
-    orderBy?: TopicEvidenceOrderByWithRelationInput | TopicEvidenceOrderByWithRelationInput[]
+    orderBy?: TopicHitOrderByWithRelationInput | TopicHitOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: TopicEvidenceWhereUniqueInput
+    cursor?: TopicHitWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` TopicEvidences from the position of the cursor.
+     * Take `±n` TopicHits from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` TopicEvidences.
+     * Skip the first `n` TopicHits.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned TopicEvidences
+     * Count returned TopicHits
     **/
-    _count?: true | TopicEvidenceCountAggregateInputType
+    _count?: true | TopicHitCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: TopicEvidenceAvgAggregateInputType
+    _avg?: TopicHitAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: TopicEvidenceSumAggregateInputType
+    _sum?: TopicHitSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: TopicEvidenceMinAggregateInputType
+    _min?: TopicHitMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: TopicEvidenceMaxAggregateInputType
+    _max?: TopicHitMaxAggregateInputType
   }
 
-  export type GetTopicEvidenceAggregateType<T extends TopicEvidenceAggregateArgs> = {
-        [P in keyof T & keyof AggregateTopicEvidence]: P extends '_count' | 'count'
+  export type GetTopicHitAggregateType<T extends TopicHitAggregateArgs> = {
+        [P in keyof T & keyof AggregateTopicHit]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateTopicEvidence[P]>
-      : GetScalarType<T[P], AggregateTopicEvidence[P]>
+        : GetScalarType<T[P], AggregateTopicHit[P]>
+      : GetScalarType<T[P], AggregateTopicHit[P]>
   }
 
 
 
 
-  export type TopicEvidenceGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: TopicEvidenceWhereInput
-    orderBy?: TopicEvidenceOrderByWithAggregationInput | TopicEvidenceOrderByWithAggregationInput[]
-    by: TopicEvidenceScalarFieldEnum[] | TopicEvidenceScalarFieldEnum
-    having?: TopicEvidenceScalarWhereWithAggregatesInput
+  export type TopicHitGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TopicHitWhereInput
+    orderBy?: TopicHitOrderByWithAggregationInput | TopicHitOrderByWithAggregationInput[]
+    by: TopicHitScalarFieldEnum[] | TopicHitScalarFieldEnum
+    having?: TopicHitScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: TopicEvidenceCountAggregateInputType | true
-    _avg?: TopicEvidenceAvgAggregateInputType
-    _sum?: TopicEvidenceSumAggregateInputType
-    _min?: TopicEvidenceMinAggregateInputType
-    _max?: TopicEvidenceMaxAggregateInputType
+    _count?: TopicHitCountAggregateInputType | true
+    _avg?: TopicHitAvgAggregateInputType
+    _sum?: TopicHitSumAggregateInputType
+    _min?: TopicHitMinAggregateInputType
+    _max?: TopicHitMaxAggregateInputType
   }
 
-  export type TopicEvidenceGroupByOutputType = {
+  export type TopicHitGroupByOutputType = {
     id: number
-    topic: string
     bucketTime: Date
+    category: string
+    parentKey: string
+    parentLabel: string
+    childKey: string | null
+    childLabel: string | null
     postId: number
     createdAt: Date
-    _count: TopicEvidenceCountAggregateOutputType | null
-    _avg: TopicEvidenceAvgAggregateOutputType | null
-    _sum: TopicEvidenceSumAggregateOutputType | null
-    _min: TopicEvidenceMinAggregateOutputType | null
-    _max: TopicEvidenceMaxAggregateOutputType | null
+    _count: TopicHitCountAggregateOutputType | null
+    _avg: TopicHitAvgAggregateOutputType | null
+    _sum: TopicHitSumAggregateOutputType | null
+    _min: TopicHitMinAggregateOutputType | null
+    _max: TopicHitMaxAggregateOutputType | null
   }
 
-  type GetTopicEvidenceGroupByPayload<T extends TopicEvidenceGroupByArgs> = Prisma.PrismaPromise<
+  type GetTopicHitGroupByPayload<T extends TopicHitGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<TopicEvidenceGroupByOutputType, T['by']> &
+      PickEnumerable<TopicHitGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof TopicEvidenceGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof TopicHitGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], TopicEvidenceGroupByOutputType[P]>
-            : GetScalarType<T[P], TopicEvidenceGroupByOutputType[P]>
+              : GetScalarType<T[P], TopicHitGroupByOutputType[P]>
+            : GetScalarType<T[P], TopicHitGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type TopicEvidenceSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type TopicHitSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    topic?: boolean
     bucketTime?: boolean
+    category?: boolean
+    parentKey?: boolean
+    parentLabel?: boolean
+    childKey?: boolean
+    childLabel?: boolean
     postId?: boolean
     createdAt?: boolean
     post?: boolean | PostDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["topicEvidence"]>
+  }, ExtArgs["result"]["topicHit"]>
 
-  export type TopicEvidenceSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type TopicHitSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    topic?: boolean
     bucketTime?: boolean
+    category?: boolean
+    parentKey?: boolean
+    parentLabel?: boolean
+    childKey?: boolean
+    childLabel?: boolean
     postId?: boolean
     createdAt?: boolean
     post?: boolean | PostDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["topicEvidence"]>
+  }, ExtArgs["result"]["topicHit"]>
 
-  export type TopicEvidenceSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type TopicHitSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    topic?: boolean
     bucketTime?: boolean
+    category?: boolean
+    parentKey?: boolean
+    parentLabel?: boolean
+    childKey?: boolean
+    childLabel?: boolean
     postId?: boolean
     createdAt?: boolean
     post?: boolean | PostDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["topicEvidence"]>
+  }, ExtArgs["result"]["topicHit"]>
 
-  export type TopicEvidenceSelectScalar = {
+  export type TopicHitSelectScalar = {
     id?: boolean
-    topic?: boolean
     bucketTime?: boolean
+    category?: boolean
+    parentKey?: boolean
+    parentLabel?: boolean
+    childKey?: boolean
+    childLabel?: boolean
     postId?: boolean
     createdAt?: boolean
   }
 
-  export type TopicEvidenceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "topic" | "bucketTime" | "postId" | "createdAt", ExtArgs["result"]["topicEvidence"]>
-  export type TopicEvidenceInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TopicHitOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "bucketTime" | "category" | "parentKey" | "parentLabel" | "childKey" | "childLabel" | "postId" | "createdAt", ExtArgs["result"]["topicHit"]>
+  export type TopicHitInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     post?: boolean | PostDefaultArgs<ExtArgs>
   }
-  export type TopicEvidenceIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TopicHitIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     post?: boolean | PostDefaultArgs<ExtArgs>
   }
-  export type TopicEvidenceIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TopicHitIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     post?: boolean | PostDefaultArgs<ExtArgs>
   }
 
-  export type $TopicEvidencePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "TopicEvidence"
+  export type $TopicHitPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "TopicHit"
     objects: {
       post: Prisma.$PostPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
-      topic: string
       bucketTime: Date
+      category: string
+      parentKey: string
+      parentLabel: string
+      childKey: string | null
+      childLabel: string | null
       postId: number
       createdAt: Date
-    }, ExtArgs["result"]["topicEvidence"]>
+    }, ExtArgs["result"]["topicHit"]>
     composites: {}
   }
 
-  type TopicEvidenceGetPayload<S extends boolean | null | undefined | TopicEvidenceDefaultArgs> = $Result.GetResult<Prisma.$TopicEvidencePayload, S>
+  type TopicHitGetPayload<S extends boolean | null | undefined | TopicHitDefaultArgs> = $Result.GetResult<Prisma.$TopicHitPayload, S>
 
-  type TopicEvidenceCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<TopicEvidenceFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: TopicEvidenceCountAggregateInputType | true
+  type TopicHitCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<TopicHitFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: TopicHitCountAggregateInputType | true
     }
 
-  export interface TopicEvidenceDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['TopicEvidence'], meta: { name: 'TopicEvidence' } }
+  export interface TopicHitDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['TopicHit'], meta: { name: 'TopicHit' } }
     /**
-     * Find zero or one TopicEvidence that matches the filter.
-     * @param {TopicEvidenceFindUniqueArgs} args - Arguments to find a TopicEvidence
+     * Find zero or one TopicHit that matches the filter.
+     * @param {TopicHitFindUniqueArgs} args - Arguments to find a TopicHit
      * @example
-     * // Get one TopicEvidence
-     * const topicEvidence = await prisma.topicEvidence.findUnique({
+     * // Get one TopicHit
+     * const topicHit = await prisma.topicHit.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends TopicEvidenceFindUniqueArgs>(args: SelectSubset<T, TopicEvidenceFindUniqueArgs<ExtArgs>>): Prisma__TopicEvidenceClient<$Result.GetResult<Prisma.$TopicEvidencePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends TopicHitFindUniqueArgs>(args: SelectSubset<T, TopicHitFindUniqueArgs<ExtArgs>>): Prisma__TopicHitClient<$Result.GetResult<Prisma.$TopicHitPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one TopicEvidence that matches the filter or throw an error with `error.code='P2025'`
+     * Find one TopicHit that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {TopicEvidenceFindUniqueOrThrowArgs} args - Arguments to find a TopicEvidence
+     * @param {TopicHitFindUniqueOrThrowArgs} args - Arguments to find a TopicHit
      * @example
-     * // Get one TopicEvidence
-     * const topicEvidence = await prisma.topicEvidence.findUniqueOrThrow({
+     * // Get one TopicHit
+     * const topicHit = await prisma.topicHit.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends TopicEvidenceFindUniqueOrThrowArgs>(args: SelectSubset<T, TopicEvidenceFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TopicEvidenceClient<$Result.GetResult<Prisma.$TopicEvidencePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends TopicHitFindUniqueOrThrowArgs>(args: SelectSubset<T, TopicHitFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TopicHitClient<$Result.GetResult<Prisma.$TopicHitPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first TopicEvidence that matches the filter.
+     * Find the first TopicHit that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TopicEvidenceFindFirstArgs} args - Arguments to find a TopicEvidence
+     * @param {TopicHitFindFirstArgs} args - Arguments to find a TopicHit
      * @example
-     * // Get one TopicEvidence
-     * const topicEvidence = await prisma.topicEvidence.findFirst({
+     * // Get one TopicHit
+     * const topicHit = await prisma.topicHit.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends TopicEvidenceFindFirstArgs>(args?: SelectSubset<T, TopicEvidenceFindFirstArgs<ExtArgs>>): Prisma__TopicEvidenceClient<$Result.GetResult<Prisma.$TopicEvidencePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends TopicHitFindFirstArgs>(args?: SelectSubset<T, TopicHitFindFirstArgs<ExtArgs>>): Prisma__TopicHitClient<$Result.GetResult<Prisma.$TopicHitPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first TopicEvidence that matches the filter or
+     * Find the first TopicHit that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TopicEvidenceFindFirstOrThrowArgs} args - Arguments to find a TopicEvidence
+     * @param {TopicHitFindFirstOrThrowArgs} args - Arguments to find a TopicHit
      * @example
-     * // Get one TopicEvidence
-     * const topicEvidence = await prisma.topicEvidence.findFirstOrThrow({
+     * // Get one TopicHit
+     * const topicHit = await prisma.topicHit.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends TopicEvidenceFindFirstOrThrowArgs>(args?: SelectSubset<T, TopicEvidenceFindFirstOrThrowArgs<ExtArgs>>): Prisma__TopicEvidenceClient<$Result.GetResult<Prisma.$TopicEvidencePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends TopicHitFindFirstOrThrowArgs>(args?: SelectSubset<T, TopicHitFindFirstOrThrowArgs<ExtArgs>>): Prisma__TopicHitClient<$Result.GetResult<Prisma.$TopicHitPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more TopicEvidences that matches the filter.
+     * Find zero or more TopicHits that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TopicEvidenceFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {TopicHitFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all TopicEvidences
-     * const topicEvidences = await prisma.topicEvidence.findMany()
+     * // Get all TopicHits
+     * const topicHits = await prisma.topicHit.findMany()
      * 
-     * // Get first 10 TopicEvidences
-     * const topicEvidences = await prisma.topicEvidence.findMany({ take: 10 })
+     * // Get first 10 TopicHits
+     * const topicHits = await prisma.topicHit.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const topicEvidenceWithIdOnly = await prisma.topicEvidence.findMany({ select: { id: true } })
+     * const topicHitWithIdOnly = await prisma.topicHit.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends TopicEvidenceFindManyArgs>(args?: SelectSubset<T, TopicEvidenceFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TopicEvidencePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends TopicHitFindManyArgs>(args?: SelectSubset<T, TopicHitFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TopicHitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a TopicEvidence.
-     * @param {TopicEvidenceCreateArgs} args - Arguments to create a TopicEvidence.
+     * Create a TopicHit.
+     * @param {TopicHitCreateArgs} args - Arguments to create a TopicHit.
      * @example
-     * // Create one TopicEvidence
-     * const TopicEvidence = await prisma.topicEvidence.create({
+     * // Create one TopicHit
+     * const TopicHit = await prisma.topicHit.create({
      *   data: {
-     *     // ... data to create a TopicEvidence
+     *     // ... data to create a TopicHit
      *   }
      * })
      * 
      */
-    create<T extends TopicEvidenceCreateArgs>(args: SelectSubset<T, TopicEvidenceCreateArgs<ExtArgs>>): Prisma__TopicEvidenceClient<$Result.GetResult<Prisma.$TopicEvidencePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends TopicHitCreateArgs>(args: SelectSubset<T, TopicHitCreateArgs<ExtArgs>>): Prisma__TopicHitClient<$Result.GetResult<Prisma.$TopicHitPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many TopicEvidences.
-     * @param {TopicEvidenceCreateManyArgs} args - Arguments to create many TopicEvidences.
+     * Create many TopicHits.
+     * @param {TopicHitCreateManyArgs} args - Arguments to create many TopicHits.
      * @example
-     * // Create many TopicEvidences
-     * const topicEvidence = await prisma.topicEvidence.createMany({
+     * // Create many TopicHits
+     * const topicHit = await prisma.topicHit.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends TopicEvidenceCreateManyArgs>(args?: SelectSubset<T, TopicEvidenceCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends TopicHitCreateManyArgs>(args?: SelectSubset<T, TopicHitCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many TopicEvidences and returns the data saved in the database.
-     * @param {TopicEvidenceCreateManyAndReturnArgs} args - Arguments to create many TopicEvidences.
+     * Create many TopicHits and returns the data saved in the database.
+     * @param {TopicHitCreateManyAndReturnArgs} args - Arguments to create many TopicHits.
      * @example
-     * // Create many TopicEvidences
-     * const topicEvidence = await prisma.topicEvidence.createManyAndReturn({
+     * // Create many TopicHits
+     * const topicHit = await prisma.topicHit.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many TopicEvidences and only return the `id`
-     * const topicEvidenceWithIdOnly = await prisma.topicEvidence.createManyAndReturn({
+     * // Create many TopicHits and only return the `id`
+     * const topicHitWithIdOnly = await prisma.topicHit.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -3611,28 +2550,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends TopicEvidenceCreateManyAndReturnArgs>(args?: SelectSubset<T, TopicEvidenceCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TopicEvidencePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends TopicHitCreateManyAndReturnArgs>(args?: SelectSubset<T, TopicHitCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TopicHitPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a TopicEvidence.
-     * @param {TopicEvidenceDeleteArgs} args - Arguments to delete one TopicEvidence.
+     * Delete a TopicHit.
+     * @param {TopicHitDeleteArgs} args - Arguments to delete one TopicHit.
      * @example
-     * // Delete one TopicEvidence
-     * const TopicEvidence = await prisma.topicEvidence.delete({
+     * // Delete one TopicHit
+     * const TopicHit = await prisma.topicHit.delete({
      *   where: {
-     *     // ... filter to delete one TopicEvidence
+     *     // ... filter to delete one TopicHit
      *   }
      * })
      * 
      */
-    delete<T extends TopicEvidenceDeleteArgs>(args: SelectSubset<T, TopicEvidenceDeleteArgs<ExtArgs>>): Prisma__TopicEvidenceClient<$Result.GetResult<Prisma.$TopicEvidencePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends TopicHitDeleteArgs>(args: SelectSubset<T, TopicHitDeleteArgs<ExtArgs>>): Prisma__TopicHitClient<$Result.GetResult<Prisma.$TopicHitPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one TopicEvidence.
-     * @param {TopicEvidenceUpdateArgs} args - Arguments to update one TopicEvidence.
+     * Update one TopicHit.
+     * @param {TopicHitUpdateArgs} args - Arguments to update one TopicHit.
      * @example
-     * // Update one TopicEvidence
-     * const topicEvidence = await prisma.topicEvidence.update({
+     * // Update one TopicHit
+     * const topicHit = await prisma.topicHit.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -3642,30 +2581,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends TopicEvidenceUpdateArgs>(args: SelectSubset<T, TopicEvidenceUpdateArgs<ExtArgs>>): Prisma__TopicEvidenceClient<$Result.GetResult<Prisma.$TopicEvidencePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends TopicHitUpdateArgs>(args: SelectSubset<T, TopicHitUpdateArgs<ExtArgs>>): Prisma__TopicHitClient<$Result.GetResult<Prisma.$TopicHitPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more TopicEvidences.
-     * @param {TopicEvidenceDeleteManyArgs} args - Arguments to filter TopicEvidences to delete.
+     * Delete zero or more TopicHits.
+     * @param {TopicHitDeleteManyArgs} args - Arguments to filter TopicHits to delete.
      * @example
-     * // Delete a few TopicEvidences
-     * const { count } = await prisma.topicEvidence.deleteMany({
+     * // Delete a few TopicHits
+     * const { count } = await prisma.topicHit.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends TopicEvidenceDeleteManyArgs>(args?: SelectSubset<T, TopicEvidenceDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends TopicHitDeleteManyArgs>(args?: SelectSubset<T, TopicHitDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more TopicEvidences.
+     * Update zero or more TopicHits.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TopicEvidenceUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {TopicHitUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many TopicEvidences
-     * const topicEvidence = await prisma.topicEvidence.updateMany({
+     * // Update many TopicHits
+     * const topicHit = await prisma.topicHit.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -3675,14 +2614,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends TopicEvidenceUpdateManyArgs>(args: SelectSubset<T, TopicEvidenceUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends TopicHitUpdateManyArgs>(args: SelectSubset<T, TopicHitUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more TopicEvidences and returns the data updated in the database.
-     * @param {TopicEvidenceUpdateManyAndReturnArgs} args - Arguments to update many TopicEvidences.
+     * Update zero or more TopicHits and returns the data updated in the database.
+     * @param {TopicHitUpdateManyAndReturnArgs} args - Arguments to update many TopicHits.
      * @example
-     * // Update many TopicEvidences
-     * const topicEvidence = await prisma.topicEvidence.updateManyAndReturn({
+     * // Update many TopicHits
+     * const topicHit = await prisma.topicHit.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -3691,8 +2630,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more TopicEvidences and only return the `id`
-     * const topicEvidenceWithIdOnly = await prisma.topicEvidence.updateManyAndReturn({
+     * // Update zero or more TopicHits and only return the `id`
+     * const topicHitWithIdOnly = await prisma.topicHit.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -3705,56 +2644,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends TopicEvidenceUpdateManyAndReturnArgs>(args: SelectSubset<T, TopicEvidenceUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TopicEvidencePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends TopicHitUpdateManyAndReturnArgs>(args: SelectSubset<T, TopicHitUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TopicHitPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one TopicEvidence.
-     * @param {TopicEvidenceUpsertArgs} args - Arguments to update or create a TopicEvidence.
+     * Create or update one TopicHit.
+     * @param {TopicHitUpsertArgs} args - Arguments to update or create a TopicHit.
      * @example
-     * // Update or create a TopicEvidence
-     * const topicEvidence = await prisma.topicEvidence.upsert({
+     * // Update or create a TopicHit
+     * const topicHit = await prisma.topicHit.upsert({
      *   create: {
-     *     // ... data to create a TopicEvidence
+     *     // ... data to create a TopicHit
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the TopicEvidence we want to update
+     *     // ... the filter for the TopicHit we want to update
      *   }
      * })
      */
-    upsert<T extends TopicEvidenceUpsertArgs>(args: SelectSubset<T, TopicEvidenceUpsertArgs<ExtArgs>>): Prisma__TopicEvidenceClient<$Result.GetResult<Prisma.$TopicEvidencePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends TopicHitUpsertArgs>(args: SelectSubset<T, TopicHitUpsertArgs<ExtArgs>>): Prisma__TopicHitClient<$Result.GetResult<Prisma.$TopicHitPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of TopicEvidences.
+     * Count the number of TopicHits.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TopicEvidenceCountArgs} args - Arguments to filter TopicEvidences to count.
+     * @param {TopicHitCountArgs} args - Arguments to filter TopicHits to count.
      * @example
-     * // Count the number of TopicEvidences
-     * const count = await prisma.topicEvidence.count({
+     * // Count the number of TopicHits
+     * const count = await prisma.topicHit.count({
      *   where: {
-     *     // ... the filter for the TopicEvidences we want to count
+     *     // ... the filter for the TopicHits we want to count
      *   }
      * })
     **/
-    count<T extends TopicEvidenceCountArgs>(
-      args?: Subset<T, TopicEvidenceCountArgs>,
+    count<T extends TopicHitCountArgs>(
+      args?: Subset<T, TopicHitCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], TopicEvidenceCountAggregateOutputType>
+          : GetScalarType<T['select'], TopicHitCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a TopicEvidence.
+     * Allows you to perform aggregations operations on a TopicHit.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TopicEvidenceAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {TopicHitAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -3774,13 +2713,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends TopicEvidenceAggregateArgs>(args: Subset<T, TopicEvidenceAggregateArgs>): Prisma.PrismaPromise<GetTopicEvidenceAggregateType<T>>
+    aggregate<T extends TopicHitAggregateArgs>(args: Subset<T, TopicHitAggregateArgs>): Prisma.PrismaPromise<GetTopicHitAggregateType<T>>
 
     /**
-     * Group by TopicEvidence.
+     * Group by TopicHit.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TopicEvidenceGroupByArgs} args - Group by arguments.
+     * @param {TopicHitGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -3795,14 +2734,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends TopicEvidenceGroupByArgs,
+      T extends TopicHitGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: TopicEvidenceGroupByArgs['orderBy'] }
-        : { orderBy?: TopicEvidenceGroupByArgs['orderBy'] },
+        ? { orderBy: TopicHitGroupByArgs['orderBy'] }
+        : { orderBy?: TopicHitGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -3851,20 +2790,20 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, TopicEvidenceGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTopicEvidenceGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, TopicHitGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTopicHitGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the TopicEvidence model
+   * Fields of the TopicHit model
    */
-  readonly fields: TopicEvidenceFieldRefs;
+  readonly fields: TopicHitFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for TopicEvidence.
+   * The delegate class that acts as a "Promise-like" for TopicHit.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__TopicEvidenceClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__TopicHitClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     post<T extends PostDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PostDefaultArgs<ExtArgs>>): Prisma__PostClient<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
@@ -3893,423 +2832,427 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the TopicEvidence model
+   * Fields of the TopicHit model
    */
-  interface TopicEvidenceFieldRefs {
-    readonly id: FieldRef<"TopicEvidence", 'Int'>
-    readonly topic: FieldRef<"TopicEvidence", 'String'>
-    readonly bucketTime: FieldRef<"TopicEvidence", 'DateTime'>
-    readonly postId: FieldRef<"TopicEvidence", 'Int'>
-    readonly createdAt: FieldRef<"TopicEvidence", 'DateTime'>
+  interface TopicHitFieldRefs {
+    readonly id: FieldRef<"TopicHit", 'Int'>
+    readonly bucketTime: FieldRef<"TopicHit", 'DateTime'>
+    readonly category: FieldRef<"TopicHit", 'String'>
+    readonly parentKey: FieldRef<"TopicHit", 'String'>
+    readonly parentLabel: FieldRef<"TopicHit", 'String'>
+    readonly childKey: FieldRef<"TopicHit", 'String'>
+    readonly childLabel: FieldRef<"TopicHit", 'String'>
+    readonly postId: FieldRef<"TopicHit", 'Int'>
+    readonly createdAt: FieldRef<"TopicHit", 'DateTime'>
   }
     
 
   // Custom InputTypes
   /**
-   * TopicEvidence findUnique
+   * TopicHit findUnique
    */
-  export type TopicEvidenceFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TopicHitFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the TopicEvidence
+     * Select specific fields to fetch from the TopicHit
      */
-    select?: TopicEvidenceSelect<ExtArgs> | null
+    select?: TopicHitSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the TopicEvidence
+     * Omit specific fields from the TopicHit
      */
-    omit?: TopicEvidenceOmit<ExtArgs> | null
+    omit?: TopicHitOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TopicEvidenceInclude<ExtArgs> | null
+    include?: TopicHitInclude<ExtArgs> | null
     /**
-     * Filter, which TopicEvidence to fetch.
+     * Filter, which TopicHit to fetch.
      */
-    where: TopicEvidenceWhereUniqueInput
+    where: TopicHitWhereUniqueInput
   }
 
   /**
-   * TopicEvidence findUniqueOrThrow
+   * TopicHit findUniqueOrThrow
    */
-  export type TopicEvidenceFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TopicHitFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the TopicEvidence
+     * Select specific fields to fetch from the TopicHit
      */
-    select?: TopicEvidenceSelect<ExtArgs> | null
+    select?: TopicHitSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the TopicEvidence
+     * Omit specific fields from the TopicHit
      */
-    omit?: TopicEvidenceOmit<ExtArgs> | null
+    omit?: TopicHitOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TopicEvidenceInclude<ExtArgs> | null
+    include?: TopicHitInclude<ExtArgs> | null
     /**
-     * Filter, which TopicEvidence to fetch.
+     * Filter, which TopicHit to fetch.
      */
-    where: TopicEvidenceWhereUniqueInput
+    where: TopicHitWhereUniqueInput
   }
 
   /**
-   * TopicEvidence findFirst
+   * TopicHit findFirst
    */
-  export type TopicEvidenceFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TopicHitFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the TopicEvidence
+     * Select specific fields to fetch from the TopicHit
      */
-    select?: TopicEvidenceSelect<ExtArgs> | null
+    select?: TopicHitSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the TopicEvidence
+     * Omit specific fields from the TopicHit
      */
-    omit?: TopicEvidenceOmit<ExtArgs> | null
+    omit?: TopicHitOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TopicEvidenceInclude<ExtArgs> | null
+    include?: TopicHitInclude<ExtArgs> | null
     /**
-     * Filter, which TopicEvidence to fetch.
+     * Filter, which TopicHit to fetch.
      */
-    where?: TopicEvidenceWhereInput
+    where?: TopicHitWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of TopicEvidences to fetch.
+     * Determine the order of TopicHits to fetch.
      */
-    orderBy?: TopicEvidenceOrderByWithRelationInput | TopicEvidenceOrderByWithRelationInput[]
+    orderBy?: TopicHitOrderByWithRelationInput | TopicHitOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for TopicEvidences.
+     * Sets the position for searching for TopicHits.
      */
-    cursor?: TopicEvidenceWhereUniqueInput
+    cursor?: TopicHitWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` TopicEvidences from the position of the cursor.
+     * Take `±n` TopicHits from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` TopicEvidences.
+     * Skip the first `n` TopicHits.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of TopicEvidences.
+     * Filter by unique combinations of TopicHits.
      */
-    distinct?: TopicEvidenceScalarFieldEnum | TopicEvidenceScalarFieldEnum[]
+    distinct?: TopicHitScalarFieldEnum | TopicHitScalarFieldEnum[]
   }
 
   /**
-   * TopicEvidence findFirstOrThrow
+   * TopicHit findFirstOrThrow
    */
-  export type TopicEvidenceFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TopicHitFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the TopicEvidence
+     * Select specific fields to fetch from the TopicHit
      */
-    select?: TopicEvidenceSelect<ExtArgs> | null
+    select?: TopicHitSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the TopicEvidence
+     * Omit specific fields from the TopicHit
      */
-    omit?: TopicEvidenceOmit<ExtArgs> | null
+    omit?: TopicHitOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TopicEvidenceInclude<ExtArgs> | null
+    include?: TopicHitInclude<ExtArgs> | null
     /**
-     * Filter, which TopicEvidence to fetch.
+     * Filter, which TopicHit to fetch.
      */
-    where?: TopicEvidenceWhereInput
+    where?: TopicHitWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of TopicEvidences to fetch.
+     * Determine the order of TopicHits to fetch.
      */
-    orderBy?: TopicEvidenceOrderByWithRelationInput | TopicEvidenceOrderByWithRelationInput[]
+    orderBy?: TopicHitOrderByWithRelationInput | TopicHitOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for TopicEvidences.
+     * Sets the position for searching for TopicHits.
      */
-    cursor?: TopicEvidenceWhereUniqueInput
+    cursor?: TopicHitWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` TopicEvidences from the position of the cursor.
+     * Take `±n` TopicHits from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` TopicEvidences.
+     * Skip the first `n` TopicHits.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of TopicEvidences.
+     * Filter by unique combinations of TopicHits.
      */
-    distinct?: TopicEvidenceScalarFieldEnum | TopicEvidenceScalarFieldEnum[]
+    distinct?: TopicHitScalarFieldEnum | TopicHitScalarFieldEnum[]
   }
 
   /**
-   * TopicEvidence findMany
+   * TopicHit findMany
    */
-  export type TopicEvidenceFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TopicHitFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the TopicEvidence
+     * Select specific fields to fetch from the TopicHit
      */
-    select?: TopicEvidenceSelect<ExtArgs> | null
+    select?: TopicHitSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the TopicEvidence
+     * Omit specific fields from the TopicHit
      */
-    omit?: TopicEvidenceOmit<ExtArgs> | null
+    omit?: TopicHitOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TopicEvidenceInclude<ExtArgs> | null
+    include?: TopicHitInclude<ExtArgs> | null
     /**
-     * Filter, which TopicEvidences to fetch.
+     * Filter, which TopicHits to fetch.
      */
-    where?: TopicEvidenceWhereInput
+    where?: TopicHitWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of TopicEvidences to fetch.
+     * Determine the order of TopicHits to fetch.
      */
-    orderBy?: TopicEvidenceOrderByWithRelationInput | TopicEvidenceOrderByWithRelationInput[]
+    orderBy?: TopicHitOrderByWithRelationInput | TopicHitOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing TopicEvidences.
+     * Sets the position for listing TopicHits.
      */
-    cursor?: TopicEvidenceWhereUniqueInput
+    cursor?: TopicHitWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` TopicEvidences from the position of the cursor.
+     * Take `±n` TopicHits from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` TopicEvidences.
+     * Skip the first `n` TopicHits.
      */
     skip?: number
-    distinct?: TopicEvidenceScalarFieldEnum | TopicEvidenceScalarFieldEnum[]
+    distinct?: TopicHitScalarFieldEnum | TopicHitScalarFieldEnum[]
   }
 
   /**
-   * TopicEvidence create
+   * TopicHit create
    */
-  export type TopicEvidenceCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TopicHitCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the TopicEvidence
+     * Select specific fields to fetch from the TopicHit
      */
-    select?: TopicEvidenceSelect<ExtArgs> | null
+    select?: TopicHitSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the TopicEvidence
+     * Omit specific fields from the TopicHit
      */
-    omit?: TopicEvidenceOmit<ExtArgs> | null
+    omit?: TopicHitOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TopicEvidenceInclude<ExtArgs> | null
+    include?: TopicHitInclude<ExtArgs> | null
     /**
-     * The data needed to create a TopicEvidence.
+     * The data needed to create a TopicHit.
      */
-    data: XOR<TopicEvidenceCreateInput, TopicEvidenceUncheckedCreateInput>
+    data: XOR<TopicHitCreateInput, TopicHitUncheckedCreateInput>
   }
 
   /**
-   * TopicEvidence createMany
+   * TopicHit createMany
    */
-  export type TopicEvidenceCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TopicHitCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many TopicEvidences.
+     * The data used to create many TopicHits.
      */
-    data: TopicEvidenceCreateManyInput | TopicEvidenceCreateManyInput[]
+    data: TopicHitCreateManyInput | TopicHitCreateManyInput[]
   }
 
   /**
-   * TopicEvidence createManyAndReturn
+   * TopicHit createManyAndReturn
    */
-  export type TopicEvidenceCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TopicHitCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the TopicEvidence
+     * Select specific fields to fetch from the TopicHit
      */
-    select?: TopicEvidenceSelectCreateManyAndReturn<ExtArgs> | null
+    select?: TopicHitSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the TopicEvidence
+     * Omit specific fields from the TopicHit
      */
-    omit?: TopicEvidenceOmit<ExtArgs> | null
+    omit?: TopicHitOmit<ExtArgs> | null
     /**
-     * The data used to create many TopicEvidences.
+     * The data used to create many TopicHits.
      */
-    data: TopicEvidenceCreateManyInput | TopicEvidenceCreateManyInput[]
+    data: TopicHitCreateManyInput | TopicHitCreateManyInput[]
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TopicEvidenceIncludeCreateManyAndReturn<ExtArgs> | null
+    include?: TopicHitIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * TopicEvidence update
+   * TopicHit update
    */
-  export type TopicEvidenceUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TopicHitUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the TopicEvidence
+     * Select specific fields to fetch from the TopicHit
      */
-    select?: TopicEvidenceSelect<ExtArgs> | null
+    select?: TopicHitSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the TopicEvidence
+     * Omit specific fields from the TopicHit
      */
-    omit?: TopicEvidenceOmit<ExtArgs> | null
+    omit?: TopicHitOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TopicEvidenceInclude<ExtArgs> | null
+    include?: TopicHitInclude<ExtArgs> | null
     /**
-     * The data needed to update a TopicEvidence.
+     * The data needed to update a TopicHit.
      */
-    data: XOR<TopicEvidenceUpdateInput, TopicEvidenceUncheckedUpdateInput>
+    data: XOR<TopicHitUpdateInput, TopicHitUncheckedUpdateInput>
     /**
-     * Choose, which TopicEvidence to update.
+     * Choose, which TopicHit to update.
      */
-    where: TopicEvidenceWhereUniqueInput
+    where: TopicHitWhereUniqueInput
   }
 
   /**
-   * TopicEvidence updateMany
+   * TopicHit updateMany
    */
-  export type TopicEvidenceUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TopicHitUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update TopicEvidences.
+     * The data used to update TopicHits.
      */
-    data: XOR<TopicEvidenceUpdateManyMutationInput, TopicEvidenceUncheckedUpdateManyInput>
+    data: XOR<TopicHitUpdateManyMutationInput, TopicHitUncheckedUpdateManyInput>
     /**
-     * Filter which TopicEvidences to update
+     * Filter which TopicHits to update
      */
-    where?: TopicEvidenceWhereInput
+    where?: TopicHitWhereInput
     /**
-     * Limit how many TopicEvidences to update.
+     * Limit how many TopicHits to update.
      */
     limit?: number
   }
 
   /**
-   * TopicEvidence updateManyAndReturn
+   * TopicHit updateManyAndReturn
    */
-  export type TopicEvidenceUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TopicHitUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the TopicEvidence
+     * Select specific fields to fetch from the TopicHit
      */
-    select?: TopicEvidenceSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: TopicHitSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the TopicEvidence
+     * Omit specific fields from the TopicHit
      */
-    omit?: TopicEvidenceOmit<ExtArgs> | null
+    omit?: TopicHitOmit<ExtArgs> | null
     /**
-     * The data used to update TopicEvidences.
+     * The data used to update TopicHits.
      */
-    data: XOR<TopicEvidenceUpdateManyMutationInput, TopicEvidenceUncheckedUpdateManyInput>
+    data: XOR<TopicHitUpdateManyMutationInput, TopicHitUncheckedUpdateManyInput>
     /**
-     * Filter which TopicEvidences to update
+     * Filter which TopicHits to update
      */
-    where?: TopicEvidenceWhereInput
+    where?: TopicHitWhereInput
     /**
-     * Limit how many TopicEvidences to update.
+     * Limit how many TopicHits to update.
      */
     limit?: number
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TopicEvidenceIncludeUpdateManyAndReturn<ExtArgs> | null
+    include?: TopicHitIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * TopicEvidence upsert
+   * TopicHit upsert
    */
-  export type TopicEvidenceUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TopicHitUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the TopicEvidence
+     * Select specific fields to fetch from the TopicHit
      */
-    select?: TopicEvidenceSelect<ExtArgs> | null
+    select?: TopicHitSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the TopicEvidence
+     * Omit specific fields from the TopicHit
      */
-    omit?: TopicEvidenceOmit<ExtArgs> | null
+    omit?: TopicHitOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TopicEvidenceInclude<ExtArgs> | null
+    include?: TopicHitInclude<ExtArgs> | null
     /**
-     * The filter to search for the TopicEvidence to update in case it exists.
+     * The filter to search for the TopicHit to update in case it exists.
      */
-    where: TopicEvidenceWhereUniqueInput
+    where: TopicHitWhereUniqueInput
     /**
-     * In case the TopicEvidence found by the `where` argument doesn't exist, create a new TopicEvidence with this data.
+     * In case the TopicHit found by the `where` argument doesn't exist, create a new TopicHit with this data.
      */
-    create: XOR<TopicEvidenceCreateInput, TopicEvidenceUncheckedCreateInput>
+    create: XOR<TopicHitCreateInput, TopicHitUncheckedCreateInput>
     /**
-     * In case the TopicEvidence was found with the provided `where` argument, update it with this data.
+     * In case the TopicHit was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<TopicEvidenceUpdateInput, TopicEvidenceUncheckedUpdateInput>
+    update: XOR<TopicHitUpdateInput, TopicHitUncheckedUpdateInput>
   }
 
   /**
-   * TopicEvidence delete
+   * TopicHit delete
    */
-  export type TopicEvidenceDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TopicHitDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the TopicEvidence
+     * Select specific fields to fetch from the TopicHit
      */
-    select?: TopicEvidenceSelect<ExtArgs> | null
+    select?: TopicHitSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the TopicEvidence
+     * Omit specific fields from the TopicHit
      */
-    omit?: TopicEvidenceOmit<ExtArgs> | null
+    omit?: TopicHitOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TopicEvidenceInclude<ExtArgs> | null
+    include?: TopicHitInclude<ExtArgs> | null
     /**
-     * Filter which TopicEvidence to delete.
+     * Filter which TopicHit to delete.
      */
-    where: TopicEvidenceWhereUniqueInput
+    where: TopicHitWhereUniqueInput
   }
 
   /**
-   * TopicEvidence deleteMany
+   * TopicHit deleteMany
    */
-  export type TopicEvidenceDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TopicHitDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which TopicEvidences to delete
+     * Filter which TopicHits to delete
      */
-    where?: TopicEvidenceWhereInput
+    where?: TopicHitWhereInput
     /**
-     * Limit how many TopicEvidences to delete.
+     * Limit how many TopicHits to delete.
      */
     limit?: number
   }
 
   /**
-   * TopicEvidence without action
+   * TopicHit without action
    */
-  export type TopicEvidenceDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TopicHitDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the TopicEvidence
+     * Select specific fields to fetch from the TopicHit
      */
-    select?: TopicEvidenceSelect<ExtArgs> | null
+    select?: TopicHitSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the TopicEvidence
+     * Omit specific fields from the TopicHit
      */
-    omit?: TopicEvidenceOmit<ExtArgs> | null
+    omit?: TopicHitOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TopicEvidenceInclude<ExtArgs> | null
+    include?: TopicHitInclude<ExtArgs> | null
   }
 
 
@@ -4329,6 +3272,7 @@ export namespace Prisma {
     source: 'source',
     externalId: 'externalId',
     title: 'title',
+    url: 'url',
     createdAt: 'createdAt',
     fetchedAt: 'fetchedAt'
   };
@@ -4336,26 +3280,19 @@ export namespace Prisma {
   export type PostScalarFieldEnum = (typeof PostScalarFieldEnum)[keyof typeof PostScalarFieldEnum]
 
 
-  export const TopicCountScalarFieldEnum: {
+  export const TopicHitScalarFieldEnum: {
     id: 'id',
-    topic: 'topic',
-    topicLabel: 'topicLabel',
     bucketTime: 'bucketTime',
-    count: 'count'
-  };
-
-  export type TopicCountScalarFieldEnum = (typeof TopicCountScalarFieldEnum)[keyof typeof TopicCountScalarFieldEnum]
-
-
-  export const TopicEvidenceScalarFieldEnum: {
-    id: 'id',
-    topic: 'topic',
-    bucketTime: 'bucketTime',
+    category: 'category',
+    parentKey: 'parentKey',
+    parentLabel: 'parentLabel',
+    childKey: 'childKey',
+    childLabel: 'childLabel',
     postId: 'postId',
     createdAt: 'createdAt'
   };
 
-  export type TopicEvidenceScalarFieldEnum = (typeof TopicEvidenceScalarFieldEnum)[keyof typeof TopicEvidenceScalarFieldEnum]
+  export type TopicHitScalarFieldEnum = (typeof TopicHitScalarFieldEnum)[keyof typeof TopicHitScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -4418,9 +3355,10 @@ export namespace Prisma {
     source?: StringFilter<"Post"> | string
     externalId?: StringFilter<"Post"> | string
     title?: StringFilter<"Post"> | string
+    url?: StringNullableFilter<"Post"> | string | null
     createdAt?: DateTimeNullableFilter<"Post"> | Date | string | null
     fetchedAt?: DateTimeFilter<"Post"> | Date | string
-    evidences?: TopicEvidenceListRelationFilter
+    topicHits?: TopicHitListRelationFilter
   }
 
   export type PostOrderByWithRelationInput = {
@@ -4428,9 +3366,10 @@ export namespace Prisma {
     source?: SortOrder
     externalId?: SortOrder
     title?: SortOrder
+    url?: SortOrderInput | SortOrder
     createdAt?: SortOrderInput | SortOrder
     fetchedAt?: SortOrder
-    evidences?: TopicEvidenceOrderByRelationAggregateInput
+    topicHits?: TopicHitOrderByRelationAggregateInput
   }
 
   export type PostWhereUniqueInput = Prisma.AtLeast<{
@@ -4442,9 +3381,10 @@ export namespace Prisma {
     source?: StringFilter<"Post"> | string
     externalId?: StringFilter<"Post"> | string
     title?: StringFilter<"Post"> | string
+    url?: StringNullableFilter<"Post"> | string | null
     createdAt?: DateTimeNullableFilter<"Post"> | Date | string | null
     fetchedAt?: DateTimeFilter<"Post"> | Date | string
-    evidences?: TopicEvidenceListRelationFilter
+    topicHits?: TopicHitListRelationFilter
   }, "id" | "source_externalId">
 
   export type PostOrderByWithAggregationInput = {
@@ -4452,6 +3392,7 @@ export namespace Prisma {
     source?: SortOrder
     externalId?: SortOrder
     title?: SortOrder
+    url?: SortOrderInput | SortOrder
     createdAt?: SortOrderInput | SortOrder
     fetchedAt?: SortOrder
     _count?: PostCountOrderByAggregateInput
@@ -4469,130 +3410,97 @@ export namespace Prisma {
     source?: StringWithAggregatesFilter<"Post"> | string
     externalId?: StringWithAggregatesFilter<"Post"> | string
     title?: StringWithAggregatesFilter<"Post"> | string
+    url?: StringNullableWithAggregatesFilter<"Post"> | string | null
     createdAt?: DateTimeNullableWithAggregatesFilter<"Post"> | Date | string | null
     fetchedAt?: DateTimeWithAggregatesFilter<"Post"> | Date | string
   }
 
-  export type TopicCountWhereInput = {
-    AND?: TopicCountWhereInput | TopicCountWhereInput[]
-    OR?: TopicCountWhereInput[]
-    NOT?: TopicCountWhereInput | TopicCountWhereInput[]
-    id?: IntFilter<"TopicCount"> | number
-    topic?: StringFilter<"TopicCount"> | string
-    topicLabel?: StringFilter<"TopicCount"> | string
-    bucketTime?: DateTimeFilter<"TopicCount"> | Date | string
-    count?: IntFilter<"TopicCount"> | number
-  }
-
-  export type TopicCountOrderByWithRelationInput = {
-    id?: SortOrder
-    topic?: SortOrder
-    topicLabel?: SortOrder
-    bucketTime?: SortOrder
-    count?: SortOrder
-  }
-
-  export type TopicCountWhereUniqueInput = Prisma.AtLeast<{
-    id?: number
-    topic_bucketTime?: TopicCountTopicBucketTimeCompoundUniqueInput
-    AND?: TopicCountWhereInput | TopicCountWhereInput[]
-    OR?: TopicCountWhereInput[]
-    NOT?: TopicCountWhereInput | TopicCountWhereInput[]
-    topic?: StringFilter<"TopicCount"> | string
-    topicLabel?: StringFilter<"TopicCount"> | string
-    bucketTime?: DateTimeFilter<"TopicCount"> | Date | string
-    count?: IntFilter<"TopicCount"> | number
-  }, "id" | "topic_bucketTime">
-
-  export type TopicCountOrderByWithAggregationInput = {
-    id?: SortOrder
-    topic?: SortOrder
-    topicLabel?: SortOrder
-    bucketTime?: SortOrder
-    count?: SortOrder
-    _count?: TopicCountCountOrderByAggregateInput
-    _avg?: TopicCountAvgOrderByAggregateInput
-    _max?: TopicCountMaxOrderByAggregateInput
-    _min?: TopicCountMinOrderByAggregateInput
-    _sum?: TopicCountSumOrderByAggregateInput
-  }
-
-  export type TopicCountScalarWhereWithAggregatesInput = {
-    AND?: TopicCountScalarWhereWithAggregatesInput | TopicCountScalarWhereWithAggregatesInput[]
-    OR?: TopicCountScalarWhereWithAggregatesInput[]
-    NOT?: TopicCountScalarWhereWithAggregatesInput | TopicCountScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"TopicCount"> | number
-    topic?: StringWithAggregatesFilter<"TopicCount"> | string
-    topicLabel?: StringWithAggregatesFilter<"TopicCount"> | string
-    bucketTime?: DateTimeWithAggregatesFilter<"TopicCount"> | Date | string
-    count?: IntWithAggregatesFilter<"TopicCount"> | number
-  }
-
-  export type TopicEvidenceWhereInput = {
-    AND?: TopicEvidenceWhereInput | TopicEvidenceWhereInput[]
-    OR?: TopicEvidenceWhereInput[]
-    NOT?: TopicEvidenceWhereInput | TopicEvidenceWhereInput[]
-    id?: IntFilter<"TopicEvidence"> | number
-    topic?: StringFilter<"TopicEvidence"> | string
-    bucketTime?: DateTimeFilter<"TopicEvidence"> | Date | string
-    postId?: IntFilter<"TopicEvidence"> | number
-    createdAt?: DateTimeFilter<"TopicEvidence"> | Date | string
+  export type TopicHitWhereInput = {
+    AND?: TopicHitWhereInput | TopicHitWhereInput[]
+    OR?: TopicHitWhereInput[]
+    NOT?: TopicHitWhereInput | TopicHitWhereInput[]
+    id?: IntFilter<"TopicHit"> | number
+    bucketTime?: DateTimeFilter<"TopicHit"> | Date | string
+    category?: StringFilter<"TopicHit"> | string
+    parentKey?: StringFilter<"TopicHit"> | string
+    parentLabel?: StringFilter<"TopicHit"> | string
+    childKey?: StringNullableFilter<"TopicHit"> | string | null
+    childLabel?: StringNullableFilter<"TopicHit"> | string | null
+    postId?: IntFilter<"TopicHit"> | number
+    createdAt?: DateTimeFilter<"TopicHit"> | Date | string
     post?: XOR<PostScalarRelationFilter, PostWhereInput>
   }
 
-  export type TopicEvidenceOrderByWithRelationInput = {
+  export type TopicHitOrderByWithRelationInput = {
     id?: SortOrder
-    topic?: SortOrder
     bucketTime?: SortOrder
+    category?: SortOrder
+    parentKey?: SortOrder
+    parentLabel?: SortOrder
+    childKey?: SortOrderInput | SortOrder
+    childLabel?: SortOrderInput | SortOrder
     postId?: SortOrder
     createdAt?: SortOrder
     post?: PostOrderByWithRelationInput
   }
 
-  export type TopicEvidenceWhereUniqueInput = Prisma.AtLeast<{
+  export type TopicHitWhereUniqueInput = Prisma.AtLeast<{
     id?: number
-    topic_bucketTime_postId?: TopicEvidenceTopicBucketTimePostIdCompoundUniqueInput
-    AND?: TopicEvidenceWhereInput | TopicEvidenceWhereInput[]
-    OR?: TopicEvidenceWhereInput[]
-    NOT?: TopicEvidenceWhereInput | TopicEvidenceWhereInput[]
-    topic?: StringFilter<"TopicEvidence"> | string
-    bucketTime?: DateTimeFilter<"TopicEvidence"> | Date | string
-    postId?: IntFilter<"TopicEvidence"> | number
-    createdAt?: DateTimeFilter<"TopicEvidence"> | Date | string
+    bucketTime_postId?: TopicHitBucketTimePostIdCompoundUniqueInput
+    AND?: TopicHitWhereInput | TopicHitWhereInput[]
+    OR?: TopicHitWhereInput[]
+    NOT?: TopicHitWhereInput | TopicHitWhereInput[]
+    bucketTime?: DateTimeFilter<"TopicHit"> | Date | string
+    category?: StringFilter<"TopicHit"> | string
+    parentKey?: StringFilter<"TopicHit"> | string
+    parentLabel?: StringFilter<"TopicHit"> | string
+    childKey?: StringNullableFilter<"TopicHit"> | string | null
+    childLabel?: StringNullableFilter<"TopicHit"> | string | null
+    postId?: IntFilter<"TopicHit"> | number
+    createdAt?: DateTimeFilter<"TopicHit"> | Date | string
     post?: XOR<PostScalarRelationFilter, PostWhereInput>
-  }, "id" | "topic_bucketTime_postId">
+  }, "id" | "bucketTime_postId">
 
-  export type TopicEvidenceOrderByWithAggregationInput = {
+  export type TopicHitOrderByWithAggregationInput = {
     id?: SortOrder
-    topic?: SortOrder
     bucketTime?: SortOrder
+    category?: SortOrder
+    parentKey?: SortOrder
+    parentLabel?: SortOrder
+    childKey?: SortOrderInput | SortOrder
+    childLabel?: SortOrderInput | SortOrder
     postId?: SortOrder
     createdAt?: SortOrder
-    _count?: TopicEvidenceCountOrderByAggregateInput
-    _avg?: TopicEvidenceAvgOrderByAggregateInput
-    _max?: TopicEvidenceMaxOrderByAggregateInput
-    _min?: TopicEvidenceMinOrderByAggregateInput
-    _sum?: TopicEvidenceSumOrderByAggregateInput
+    _count?: TopicHitCountOrderByAggregateInput
+    _avg?: TopicHitAvgOrderByAggregateInput
+    _max?: TopicHitMaxOrderByAggregateInput
+    _min?: TopicHitMinOrderByAggregateInput
+    _sum?: TopicHitSumOrderByAggregateInput
   }
 
-  export type TopicEvidenceScalarWhereWithAggregatesInput = {
-    AND?: TopicEvidenceScalarWhereWithAggregatesInput | TopicEvidenceScalarWhereWithAggregatesInput[]
-    OR?: TopicEvidenceScalarWhereWithAggregatesInput[]
-    NOT?: TopicEvidenceScalarWhereWithAggregatesInput | TopicEvidenceScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"TopicEvidence"> | number
-    topic?: StringWithAggregatesFilter<"TopicEvidence"> | string
-    bucketTime?: DateTimeWithAggregatesFilter<"TopicEvidence"> | Date | string
-    postId?: IntWithAggregatesFilter<"TopicEvidence"> | number
-    createdAt?: DateTimeWithAggregatesFilter<"TopicEvidence"> | Date | string
+  export type TopicHitScalarWhereWithAggregatesInput = {
+    AND?: TopicHitScalarWhereWithAggregatesInput | TopicHitScalarWhereWithAggregatesInput[]
+    OR?: TopicHitScalarWhereWithAggregatesInput[]
+    NOT?: TopicHitScalarWhereWithAggregatesInput | TopicHitScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"TopicHit"> | number
+    bucketTime?: DateTimeWithAggregatesFilter<"TopicHit"> | Date | string
+    category?: StringWithAggregatesFilter<"TopicHit"> | string
+    parentKey?: StringWithAggregatesFilter<"TopicHit"> | string
+    parentLabel?: StringWithAggregatesFilter<"TopicHit"> | string
+    childKey?: StringNullableWithAggregatesFilter<"TopicHit"> | string | null
+    childLabel?: StringNullableWithAggregatesFilter<"TopicHit"> | string | null
+    postId?: IntWithAggregatesFilter<"TopicHit"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"TopicHit"> | Date | string
   }
 
   export type PostCreateInput = {
     source: string
     externalId: string
     title: string
+    url?: string | null
     createdAt?: Date | string | null
     fetchedAt?: Date | string
-    evidences?: TopicEvidenceCreateNestedManyWithoutPostInput
+    topicHits?: TopicHitCreateNestedManyWithoutPostInput
   }
 
   export type PostUncheckedCreateInput = {
@@ -4600,18 +3508,20 @@ export namespace Prisma {
     source: string
     externalId: string
     title: string
+    url?: string | null
     createdAt?: Date | string | null
     fetchedAt?: Date | string
-    evidences?: TopicEvidenceUncheckedCreateNestedManyWithoutPostInput
+    topicHits?: TopicHitUncheckedCreateNestedManyWithoutPostInput
   }
 
   export type PostUpdateInput = {
     source?: StringFieldUpdateOperationsInput | string
     externalId?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    url?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fetchedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    evidences?: TopicEvidenceUpdateManyWithoutPostNestedInput
+    topicHits?: TopicHitUpdateManyWithoutPostNestedInput
   }
 
   export type PostUncheckedUpdateInput = {
@@ -4619,9 +3529,10 @@ export namespace Prisma {
     source?: StringFieldUpdateOperationsInput | string
     externalId?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    url?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fetchedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    evidences?: TopicEvidenceUncheckedUpdateManyWithoutPostNestedInput
+    topicHits?: TopicHitUncheckedUpdateManyWithoutPostNestedInput
   }
 
   export type PostCreateManyInput = {
@@ -4629,6 +3540,7 @@ export namespace Prisma {
     source: string
     externalId: string
     title: string
+    url?: string | null
     createdAt?: Date | string | null
     fetchedAt?: Date | string
   }
@@ -4637,6 +3549,7 @@ export namespace Prisma {
     source?: StringFieldUpdateOperationsInput | string
     externalId?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    url?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fetchedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -4646,111 +3559,87 @@ export namespace Prisma {
     source?: StringFieldUpdateOperationsInput | string
     externalId?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    url?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fetchedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type TopicCountCreateInput = {
-    topic: string
-    topicLabel?: string
+  export type TopicHitCreateInput = {
     bucketTime: Date | string
-    count: number
-  }
-
-  export type TopicCountUncheckedCreateInput = {
-    id?: number
-    topic: string
-    topicLabel?: string
-    bucketTime: Date | string
-    count: number
-  }
-
-  export type TopicCountUpdateInput = {
-    topic?: StringFieldUpdateOperationsInput | string
-    topicLabel?: StringFieldUpdateOperationsInput | string
-    bucketTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    count?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type TopicCountUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    topic?: StringFieldUpdateOperationsInput | string
-    topicLabel?: StringFieldUpdateOperationsInput | string
-    bucketTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    count?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type TopicCountCreateManyInput = {
-    id?: number
-    topic: string
-    topicLabel?: string
-    bucketTime: Date | string
-    count: number
-  }
-
-  export type TopicCountUpdateManyMutationInput = {
-    topic?: StringFieldUpdateOperationsInput | string
-    topicLabel?: StringFieldUpdateOperationsInput | string
-    bucketTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    count?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type TopicCountUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    topic?: StringFieldUpdateOperationsInput | string
-    topicLabel?: StringFieldUpdateOperationsInput | string
-    bucketTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    count?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type TopicEvidenceCreateInput = {
-    topic: string
-    bucketTime: Date | string
+    category: string
+    parentKey: string
+    parentLabel: string
+    childKey?: string | null
+    childLabel?: string | null
     createdAt?: Date | string
-    post: PostCreateNestedOneWithoutEvidencesInput
+    post: PostCreateNestedOneWithoutTopicHitsInput
   }
 
-  export type TopicEvidenceUncheckedCreateInput = {
+  export type TopicHitUncheckedCreateInput = {
     id?: number
-    topic: string
     bucketTime: Date | string
+    category: string
+    parentKey: string
+    parentLabel: string
+    childKey?: string | null
+    childLabel?: string | null
     postId: number
     createdAt?: Date | string
   }
 
-  export type TopicEvidenceUpdateInput = {
-    topic?: StringFieldUpdateOperationsInput | string
+  export type TopicHitUpdateInput = {
     bucketTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    category?: StringFieldUpdateOperationsInput | string
+    parentKey?: StringFieldUpdateOperationsInput | string
+    parentLabel?: StringFieldUpdateOperationsInput | string
+    childKey?: NullableStringFieldUpdateOperationsInput | string | null
+    childLabel?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    post?: PostUpdateOneRequiredWithoutEvidencesNestedInput
+    post?: PostUpdateOneRequiredWithoutTopicHitsNestedInput
   }
 
-  export type TopicEvidenceUncheckedUpdateInput = {
+  export type TopicHitUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    topic?: StringFieldUpdateOperationsInput | string
     bucketTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    category?: StringFieldUpdateOperationsInput | string
+    parentKey?: StringFieldUpdateOperationsInput | string
+    parentLabel?: StringFieldUpdateOperationsInput | string
+    childKey?: NullableStringFieldUpdateOperationsInput | string | null
+    childLabel?: NullableStringFieldUpdateOperationsInput | string | null
     postId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type TopicEvidenceCreateManyInput = {
+  export type TopicHitCreateManyInput = {
     id?: number
-    topic: string
     bucketTime: Date | string
+    category: string
+    parentKey: string
+    parentLabel: string
+    childKey?: string | null
+    childLabel?: string | null
     postId: number
     createdAt?: Date | string
   }
 
-  export type TopicEvidenceUpdateManyMutationInput = {
-    topic?: StringFieldUpdateOperationsInput | string
+  export type TopicHitUpdateManyMutationInput = {
     bucketTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    category?: StringFieldUpdateOperationsInput | string
+    parentKey?: StringFieldUpdateOperationsInput | string
+    parentLabel?: StringFieldUpdateOperationsInput | string
+    childKey?: NullableStringFieldUpdateOperationsInput | string | null
+    childLabel?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type TopicEvidenceUncheckedUpdateManyInput = {
+  export type TopicHitUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    topic?: StringFieldUpdateOperationsInput | string
     bucketTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    category?: StringFieldUpdateOperationsInput | string
+    parentKey?: StringFieldUpdateOperationsInput | string
+    parentLabel?: StringFieldUpdateOperationsInput | string
+    childKey?: NullableStringFieldUpdateOperationsInput | string | null
+    childLabel?: NullableStringFieldUpdateOperationsInput | string | null
     postId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -4780,6 +3669,20 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type DateTimeNullableFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | null
@@ -4802,10 +3705,10 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
-  export type TopicEvidenceListRelationFilter = {
-    every?: TopicEvidenceWhereInput
-    some?: TopicEvidenceWhereInput
-    none?: TopicEvidenceWhereInput
+  export type TopicHitListRelationFilter = {
+    every?: TopicHitWhereInput
+    some?: TopicHitWhereInput
+    none?: TopicHitWhereInput
   }
 
   export type SortOrderInput = {
@@ -4813,7 +3716,7 @@ export namespace Prisma {
     nulls?: NullsOrder
   }
 
-  export type TopicEvidenceOrderByRelationAggregateInput = {
+  export type TopicHitOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -4827,6 +3730,7 @@ export namespace Prisma {
     source?: SortOrder
     externalId?: SortOrder
     title?: SortOrder
+    url?: SortOrder
     createdAt?: SortOrder
     fetchedAt?: SortOrder
   }
@@ -4840,6 +3744,7 @@ export namespace Prisma {
     source?: SortOrder
     externalId?: SortOrder
     title?: SortOrder
+    url?: SortOrder
     createdAt?: SortOrder
     fetchedAt?: SortOrder
   }
@@ -4849,6 +3754,7 @@ export namespace Prisma {
     source?: SortOrder
     externalId?: SortOrder
     title?: SortOrder
+    url?: SortOrder
     createdAt?: SortOrder
     fetchedAt?: SortOrder
   }
@@ -4890,6 +3796,23 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
   export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | null
@@ -4918,106 +3841,82 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type TopicCountTopicBucketTimeCompoundUniqueInput = {
-    topic: string
-    bucketTime: Date | string
-  }
-
-  export type TopicCountCountOrderByAggregateInput = {
-    id?: SortOrder
-    topic?: SortOrder
-    topicLabel?: SortOrder
-    bucketTime?: SortOrder
-    count?: SortOrder
-  }
-
-  export type TopicCountAvgOrderByAggregateInput = {
-    id?: SortOrder
-    count?: SortOrder
-  }
-
-  export type TopicCountMaxOrderByAggregateInput = {
-    id?: SortOrder
-    topic?: SortOrder
-    topicLabel?: SortOrder
-    bucketTime?: SortOrder
-    count?: SortOrder
-  }
-
-  export type TopicCountMinOrderByAggregateInput = {
-    id?: SortOrder
-    topic?: SortOrder
-    topicLabel?: SortOrder
-    bucketTime?: SortOrder
-    count?: SortOrder
-  }
-
-  export type TopicCountSumOrderByAggregateInput = {
-    id?: SortOrder
-    count?: SortOrder
-  }
-
   export type PostScalarRelationFilter = {
     is?: PostWhereInput
     isNot?: PostWhereInput
   }
 
-  export type TopicEvidenceTopicBucketTimePostIdCompoundUniqueInput = {
-    topic: string
+  export type TopicHitBucketTimePostIdCompoundUniqueInput = {
     bucketTime: Date | string
     postId: number
   }
 
-  export type TopicEvidenceCountOrderByAggregateInput = {
+  export type TopicHitCountOrderByAggregateInput = {
     id?: SortOrder
-    topic?: SortOrder
     bucketTime?: SortOrder
+    category?: SortOrder
+    parentKey?: SortOrder
+    parentLabel?: SortOrder
+    childKey?: SortOrder
+    childLabel?: SortOrder
     postId?: SortOrder
     createdAt?: SortOrder
   }
 
-  export type TopicEvidenceAvgOrderByAggregateInput = {
+  export type TopicHitAvgOrderByAggregateInput = {
     id?: SortOrder
     postId?: SortOrder
   }
 
-  export type TopicEvidenceMaxOrderByAggregateInput = {
+  export type TopicHitMaxOrderByAggregateInput = {
     id?: SortOrder
-    topic?: SortOrder
     bucketTime?: SortOrder
+    category?: SortOrder
+    parentKey?: SortOrder
+    parentLabel?: SortOrder
+    childKey?: SortOrder
+    childLabel?: SortOrder
     postId?: SortOrder
     createdAt?: SortOrder
   }
 
-  export type TopicEvidenceMinOrderByAggregateInput = {
+  export type TopicHitMinOrderByAggregateInput = {
     id?: SortOrder
-    topic?: SortOrder
     bucketTime?: SortOrder
+    category?: SortOrder
+    parentKey?: SortOrder
+    parentLabel?: SortOrder
+    childKey?: SortOrder
+    childLabel?: SortOrder
     postId?: SortOrder
     createdAt?: SortOrder
   }
 
-  export type TopicEvidenceSumOrderByAggregateInput = {
+  export type TopicHitSumOrderByAggregateInput = {
     id?: SortOrder
     postId?: SortOrder
   }
 
-  export type TopicEvidenceCreateNestedManyWithoutPostInput = {
-    create?: XOR<TopicEvidenceCreateWithoutPostInput, TopicEvidenceUncheckedCreateWithoutPostInput> | TopicEvidenceCreateWithoutPostInput[] | TopicEvidenceUncheckedCreateWithoutPostInput[]
-    connectOrCreate?: TopicEvidenceCreateOrConnectWithoutPostInput | TopicEvidenceCreateOrConnectWithoutPostInput[]
-    createMany?: TopicEvidenceCreateManyPostInputEnvelope
-    connect?: TopicEvidenceWhereUniqueInput | TopicEvidenceWhereUniqueInput[]
+  export type TopicHitCreateNestedManyWithoutPostInput = {
+    create?: XOR<TopicHitCreateWithoutPostInput, TopicHitUncheckedCreateWithoutPostInput> | TopicHitCreateWithoutPostInput[] | TopicHitUncheckedCreateWithoutPostInput[]
+    connectOrCreate?: TopicHitCreateOrConnectWithoutPostInput | TopicHitCreateOrConnectWithoutPostInput[]
+    createMany?: TopicHitCreateManyPostInputEnvelope
+    connect?: TopicHitWhereUniqueInput | TopicHitWhereUniqueInput[]
   }
 
-  export type TopicEvidenceUncheckedCreateNestedManyWithoutPostInput = {
-    create?: XOR<TopicEvidenceCreateWithoutPostInput, TopicEvidenceUncheckedCreateWithoutPostInput> | TopicEvidenceCreateWithoutPostInput[] | TopicEvidenceUncheckedCreateWithoutPostInput[]
-    connectOrCreate?: TopicEvidenceCreateOrConnectWithoutPostInput | TopicEvidenceCreateOrConnectWithoutPostInput[]
-    createMany?: TopicEvidenceCreateManyPostInputEnvelope
-    connect?: TopicEvidenceWhereUniqueInput | TopicEvidenceWhereUniqueInput[]
+  export type TopicHitUncheckedCreateNestedManyWithoutPostInput = {
+    create?: XOR<TopicHitCreateWithoutPostInput, TopicHitUncheckedCreateWithoutPostInput> | TopicHitCreateWithoutPostInput[] | TopicHitUncheckedCreateWithoutPostInput[]
+    connectOrCreate?: TopicHitCreateOrConnectWithoutPostInput | TopicHitCreateOrConnectWithoutPostInput[]
+    createMany?: TopicHitCreateManyPostInputEnvelope
+    connect?: TopicHitWhereUniqueInput | TopicHitWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
     set?: string
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
   }
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
@@ -5028,18 +3927,18 @@ export namespace Prisma {
     set?: Date | string
   }
 
-  export type TopicEvidenceUpdateManyWithoutPostNestedInput = {
-    create?: XOR<TopicEvidenceCreateWithoutPostInput, TopicEvidenceUncheckedCreateWithoutPostInput> | TopicEvidenceCreateWithoutPostInput[] | TopicEvidenceUncheckedCreateWithoutPostInput[]
-    connectOrCreate?: TopicEvidenceCreateOrConnectWithoutPostInput | TopicEvidenceCreateOrConnectWithoutPostInput[]
-    upsert?: TopicEvidenceUpsertWithWhereUniqueWithoutPostInput | TopicEvidenceUpsertWithWhereUniqueWithoutPostInput[]
-    createMany?: TopicEvidenceCreateManyPostInputEnvelope
-    set?: TopicEvidenceWhereUniqueInput | TopicEvidenceWhereUniqueInput[]
-    disconnect?: TopicEvidenceWhereUniqueInput | TopicEvidenceWhereUniqueInput[]
-    delete?: TopicEvidenceWhereUniqueInput | TopicEvidenceWhereUniqueInput[]
-    connect?: TopicEvidenceWhereUniqueInput | TopicEvidenceWhereUniqueInput[]
-    update?: TopicEvidenceUpdateWithWhereUniqueWithoutPostInput | TopicEvidenceUpdateWithWhereUniqueWithoutPostInput[]
-    updateMany?: TopicEvidenceUpdateManyWithWhereWithoutPostInput | TopicEvidenceUpdateManyWithWhereWithoutPostInput[]
-    deleteMany?: TopicEvidenceScalarWhereInput | TopicEvidenceScalarWhereInput[]
+  export type TopicHitUpdateManyWithoutPostNestedInput = {
+    create?: XOR<TopicHitCreateWithoutPostInput, TopicHitUncheckedCreateWithoutPostInput> | TopicHitCreateWithoutPostInput[] | TopicHitUncheckedCreateWithoutPostInput[]
+    connectOrCreate?: TopicHitCreateOrConnectWithoutPostInput | TopicHitCreateOrConnectWithoutPostInput[]
+    upsert?: TopicHitUpsertWithWhereUniqueWithoutPostInput | TopicHitUpsertWithWhereUniqueWithoutPostInput[]
+    createMany?: TopicHitCreateManyPostInputEnvelope
+    set?: TopicHitWhereUniqueInput | TopicHitWhereUniqueInput[]
+    disconnect?: TopicHitWhereUniqueInput | TopicHitWhereUniqueInput[]
+    delete?: TopicHitWhereUniqueInput | TopicHitWhereUniqueInput[]
+    connect?: TopicHitWhereUniqueInput | TopicHitWhereUniqueInput[]
+    update?: TopicHitUpdateWithWhereUniqueWithoutPostInput | TopicHitUpdateWithWhereUniqueWithoutPostInput[]
+    updateMany?: TopicHitUpdateManyWithWhereWithoutPostInput | TopicHitUpdateManyWithWhereWithoutPostInput[]
+    deleteMany?: TopicHitScalarWhereInput | TopicHitScalarWhereInput[]
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -5050,32 +3949,32 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type TopicEvidenceUncheckedUpdateManyWithoutPostNestedInput = {
-    create?: XOR<TopicEvidenceCreateWithoutPostInput, TopicEvidenceUncheckedCreateWithoutPostInput> | TopicEvidenceCreateWithoutPostInput[] | TopicEvidenceUncheckedCreateWithoutPostInput[]
-    connectOrCreate?: TopicEvidenceCreateOrConnectWithoutPostInput | TopicEvidenceCreateOrConnectWithoutPostInput[]
-    upsert?: TopicEvidenceUpsertWithWhereUniqueWithoutPostInput | TopicEvidenceUpsertWithWhereUniqueWithoutPostInput[]
-    createMany?: TopicEvidenceCreateManyPostInputEnvelope
-    set?: TopicEvidenceWhereUniqueInput | TopicEvidenceWhereUniqueInput[]
-    disconnect?: TopicEvidenceWhereUniqueInput | TopicEvidenceWhereUniqueInput[]
-    delete?: TopicEvidenceWhereUniqueInput | TopicEvidenceWhereUniqueInput[]
-    connect?: TopicEvidenceWhereUniqueInput | TopicEvidenceWhereUniqueInput[]
-    update?: TopicEvidenceUpdateWithWhereUniqueWithoutPostInput | TopicEvidenceUpdateWithWhereUniqueWithoutPostInput[]
-    updateMany?: TopicEvidenceUpdateManyWithWhereWithoutPostInput | TopicEvidenceUpdateManyWithWhereWithoutPostInput[]
-    deleteMany?: TopicEvidenceScalarWhereInput | TopicEvidenceScalarWhereInput[]
+  export type TopicHitUncheckedUpdateManyWithoutPostNestedInput = {
+    create?: XOR<TopicHitCreateWithoutPostInput, TopicHitUncheckedCreateWithoutPostInput> | TopicHitCreateWithoutPostInput[] | TopicHitUncheckedCreateWithoutPostInput[]
+    connectOrCreate?: TopicHitCreateOrConnectWithoutPostInput | TopicHitCreateOrConnectWithoutPostInput[]
+    upsert?: TopicHitUpsertWithWhereUniqueWithoutPostInput | TopicHitUpsertWithWhereUniqueWithoutPostInput[]
+    createMany?: TopicHitCreateManyPostInputEnvelope
+    set?: TopicHitWhereUniqueInput | TopicHitWhereUniqueInput[]
+    disconnect?: TopicHitWhereUniqueInput | TopicHitWhereUniqueInput[]
+    delete?: TopicHitWhereUniqueInput | TopicHitWhereUniqueInput[]
+    connect?: TopicHitWhereUniqueInput | TopicHitWhereUniqueInput[]
+    update?: TopicHitUpdateWithWhereUniqueWithoutPostInput | TopicHitUpdateWithWhereUniqueWithoutPostInput[]
+    updateMany?: TopicHitUpdateManyWithWhereWithoutPostInput | TopicHitUpdateManyWithWhereWithoutPostInput[]
+    deleteMany?: TopicHitScalarWhereInput | TopicHitScalarWhereInput[]
   }
 
-  export type PostCreateNestedOneWithoutEvidencesInput = {
-    create?: XOR<PostCreateWithoutEvidencesInput, PostUncheckedCreateWithoutEvidencesInput>
-    connectOrCreate?: PostCreateOrConnectWithoutEvidencesInput
+  export type PostCreateNestedOneWithoutTopicHitsInput = {
+    create?: XOR<PostCreateWithoutTopicHitsInput, PostUncheckedCreateWithoutTopicHitsInput>
+    connectOrCreate?: PostCreateOrConnectWithoutTopicHitsInput
     connect?: PostWhereUniqueInput
   }
 
-  export type PostUpdateOneRequiredWithoutEvidencesNestedInput = {
-    create?: XOR<PostCreateWithoutEvidencesInput, PostUncheckedCreateWithoutEvidencesInput>
-    connectOrCreate?: PostCreateOrConnectWithoutEvidencesInput
-    upsert?: PostUpsertWithoutEvidencesInput
+  export type PostUpdateOneRequiredWithoutTopicHitsNestedInput = {
+    create?: XOR<PostCreateWithoutTopicHitsInput, PostUncheckedCreateWithoutTopicHitsInput>
+    connectOrCreate?: PostCreateOrConnectWithoutTopicHitsInput
+    upsert?: PostUpsertWithoutTopicHitsInput
     connect?: PostWhereUniqueInput
-    update?: XOR<XOR<PostUpdateToOneWithWhereWithoutEvidencesInput, PostUpdateWithoutEvidencesInput>, PostUncheckedUpdateWithoutEvidencesInput>
+    update?: XOR<XOR<PostUpdateToOneWithWhereWithoutTopicHitsInput, PostUpdateWithoutTopicHitsInput>, PostUncheckedUpdateWithoutTopicHitsInput>
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -5101,6 +4000,20 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringFilter<$PrismaModel> | string
+  }
+
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
   export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
@@ -5169,6 +4082,34 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
   export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | null
@@ -5181,17 +4122,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
-  }
-
-  export type NestedIntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | null
-    notIn?: number[] | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -5208,129 +4138,161 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type TopicEvidenceCreateWithoutPostInput = {
-    topic: string
+  export type TopicHitCreateWithoutPostInput = {
     bucketTime: Date | string
+    category: string
+    parentKey: string
+    parentLabel: string
+    childKey?: string | null
+    childLabel?: string | null
     createdAt?: Date | string
   }
 
-  export type TopicEvidenceUncheckedCreateWithoutPostInput = {
+  export type TopicHitUncheckedCreateWithoutPostInput = {
     id?: number
-    topic: string
     bucketTime: Date | string
+    category: string
+    parentKey: string
+    parentLabel: string
+    childKey?: string | null
+    childLabel?: string | null
     createdAt?: Date | string
   }
 
-  export type TopicEvidenceCreateOrConnectWithoutPostInput = {
-    where: TopicEvidenceWhereUniqueInput
-    create: XOR<TopicEvidenceCreateWithoutPostInput, TopicEvidenceUncheckedCreateWithoutPostInput>
+  export type TopicHitCreateOrConnectWithoutPostInput = {
+    where: TopicHitWhereUniqueInput
+    create: XOR<TopicHitCreateWithoutPostInput, TopicHitUncheckedCreateWithoutPostInput>
   }
 
-  export type TopicEvidenceCreateManyPostInputEnvelope = {
-    data: TopicEvidenceCreateManyPostInput | TopicEvidenceCreateManyPostInput[]
+  export type TopicHitCreateManyPostInputEnvelope = {
+    data: TopicHitCreateManyPostInput | TopicHitCreateManyPostInput[]
   }
 
-  export type TopicEvidenceUpsertWithWhereUniqueWithoutPostInput = {
-    where: TopicEvidenceWhereUniqueInput
-    update: XOR<TopicEvidenceUpdateWithoutPostInput, TopicEvidenceUncheckedUpdateWithoutPostInput>
-    create: XOR<TopicEvidenceCreateWithoutPostInput, TopicEvidenceUncheckedCreateWithoutPostInput>
+  export type TopicHitUpsertWithWhereUniqueWithoutPostInput = {
+    where: TopicHitWhereUniqueInput
+    update: XOR<TopicHitUpdateWithoutPostInput, TopicHitUncheckedUpdateWithoutPostInput>
+    create: XOR<TopicHitCreateWithoutPostInput, TopicHitUncheckedCreateWithoutPostInput>
   }
 
-  export type TopicEvidenceUpdateWithWhereUniqueWithoutPostInput = {
-    where: TopicEvidenceWhereUniqueInput
-    data: XOR<TopicEvidenceUpdateWithoutPostInput, TopicEvidenceUncheckedUpdateWithoutPostInput>
+  export type TopicHitUpdateWithWhereUniqueWithoutPostInput = {
+    where: TopicHitWhereUniqueInput
+    data: XOR<TopicHitUpdateWithoutPostInput, TopicHitUncheckedUpdateWithoutPostInput>
   }
 
-  export type TopicEvidenceUpdateManyWithWhereWithoutPostInput = {
-    where: TopicEvidenceScalarWhereInput
-    data: XOR<TopicEvidenceUpdateManyMutationInput, TopicEvidenceUncheckedUpdateManyWithoutPostInput>
+  export type TopicHitUpdateManyWithWhereWithoutPostInput = {
+    where: TopicHitScalarWhereInput
+    data: XOR<TopicHitUpdateManyMutationInput, TopicHitUncheckedUpdateManyWithoutPostInput>
   }
 
-  export type TopicEvidenceScalarWhereInput = {
-    AND?: TopicEvidenceScalarWhereInput | TopicEvidenceScalarWhereInput[]
-    OR?: TopicEvidenceScalarWhereInput[]
-    NOT?: TopicEvidenceScalarWhereInput | TopicEvidenceScalarWhereInput[]
-    id?: IntFilter<"TopicEvidence"> | number
-    topic?: StringFilter<"TopicEvidence"> | string
-    bucketTime?: DateTimeFilter<"TopicEvidence"> | Date | string
-    postId?: IntFilter<"TopicEvidence"> | number
-    createdAt?: DateTimeFilter<"TopicEvidence"> | Date | string
+  export type TopicHitScalarWhereInput = {
+    AND?: TopicHitScalarWhereInput | TopicHitScalarWhereInput[]
+    OR?: TopicHitScalarWhereInput[]
+    NOT?: TopicHitScalarWhereInput | TopicHitScalarWhereInput[]
+    id?: IntFilter<"TopicHit"> | number
+    bucketTime?: DateTimeFilter<"TopicHit"> | Date | string
+    category?: StringFilter<"TopicHit"> | string
+    parentKey?: StringFilter<"TopicHit"> | string
+    parentLabel?: StringFilter<"TopicHit"> | string
+    childKey?: StringNullableFilter<"TopicHit"> | string | null
+    childLabel?: StringNullableFilter<"TopicHit"> | string | null
+    postId?: IntFilter<"TopicHit"> | number
+    createdAt?: DateTimeFilter<"TopicHit"> | Date | string
   }
 
-  export type PostCreateWithoutEvidencesInput = {
+  export type PostCreateWithoutTopicHitsInput = {
     source: string
     externalId: string
     title: string
+    url?: string | null
     createdAt?: Date | string | null
     fetchedAt?: Date | string
   }
 
-  export type PostUncheckedCreateWithoutEvidencesInput = {
+  export type PostUncheckedCreateWithoutTopicHitsInput = {
     id?: number
     source: string
     externalId: string
     title: string
+    url?: string | null
     createdAt?: Date | string | null
     fetchedAt?: Date | string
   }
 
-  export type PostCreateOrConnectWithoutEvidencesInput = {
+  export type PostCreateOrConnectWithoutTopicHitsInput = {
     where: PostWhereUniqueInput
-    create: XOR<PostCreateWithoutEvidencesInput, PostUncheckedCreateWithoutEvidencesInput>
+    create: XOR<PostCreateWithoutTopicHitsInput, PostUncheckedCreateWithoutTopicHitsInput>
   }
 
-  export type PostUpsertWithoutEvidencesInput = {
-    update: XOR<PostUpdateWithoutEvidencesInput, PostUncheckedUpdateWithoutEvidencesInput>
-    create: XOR<PostCreateWithoutEvidencesInput, PostUncheckedCreateWithoutEvidencesInput>
+  export type PostUpsertWithoutTopicHitsInput = {
+    update: XOR<PostUpdateWithoutTopicHitsInput, PostUncheckedUpdateWithoutTopicHitsInput>
+    create: XOR<PostCreateWithoutTopicHitsInput, PostUncheckedCreateWithoutTopicHitsInput>
     where?: PostWhereInput
   }
 
-  export type PostUpdateToOneWithWhereWithoutEvidencesInput = {
+  export type PostUpdateToOneWithWhereWithoutTopicHitsInput = {
     where?: PostWhereInput
-    data: XOR<PostUpdateWithoutEvidencesInput, PostUncheckedUpdateWithoutEvidencesInput>
+    data: XOR<PostUpdateWithoutTopicHitsInput, PostUncheckedUpdateWithoutTopicHitsInput>
   }
 
-  export type PostUpdateWithoutEvidencesInput = {
+  export type PostUpdateWithoutTopicHitsInput = {
     source?: StringFieldUpdateOperationsInput | string
     externalId?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    url?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fetchedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type PostUncheckedUpdateWithoutEvidencesInput = {
+  export type PostUncheckedUpdateWithoutTopicHitsInput = {
     id?: IntFieldUpdateOperationsInput | number
     source?: StringFieldUpdateOperationsInput | string
     externalId?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    url?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fetchedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type TopicEvidenceCreateManyPostInput = {
+  export type TopicHitCreateManyPostInput = {
     id?: number
-    topic: string
     bucketTime: Date | string
+    category: string
+    parentKey: string
+    parentLabel: string
+    childKey?: string | null
+    childLabel?: string | null
     createdAt?: Date | string
   }
 
-  export type TopicEvidenceUpdateWithoutPostInput = {
-    topic?: StringFieldUpdateOperationsInput | string
+  export type TopicHitUpdateWithoutPostInput = {
     bucketTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    category?: StringFieldUpdateOperationsInput | string
+    parentKey?: StringFieldUpdateOperationsInput | string
+    parentLabel?: StringFieldUpdateOperationsInput | string
+    childKey?: NullableStringFieldUpdateOperationsInput | string | null
+    childLabel?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type TopicEvidenceUncheckedUpdateWithoutPostInput = {
+  export type TopicHitUncheckedUpdateWithoutPostInput = {
     id?: IntFieldUpdateOperationsInput | number
-    topic?: StringFieldUpdateOperationsInput | string
     bucketTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    category?: StringFieldUpdateOperationsInput | string
+    parentKey?: StringFieldUpdateOperationsInput | string
+    parentLabel?: StringFieldUpdateOperationsInput | string
+    childKey?: NullableStringFieldUpdateOperationsInput | string | null
+    childLabel?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type TopicEvidenceUncheckedUpdateManyWithoutPostInput = {
+  export type TopicHitUncheckedUpdateManyWithoutPostInput = {
     id?: IntFieldUpdateOperationsInput | number
-    topic?: StringFieldUpdateOperationsInput | string
     bucketTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    category?: StringFieldUpdateOperationsInput | string
+    parentKey?: StringFieldUpdateOperationsInput | string
+    parentLabel?: StringFieldUpdateOperationsInput | string
+    childKey?: NullableStringFieldUpdateOperationsInput | string | null
+    childLabel?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 

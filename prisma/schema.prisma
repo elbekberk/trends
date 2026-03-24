@@ -9,35 +9,30 @@ datasource db {
 }
 
 model Post {
-  id         Int      @id @default(autoincrement())
+  id         Int        @id @default(autoincrement())
   source     String
   externalId String
   title      String
+  url        String?
   createdAt  DateTime?
-  fetchedAt  DateTime @default(now())
-  evidences  TopicEvidence[]
+  fetchedAt  DateTime   @default(now())
+  topicHits  TopicHit[]
 
   @@unique([source, externalId])
 }
 
-model TopicCount {
-  id         Int      @id @default(autoincrement())
-  topic      String
-  topicLabel String   @default("")
-  bucketTime DateTime
-  count      Int
+model TopicHit {
+  id          Int      @id @default(autoincrement())
+  bucketTime  DateTime
+  category    String
+  parentKey   String
+  parentLabel String
+  childKey    String?
+  childLabel  String?
+  postId      Int
+  createdAt   DateTime @default(now())
+  post        Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
 
-  @@unique([topic, bucketTime])
-}
-
-model TopicEvidence {
-  id         Int      @id @default(autoincrement())
-  topic      String
-  bucketTime DateTime
-  postId     Int
-  createdAt  DateTime @default(now())
-  post       Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
-
-  @@unique([topic, bucketTime, postId])
-  @@index([topic, bucketTime])
+  @@unique([bucketTime, postId])
+  @@index([bucketTime, category, parentKey])
 }

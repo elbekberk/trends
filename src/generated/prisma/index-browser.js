@@ -123,22 +123,19 @@ exports.Prisma.PostScalarFieldEnum = {
   source: 'source',
   externalId: 'externalId',
   title: 'title',
+  url: 'url',
   createdAt: 'createdAt',
   fetchedAt: 'fetchedAt'
 };
 
-exports.Prisma.TopicCountScalarFieldEnum = {
+exports.Prisma.TopicHitScalarFieldEnum = {
   id: 'id',
-  topic: 'topic',
-  topicLabel: 'topicLabel',
   bucketTime: 'bucketTime',
-  count: 'count'
-};
-
-exports.Prisma.TopicEvidenceScalarFieldEnum = {
-  id: 'id',
-  topic: 'topic',
-  bucketTime: 'bucketTime',
+  category: 'category',
+  parentKey: 'parentKey',
+  parentLabel: 'parentLabel',
+  childKey: 'childKey',
+  childLabel: 'childLabel',
   postId: 'postId',
   createdAt: 'createdAt'
 };
@@ -156,8 +153,7 @@ exports.Prisma.NullsOrder = {
 
 exports.Prisma.ModelName = {
   Post: 'Post',
-  TopicCount: 'TopicCount',
-  TopicEvidence: 'TopicEvidence'
+  TopicHit: 'TopicHit'
 };
 
 /**
