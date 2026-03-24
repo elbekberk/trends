@@ -21,21 +21,118 @@ export type RedditSourcePool = "technology" | "economy" | "geopolitics" | "gener
 
 export type RedditListing = "hot" | "new" | "rising";
 
-export type RedditFetchMeta = {
+/** Reddit-only fields captured at ingest (discussion-first; outbound link is secondary). */
+export type RedditDiscussionFields = {
   pool: RedditSourcePool;
   subreddit: string;
   listing: RedditListing;
+  externalUrl: string | null;
+  selftext: string;
+  score: number | null;
+  numComments: number | null;
+  domain: string | null;
+  isSelf: boolean | null;
 };
 
 type SourcePost = {
   source: "reddit" | "hn";
   externalId: string;
   title: string;
+  /** Primary URL: Reddit thread for reddit; HN story or item page for hn. */
   url: string | null;
   createdAt: Date | null;
-  /** Set for Reddit posts — used for ingest breakdown by pool/subreddit/listing. */
-  redditMeta?: RedditFetchMeta;
+  reddit?: RedditDiscussionFields;
 };
+
+const MAX_SELFTEXT_LEN = 12_000;
+
+function redditThreadUrl(permalink: string): string {
+  const p = String(permalink);
+  if (p.startsWith("http://") || p.startsWith("https://")) return p;
+  return `https://www.reddit.com${p.startsWith("/") ? p : `/${p}`}`;
+}
+
+function parseRedditListing(
+  p: Record<string, unknown>,
+  pool: RedditSourcePool,
+  subredditFromRoute: string,
+  listing: RedditListing,
+): RedditDiscussionFields {
+  const selftextRaw = p.selftext != null ? String(p.selftext) : "";
+  const selftext =
+    selftextRaw.length > MAX_SELFTEXT_LEN
+      ? `${selftextRaw.slice(0, MAX_SELFTEXT_LEN)}…`
+      : selftextRaw;
+
+  const permalink = p.permalink != null ? String(p.permalink) : "";
+  const threadUrl = permalink ? redditThreadUrl(permalink) : "";
+  const rawUrl = p.url != null ? String(p.url) : "";
+  const isSelf = typeof p.is_self === "boolean" ? p.is_self : null;
+
+  let externalUrl: string | null = null;
+  if (isSelf === true) {
+    externalUrl = null;
+  } else if (rawUrl && threadUrl && rawUrl !== threadUrl) {
+    externalUrl = rawUrl;
+  }
+
+  const subreddit =
+    (p.subreddit != null ? String(p.subreddit) : null) ?? subredditFromRoute;
+
+  return {
+    pool,
+    subreddit,
+    listing,
+    externalUrl,
+    selftext,
+    score: typeof p.score === "number" ? p.score : null,
+    numComments: typeof p.num_comments === "number" ? p.num_comments : null,
+    domain: p.domain != null ? String(p.domain) : null,
+    isSelf,
+  };
+}
+
+function discussionTextForExtraction(post: SourcePost): string {
+  if (post.source !== "reddit" || !post.reddit) return post.title;
+  const st = post.reddit.selftext.trim();
+  return st ? `${post.title}\n${st}` : post.title;
+}
+
+function prismaPostData(post: SourcePost, fetchedAt: Date) {
+  if (post.source === "reddit" && post.reddit) {
+    const r = post.reddit;
+    return {
+      title: post.title,
+      url: post.url,
+      createdAt: post.createdAt,
+      fetchedAt,
+      externalUrl: r.externalUrl,
+      selftext: r.selftext.length > 0 ? r.selftext : null,
+      redditScore: r.score,
+      numComments: r.numComments,
+      subreddit: r.subreddit,
+      redditListing: r.listing,
+      redditPool: r.pool,
+      linkDomain: r.domain,
+      isSelf: r.isSelf,
+    };
+  }
+  return {
+    title: post.title,
+    url: post.url,
+    createdAt: post.createdAt,
+    fetchedAt,
+    externalUrl: null,
+    selftext: null,
+    redditScore: null,
+    numComments: null,
+    subreddit: null,
+    redditListing: null,
+    redditPool: null,
+    linkDomain: null,
+    isSelf: null,
+  };
+}
 
 /**
  * Central Reddit source config: tune subreddit lists per high-level pool here only.
@@ -274,8 +371,8 @@ function toPhraseCandidate(tokens: string[], size: number): PhraseCandidate {
   return { key, label, size };
 }
 
-function extractCandidates(title: string): PhraseCandidate[] {
-  const tokens = tokenizeTitle(title);
+function extractCandidatesFromText(text: string): PhraseCandidate[] {
+  const tokens = tokenizeTitle(text);
   const candidates = new Map<string, PhraseCandidate>();
 
   for (const size of [2, 3]) {
@@ -545,18 +642,28 @@ async function fetchRedditPosts() {
         for (const item of posts) {
           const p = item?.data;
           if (!p?.id || !p?.title) continue;
+          const permalink = p.permalink != null ? String(p.permalink) : "";
+          if (!permalink) continue;
 
           const dedupeKey = `reddit:${p.id}`;
           if (seen.has(dedupeKey)) continue;
           seen.add(dedupeKey);
 
+          const threadUrl = redditThreadUrl(permalink);
+          const discussion = parseRedditListing(
+            p as Record<string, unknown>,
+            pool,
+            subreddit,
+            listing,
+          );
+
           results.push({
             source: "reddit",
             externalId: String(p.id),
             title: String(p.title),
-            url: p.url ? String(p.url) : `https://www.reddit.com${String(p.permalink ?? "")}`,
+            url: threadUrl,
             createdAt: p.created_utc ? new Date(p.created_utc * 1000) : null,
-            redditMeta: { pool, subreddit, listing },
+            reddit: discussion,
           });
           listingCounts[flatKey] += 1;
           byPool[pool].bySubredditListing[subListingKey] =
@@ -670,6 +777,7 @@ export async function runIngest() {
     }
     uniqueTitleFingerprint.add(fingerprint);
 
+    const postData = prismaPostData(post, fetchedAt);
     const savedPost = await db.post.upsert({
       where: {
         source_externalId: {
@@ -677,24 +785,16 @@ export async function runIngest() {
           externalId: post.externalId,
         },
       },
-      update: {
-        title: post.title,
-        url: post.url,
-        createdAt: post.createdAt,
-        fetchedAt,
-      },
+      update: postData,
       create: {
         source: post.source,
         externalId: post.externalId,
-        title: post.title,
-        url: post.url,
-        createdAt: post.createdAt,
-        fetchedAt,
+        ...postData,
       },
     });
     savedPosts += 1;
 
-    const candidates = extractCandidates(post.title);
+    const candidates = extractCandidatesFromText(discussionTextForExtraction(post));
     prepared.push({ post, postId: savedPost.id, candidates });
 
     const uniqueCandidates = new Map(candidates.map((c) => [c.key, c]));
@@ -714,7 +814,7 @@ export async function runIngest() {
   for (const item of prepared) {
     const assigned = pickParentForPost(
       item.candidates,
-      item.post.title,
+      discussionTextForExtraction(item.post),
       candidateFrequency,
       candidateSourceSpread,
       candidateLabels,
@@ -770,6 +870,8 @@ type TopicHitWithPost = Awaited<ReturnType<typeof db.topicHit.findMany>>[number]
     source: string;
     title: string;
     url: string | null;
+    selftext: string | null;
+    externalUrl: string | null;
     createdAt: Date | null;
     fetchedAt: Date;
   };
@@ -884,6 +986,8 @@ async function fetchTopicRows(bucketTime: Date) {
           source: true,
           title: true,
           url: true,
+          selftext: true,
+          externalUrl: true,
           createdAt: true,
           fetchedAt: true,
         },
@@ -926,8 +1030,11 @@ export async function getRisingTopics(limit = 30) {
       const current = rows.length;
       const previous = previousByDisplay.get(parentKey)?.length ?? 0;
       const { label: parentLabel } = displayParentForRow(rows[0]);
-      const titles = rows.map((r) => r.post.title);
-      const category = inferTopicCategory(parentKey, titles);
+      const textBlobs = rows.map((r) => {
+        const st = r.post.selftext?.trim();
+        return st ? `${r.post.title}\n${st}` : r.post.title;
+      });
+      const category = inferTopicCategory(parentKey, textBlobs);
       const sourceBreakdown = rows.reduce(
         (acc, row) => {
           acc[row.post.source] = (acc[row.post.source] ?? 0) + 1;

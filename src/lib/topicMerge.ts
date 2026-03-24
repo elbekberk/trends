@@ -106,16 +106,22 @@ export type TopicHitRowForMerge = {
   parentKey: string;
   canonicalParentLabel: string | null;
   parentLabel: string;
-  post: { title: string };
+  post: { title: string; selftext?: string | null };
 };
+
+function postDiscussionBlob(post: { title: string; selftext?: string | null }): string {
+  const st = post.selftext?.trim();
+  return st ? `${post.title}\n${st}` : post.title;
+}
 
 /**
  * Read-time display parent: reuse `matchMajorTheme` only — no extra rule tables.
  */
 export function displayParentForRow(row: TopicHitRowForMerge): { key: string; label: string } {
-  const titleLower = row.post.title.toLowerCase();
+  const blob = postDiscussionBlob(row.post);
+  const titleLower = blob.toLowerCase();
   const rawKey = row.canonicalParentKey ?? row.parentKey;
-  const tokens = titleTokens(row.post.title);
+  const tokens = titleTokens(blob);
   const themed = matchMajorTheme(rawKey, titleLower, tokens);
   if (themed) {
     return { key: themed.canonicalParentKey, label: themed.canonicalParentLabel };

@@ -9,14 +9,24 @@ datasource db {
 }
 
 model Post {
-  id         Int        @id @default(autoincrement())
-  source     String
-  externalId String
-  title      String
-  url        String?
-  createdAt  DateTime?
-  fetchedAt  DateTime   @default(now())
-  topicHits  TopicHit[]
+  id            Int        @id @default(autoincrement())
+  source        String
+  externalId    String
+  title         String
+  /// Primary link: Reddit thread permalink for reddit; story URL for HN.
+  url           String?
+  externalUrl   String?
+  selftext      String?
+  redditScore   Int?
+  numComments   Int?
+  subreddit     String?
+  redditListing String?
+  redditPool    String?
+  linkDomain    String?
+  isSelf        Boolean?
+  createdAt     DateTime?
+  fetchedAt     DateTime   @default(now())
+  topicHits     TopicHit[]
 
   @@unique([source, externalId])
 }

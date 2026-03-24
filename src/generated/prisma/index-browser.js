@@ -124,6 +124,15 @@ exports.Prisma.PostScalarFieldEnum = {
   externalId: 'externalId',
   title: 'title',
   url: 'url',
+  externalUrl: 'externalUrl',
+  selftext: 'selftext',
+  redditScore: 'redditScore',
+  numComments: 'numComments',
+  subreddit: 'subreddit',
+  redditListing: 'redditListing',
+  redditPool: 'redditPool',
+  linkDomain: 'linkDomain',
+  isSelf: 'isSelf',
   createdAt: 'createdAt',
   fetchedAt: 'fetchedAt'
 };

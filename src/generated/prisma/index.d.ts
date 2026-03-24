@@ -996,10 +996,14 @@ export namespace Prisma {
 
   export type PostAvgAggregateOutputType = {
     id: number | null
+    redditScore: number | null
+    numComments: number | null
   }
 
   export type PostSumAggregateOutputType = {
     id: number | null
+    redditScore: number | null
+    numComments: number | null
   }
 
   export type PostMinAggregateOutputType = {
@@ -1008,6 +1012,15 @@ export namespace Prisma {
     externalId: string | null
     title: string | null
     url: string | null
+    externalUrl: string | null
+    selftext: string | null
+    redditScore: number | null
+    numComments: number | null
+    subreddit: string | null
+    redditListing: string | null
+    redditPool: string | null
+    linkDomain: string | null
+    isSelf: boolean | null
     createdAt: Date | null
     fetchedAt: Date | null
   }
@@ -1018,6 +1031,15 @@ export namespace Prisma {
     externalId: string | null
     title: string | null
     url: string | null
+    externalUrl: string | null
+    selftext: string | null
+    redditScore: number | null
+    numComments: number | null
+    subreddit: string | null
+    redditListing: string | null
+    redditPool: string | null
+    linkDomain: string | null
+    isSelf: boolean | null
     createdAt: Date | null
     fetchedAt: Date | null
   }
@@ -1028,6 +1050,15 @@ export namespace Prisma {
     externalId: number
     title: number
     url: number
+    externalUrl: number
+    selftext: number
+    redditScore: number
+    numComments: number
+    subreddit: number
+    redditListing: number
+    redditPool: number
+    linkDomain: number
+    isSelf: number
     createdAt: number
     fetchedAt: number
     _all: number
@@ -1036,10 +1067,14 @@ export namespace Prisma {
 
   export type PostAvgAggregateInputType = {
     id?: true
+    redditScore?: true
+    numComments?: true
   }
 
   export type PostSumAggregateInputType = {
     id?: true
+    redditScore?: true
+    numComments?: true
   }
 
   export type PostMinAggregateInputType = {
@@ -1048,6 +1083,15 @@ export namespace Prisma {
     externalId?: true
     title?: true
     url?: true
+    externalUrl?: true
+    selftext?: true
+    redditScore?: true
+    numComments?: true
+    subreddit?: true
+    redditListing?: true
+    redditPool?: true
+    linkDomain?: true
+    isSelf?: true
     createdAt?: true
     fetchedAt?: true
   }
@@ -1058,6 +1102,15 @@ export namespace Prisma {
     externalId?: true
     title?: true
     url?: true
+    externalUrl?: true
+    selftext?: true
+    redditScore?: true
+    numComments?: true
+    subreddit?: true
+    redditListing?: true
+    redditPool?: true
+    linkDomain?: true
+    isSelf?: true
     createdAt?: true
     fetchedAt?: true
   }
@@ -1068,6 +1121,15 @@ export namespace Prisma {
     externalId?: true
     title?: true
     url?: true
+    externalUrl?: true
+    selftext?: true
+    redditScore?: true
+    numComments?: true
+    subreddit?: true
+    redditListing?: true
+    redditPool?: true
+    linkDomain?: true
+    isSelf?: true
     createdAt?: true
     fetchedAt?: true
     _all?: true
@@ -1165,6 +1227,15 @@ export namespace Prisma {
     externalId: string
     title: string
     url: string | null
+    externalUrl: string | null
+    selftext: string | null
+    redditScore: number | null
+    numComments: number | null
+    subreddit: string | null
+    redditListing: string | null
+    redditPool: string | null
+    linkDomain: string | null
+    isSelf: boolean | null
     createdAt: Date | null
     fetchedAt: Date
     _count: PostCountAggregateOutputType | null
@@ -1194,6 +1265,15 @@ export namespace Prisma {
     externalId?: boolean
     title?: boolean
     url?: boolean
+    externalUrl?: boolean
+    selftext?: boolean
+    redditScore?: boolean
+    numComments?: boolean
+    subreddit?: boolean
+    redditListing?: boolean
+    redditPool?: boolean
+    linkDomain?: boolean
+    isSelf?: boolean
     createdAt?: boolean
     fetchedAt?: boolean
     topicHits?: boolean | Post$topicHitsArgs<ExtArgs>
@@ -1206,6 +1286,15 @@ export namespace Prisma {
     externalId?: boolean
     title?: boolean
     url?: boolean
+    externalUrl?: boolean
+    selftext?: boolean
+    redditScore?: boolean
+    numComments?: boolean
+    subreddit?: boolean
+    redditListing?: boolean
+    redditPool?: boolean
+    linkDomain?: boolean
+    isSelf?: boolean
     createdAt?: boolean
     fetchedAt?: boolean
   }, ExtArgs["result"]["post"]>
@@ -1216,6 +1305,15 @@ export namespace Prisma {
     externalId?: boolean
     title?: boolean
     url?: boolean
+    externalUrl?: boolean
+    selftext?: boolean
+    redditScore?: boolean
+    numComments?: boolean
+    subreddit?: boolean
+    redditListing?: boolean
+    redditPool?: boolean
+    linkDomain?: boolean
+    isSelf?: boolean
     createdAt?: boolean
     fetchedAt?: boolean
   }, ExtArgs["result"]["post"]>
@@ -1226,11 +1324,20 @@ export namespace Prisma {
     externalId?: boolean
     title?: boolean
     url?: boolean
+    externalUrl?: boolean
+    selftext?: boolean
+    redditScore?: boolean
+    numComments?: boolean
+    subreddit?: boolean
+    redditListing?: boolean
+    redditPool?: boolean
+    linkDomain?: boolean
+    isSelf?: boolean
     createdAt?: boolean
     fetchedAt?: boolean
   }
 
-  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "source" | "externalId" | "title" | "url" | "createdAt" | "fetchedAt", ExtArgs["result"]["post"]>
+  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "source" | "externalId" | "title" | "url" | "externalUrl" | "selftext" | "redditScore" | "numComments" | "subreddit" | "redditListing" | "redditPool" | "linkDomain" | "isSelf" | "createdAt" | "fetchedAt", ExtArgs["result"]["post"]>
   export type PostInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     topicHits?: boolean | Post$topicHitsArgs<ExtArgs>
     _count?: boolean | PostCountOutputTypeDefaultArgs<ExtArgs>
@@ -1248,7 +1355,19 @@ export namespace Prisma {
       source: string
       externalId: string
       title: string
+      /**
+       * Primary link: Reddit thread permalink for reddit; story URL for HN.
+       */
       url: string | null
+      externalUrl: string | null
+      selftext: string | null
+      redditScore: number | null
+      numComments: number | null
+      subreddit: string | null
+      redditListing: string | null
+      redditPool: string | null
+      linkDomain: string | null
+      isSelf: boolean | null
       createdAt: Date | null
       fetchedAt: Date
     }, ExtArgs["result"]["post"]>
@@ -1680,6 +1799,15 @@ export namespace Prisma {
     readonly externalId: FieldRef<"Post", 'String'>
     readonly title: FieldRef<"Post", 'String'>
     readonly url: FieldRef<"Post", 'String'>
+    readonly externalUrl: FieldRef<"Post", 'String'>
+    readonly selftext: FieldRef<"Post", 'String'>
+    readonly redditScore: FieldRef<"Post", 'Int'>
+    readonly numComments: FieldRef<"Post", 'Int'>
+    readonly subreddit: FieldRef<"Post", 'String'>
+    readonly redditListing: FieldRef<"Post", 'String'>
+    readonly redditPool: FieldRef<"Post", 'String'>
+    readonly linkDomain: FieldRef<"Post", 'String'>
+    readonly isSelf: FieldRef<"Post", 'Boolean'>
     readonly createdAt: FieldRef<"Post", 'DateTime'>
     readonly fetchedAt: FieldRef<"Post", 'DateTime'>
   }
@@ -3299,6 +3427,15 @@ export namespace Prisma {
     externalId: 'externalId',
     title: 'title',
     url: 'url',
+    externalUrl: 'externalUrl',
+    selftext: 'selftext',
+    redditScore: 'redditScore',
+    numComments: 'numComments',
+    subreddit: 'subreddit',
+    redditListing: 'redditListing',
+    redditPool: 'redditPool',
+    linkDomain: 'linkDomain',
+    isSelf: 'isSelf',
     createdAt: 'createdAt',
     fetchedAt: 'fetchedAt'
   };
@@ -3359,6 +3496,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
    * Reference to a field of type 'DateTime'
    */
   export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -3384,6 +3528,15 @@ export namespace Prisma {
     externalId?: StringFilter<"Post"> | string
     title?: StringFilter<"Post"> | string
     url?: StringNullableFilter<"Post"> | string | null
+    externalUrl?: StringNullableFilter<"Post"> | string | null
+    selftext?: StringNullableFilter<"Post"> | string | null
+    redditScore?: IntNullableFilter<"Post"> | number | null
+    numComments?: IntNullableFilter<"Post"> | number | null
+    subreddit?: StringNullableFilter<"Post"> | string | null
+    redditListing?: StringNullableFilter<"Post"> | string | null
+    redditPool?: StringNullableFilter<"Post"> | string | null
+    linkDomain?: StringNullableFilter<"Post"> | string | null
+    isSelf?: BoolNullableFilter<"Post"> | boolean | null
     createdAt?: DateTimeNullableFilter<"Post"> | Date | string | null
     fetchedAt?: DateTimeFilter<"Post"> | Date | string
     topicHits?: TopicHitListRelationFilter
@@ -3395,6 +3548,15 @@ export namespace Prisma {
     externalId?: SortOrder
     title?: SortOrder
     url?: SortOrderInput | SortOrder
+    externalUrl?: SortOrderInput | SortOrder
+    selftext?: SortOrderInput | SortOrder
+    redditScore?: SortOrderInput | SortOrder
+    numComments?: SortOrderInput | SortOrder
+    subreddit?: SortOrderInput | SortOrder
+    redditListing?: SortOrderInput | SortOrder
+    redditPool?: SortOrderInput | SortOrder
+    linkDomain?: SortOrderInput | SortOrder
+    isSelf?: SortOrderInput | SortOrder
     createdAt?: SortOrderInput | SortOrder
     fetchedAt?: SortOrder
     topicHits?: TopicHitOrderByRelationAggregateInput
@@ -3410,6 +3572,15 @@ export namespace Prisma {
     externalId?: StringFilter<"Post"> | string
     title?: StringFilter<"Post"> | string
     url?: StringNullableFilter<"Post"> | string | null
+    externalUrl?: StringNullableFilter<"Post"> | string | null
+    selftext?: StringNullableFilter<"Post"> | string | null
+    redditScore?: IntNullableFilter<"Post"> | number | null
+    numComments?: IntNullableFilter<"Post"> | number | null
+    subreddit?: StringNullableFilter<"Post"> | string | null
+    redditListing?: StringNullableFilter<"Post"> | string | null
+    redditPool?: StringNullableFilter<"Post"> | string | null
+    linkDomain?: StringNullableFilter<"Post"> | string | null
+    isSelf?: BoolNullableFilter<"Post"> | boolean | null
     createdAt?: DateTimeNullableFilter<"Post"> | Date | string | null
     fetchedAt?: DateTimeFilter<"Post"> | Date | string
     topicHits?: TopicHitListRelationFilter
@@ -3421,6 +3592,15 @@ export namespace Prisma {
     externalId?: SortOrder
     title?: SortOrder
     url?: SortOrderInput | SortOrder
+    externalUrl?: SortOrderInput | SortOrder
+    selftext?: SortOrderInput | SortOrder
+    redditScore?: SortOrderInput | SortOrder
+    numComments?: SortOrderInput | SortOrder
+    subreddit?: SortOrderInput | SortOrder
+    redditListing?: SortOrderInput | SortOrder
+    redditPool?: SortOrderInput | SortOrder
+    linkDomain?: SortOrderInput | SortOrder
+    isSelf?: SortOrderInput | SortOrder
     createdAt?: SortOrderInput | SortOrder
     fetchedAt?: SortOrder
     _count?: PostCountOrderByAggregateInput
@@ -3439,6 +3619,15 @@ export namespace Prisma {
     externalId?: StringWithAggregatesFilter<"Post"> | string
     title?: StringWithAggregatesFilter<"Post"> | string
     url?: StringNullableWithAggregatesFilter<"Post"> | string | null
+    externalUrl?: StringNullableWithAggregatesFilter<"Post"> | string | null
+    selftext?: StringNullableWithAggregatesFilter<"Post"> | string | null
+    redditScore?: IntNullableWithAggregatesFilter<"Post"> | number | null
+    numComments?: IntNullableWithAggregatesFilter<"Post"> | number | null
+    subreddit?: StringNullableWithAggregatesFilter<"Post"> | string | null
+    redditListing?: StringNullableWithAggregatesFilter<"Post"> | string | null
+    redditPool?: StringNullableWithAggregatesFilter<"Post"> | string | null
+    linkDomain?: StringNullableWithAggregatesFilter<"Post"> | string | null
+    isSelf?: BoolNullableWithAggregatesFilter<"Post"> | boolean | null
     createdAt?: DateTimeNullableWithAggregatesFilter<"Post"> | Date | string | null
     fetchedAt?: DateTimeWithAggregatesFilter<"Post"> | Date | string
   }
@@ -3536,6 +3725,15 @@ export namespace Prisma {
     externalId: string
     title: string
     url?: string | null
+    externalUrl?: string | null
+    selftext?: string | null
+    redditScore?: number | null
+    numComments?: number | null
+    subreddit?: string | null
+    redditListing?: string | null
+    redditPool?: string | null
+    linkDomain?: string | null
+    isSelf?: boolean | null
     createdAt?: Date | string | null
     fetchedAt?: Date | string
     topicHits?: TopicHitCreateNestedManyWithoutPostInput
@@ -3547,6 +3745,15 @@ export namespace Prisma {
     externalId: string
     title: string
     url?: string | null
+    externalUrl?: string | null
+    selftext?: string | null
+    redditScore?: number | null
+    numComments?: number | null
+    subreddit?: string | null
+    redditListing?: string | null
+    redditPool?: string | null
+    linkDomain?: string | null
+    isSelf?: boolean | null
     createdAt?: Date | string | null
     fetchedAt?: Date | string
     topicHits?: TopicHitUncheckedCreateNestedManyWithoutPostInput
@@ -3557,6 +3764,15 @@ export namespace Prisma {
     externalId?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     url?: NullableStringFieldUpdateOperationsInput | string | null
+    externalUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    selftext?: NullableStringFieldUpdateOperationsInput | string | null
+    redditScore?: NullableIntFieldUpdateOperationsInput | number | null
+    numComments?: NullableIntFieldUpdateOperationsInput | number | null
+    subreddit?: NullableStringFieldUpdateOperationsInput | string | null
+    redditListing?: NullableStringFieldUpdateOperationsInput | string | null
+    redditPool?: NullableStringFieldUpdateOperationsInput | string | null
+    linkDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    isSelf?: NullableBoolFieldUpdateOperationsInput | boolean | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fetchedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     topicHits?: TopicHitUpdateManyWithoutPostNestedInput
@@ -3568,6 +3784,15 @@ export namespace Prisma {
     externalId?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     url?: NullableStringFieldUpdateOperationsInput | string | null
+    externalUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    selftext?: NullableStringFieldUpdateOperationsInput | string | null
+    redditScore?: NullableIntFieldUpdateOperationsInput | number | null
+    numComments?: NullableIntFieldUpdateOperationsInput | number | null
+    subreddit?: NullableStringFieldUpdateOperationsInput | string | null
+    redditListing?: NullableStringFieldUpdateOperationsInput | string | null
+    redditPool?: NullableStringFieldUpdateOperationsInput | string | null
+    linkDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    isSelf?: NullableBoolFieldUpdateOperationsInput | boolean | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fetchedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     topicHits?: TopicHitUncheckedUpdateManyWithoutPostNestedInput
@@ -3579,6 +3804,15 @@ export namespace Prisma {
     externalId: string
     title: string
     url?: string | null
+    externalUrl?: string | null
+    selftext?: string | null
+    redditScore?: number | null
+    numComments?: number | null
+    subreddit?: string | null
+    redditListing?: string | null
+    redditPool?: string | null
+    linkDomain?: string | null
+    isSelf?: boolean | null
     createdAt?: Date | string | null
     fetchedAt?: Date | string
   }
@@ -3588,6 +3822,15 @@ export namespace Prisma {
     externalId?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     url?: NullableStringFieldUpdateOperationsInput | string | null
+    externalUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    selftext?: NullableStringFieldUpdateOperationsInput | string | null
+    redditScore?: NullableIntFieldUpdateOperationsInput | number | null
+    numComments?: NullableIntFieldUpdateOperationsInput | number | null
+    subreddit?: NullableStringFieldUpdateOperationsInput | string | null
+    redditListing?: NullableStringFieldUpdateOperationsInput | string | null
+    redditPool?: NullableStringFieldUpdateOperationsInput | string | null
+    linkDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    isSelf?: NullableBoolFieldUpdateOperationsInput | boolean | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fetchedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -3598,6 +3841,15 @@ export namespace Prisma {
     externalId?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     url?: NullableStringFieldUpdateOperationsInput | string | null
+    externalUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    selftext?: NullableStringFieldUpdateOperationsInput | string | null
+    redditScore?: NullableIntFieldUpdateOperationsInput | number | null
+    numComments?: NullableIntFieldUpdateOperationsInput | number | null
+    subreddit?: NullableStringFieldUpdateOperationsInput | string | null
+    redditListing?: NullableStringFieldUpdateOperationsInput | string | null
+    redditPool?: NullableStringFieldUpdateOperationsInput | string | null
+    linkDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    isSelf?: NullableBoolFieldUpdateOperationsInput | boolean | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fetchedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -3735,6 +3987,22 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type BoolNullableFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
+  }
+
   export type DateTimeNullableFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | null
@@ -3783,12 +4051,23 @@ export namespace Prisma {
     externalId?: SortOrder
     title?: SortOrder
     url?: SortOrder
+    externalUrl?: SortOrder
+    selftext?: SortOrder
+    redditScore?: SortOrder
+    numComments?: SortOrder
+    subreddit?: SortOrder
+    redditListing?: SortOrder
+    redditPool?: SortOrder
+    linkDomain?: SortOrder
+    isSelf?: SortOrder
     createdAt?: SortOrder
     fetchedAt?: SortOrder
   }
 
   export type PostAvgOrderByAggregateInput = {
     id?: SortOrder
+    redditScore?: SortOrder
+    numComments?: SortOrder
   }
 
   export type PostMaxOrderByAggregateInput = {
@@ -3797,6 +4076,15 @@ export namespace Prisma {
     externalId?: SortOrder
     title?: SortOrder
     url?: SortOrder
+    externalUrl?: SortOrder
+    selftext?: SortOrder
+    redditScore?: SortOrder
+    numComments?: SortOrder
+    subreddit?: SortOrder
+    redditListing?: SortOrder
+    redditPool?: SortOrder
+    linkDomain?: SortOrder
+    isSelf?: SortOrder
     createdAt?: SortOrder
     fetchedAt?: SortOrder
   }
@@ -3807,12 +4095,23 @@ export namespace Prisma {
     externalId?: SortOrder
     title?: SortOrder
     url?: SortOrder
+    externalUrl?: SortOrder
+    selftext?: SortOrder
+    redditScore?: SortOrder
+    numComments?: SortOrder
+    subreddit?: SortOrder
+    redditListing?: SortOrder
+    redditPool?: SortOrder
+    linkDomain?: SortOrder
+    isSelf?: SortOrder
     createdAt?: SortOrder
     fetchedAt?: SortOrder
   }
 
   export type PostSumOrderByAggregateInput = {
     id?: SortOrder
+    redditScore?: SortOrder
+    numComments?: SortOrder
   }
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -3863,6 +4162,30 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type BoolNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedBoolNullableFilter<$PrismaModel>
+    _max?: NestedBoolNullableFilter<$PrismaModel>
   }
 
   export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -3977,6 +4300,18 @@ export namespace Prisma {
     set?: string | null
   }
 
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type NullableBoolFieldUpdateOperationsInput = {
+    set?: boolean | null
+  }
+
   export type NullableDateTimeFieldUpdateOperationsInput = {
     set?: Date | string | null
   }
@@ -4074,6 +4409,22 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedBoolNullableFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
+  }
+
   export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | null
@@ -4157,7 +4508,7 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
-  export type NestedIntNullableFilter<$PrismaModel = never> = {
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | null
     notIn?: number[] | null
@@ -4165,7 +4516,31 @@ export namespace Prisma {
     lte?: number | IntFieldRefInput<$PrismaModel>
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedBoolNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedBoolNullableFilter<$PrismaModel>
+    _max?: NestedBoolNullableFilter<$PrismaModel>
   }
 
   export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -4268,6 +4643,15 @@ export namespace Prisma {
     externalId: string
     title: string
     url?: string | null
+    externalUrl?: string | null
+    selftext?: string | null
+    redditScore?: number | null
+    numComments?: number | null
+    subreddit?: string | null
+    redditListing?: string | null
+    redditPool?: string | null
+    linkDomain?: string | null
+    isSelf?: boolean | null
     createdAt?: Date | string | null
     fetchedAt?: Date | string
   }
@@ -4278,6 +4662,15 @@ export namespace Prisma {
     externalId: string
     title: string
     url?: string | null
+    externalUrl?: string | null
+    selftext?: string | null
+    redditScore?: number | null
+    numComments?: number | null
+    subreddit?: string | null
+    redditListing?: string | null
+    redditPool?: string | null
+    linkDomain?: string | null
+    isSelf?: boolean | null
     createdAt?: Date | string | null
     fetchedAt?: Date | string
   }
@@ -4303,6 +4696,15 @@ export namespace Prisma {
     externalId?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     url?: NullableStringFieldUpdateOperationsInput | string | null
+    externalUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    selftext?: NullableStringFieldUpdateOperationsInput | string | null
+    redditScore?: NullableIntFieldUpdateOperationsInput | number | null
+    numComments?: NullableIntFieldUpdateOperationsInput | number | null
+    subreddit?: NullableStringFieldUpdateOperationsInput | string | null
+    redditListing?: NullableStringFieldUpdateOperationsInput | string | null
+    redditPool?: NullableStringFieldUpdateOperationsInput | string | null
+    linkDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    isSelf?: NullableBoolFieldUpdateOperationsInput | boolean | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fetchedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -4313,6 +4715,15 @@ export namespace Prisma {
     externalId?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     url?: NullableStringFieldUpdateOperationsInput | string | null
+    externalUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    selftext?: NullableStringFieldUpdateOperationsInput | string | null
+    redditScore?: NullableIntFieldUpdateOperationsInput | number | null
+    numComments?: NullableIntFieldUpdateOperationsInput | number | null
+    subreddit?: NullableStringFieldUpdateOperationsInput | string | null
+    redditListing?: NullableStringFieldUpdateOperationsInput | string | null
+    redditPool?: NullableStringFieldUpdateOperationsInput | string | null
+    linkDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    isSelf?: NullableBoolFieldUpdateOperationsInput | boolean | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fetchedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

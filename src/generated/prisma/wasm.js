@@ -96,6 +96,15 @@ exports.Prisma.PostScalarFieldEnum = {
   externalId: 'externalId',
   title: 'title',
   url: 'url',
+  externalUrl: 'externalUrl',
+  selftext: 'selftext',
+  redditScore: 'redditScore',
+  numComments: 'numComments',
+  subreddit: 'subreddit',
+  redditListing: 'redditListing',
+  redditPool: 'redditPool',
+  linkDomain: 'linkDomain',
+  isSelf: 'isSelf',
   createdAt: 'createdAt',
   fetchedAt: 'fetchedAt'
 };
@@ -177,15 +186,22 @@ const config = {
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Post {\n  id         Int        @id @default(autoincrement())\n  source     String\n  externalId String\n  title      String\n  url        String?\n  createdAt  DateTime?\n  fetchedAt  DateTime   @default(now())\n  topicHits  TopicHit[]\n\n  @@unique([source, externalId])\n}\n\nmodel TopicHit {\n  id                   Int      @id @default(autoincrement())\n  bucketTime           DateTime\n  category             String\n  parentKey            String\n  parentLabel          String\n  canonicalParentKey   String?\n  canonicalParentLabel String?\n  childKey             String?\n  childLabel           String?\n  postId               Int\n  createdAt            DateTime @default(now())\n  post                 Post     @relation(fields: [postId], references: [id], onDelete: Cascade)\n\n  @@unique([bucketTime, postId])\n  @@index([bucketTime, category, parentKey])\n  @@index([bucketTime, canonicalParentKey])\n}\n",
-  "inlineSchemaHash": "7db17244a4252e575ea345e8e5d780a56a5b01e88d79d2562afc0eb3f7b8059b",
-  "copyEngine": false
+  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Post {\n  id            Int        @id @default(autoincrement())\n  source        String\n  externalId    String\n  title         String\n  /// Primary link: Reddit thread permalink for reddit; story URL for HN.\n  url           String?\n  externalUrl   String?\n  selftext      String?\n  redditScore   Int?\n  numComments   Int?\n  subreddit     String?\n  redditListing String?\n  redditPool    String?\n  linkDomain    String?\n  isSelf        Boolean?\n  createdAt     DateTime?\n  fetchedAt     DateTime   @default(now())\n  topicHits     TopicHit[]\n\n  @@unique([source, externalId])\n}\n\nmodel TopicHit {\n  id                   Int      @id @default(autoincrement())\n  bucketTime           DateTime\n  category             String\n  parentKey            String\n  parentLabel          String\n  canonicalParentKey   String?\n  canonicalParentLabel String?\n  childKey             String?\n  childLabel           String?\n  postId               Int\n  createdAt            DateTime @default(now())\n  post                 Post     @relation(fields: [postId], references: [id], onDelete: Cascade)\n\n  @@unique([bucketTime, postId])\n  @@index([bucketTime, category, parentKey])\n  @@index([bucketTime, canonicalParentKey])\n}\n",
+  "inlineSchemaHash": "c5d1f5cc6560d39dac98bacf9f8e2fac2589ac680307151acac997723fb4c96c",
+  "copyEngine": true
 }
 config.dirname = '/'
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"Post\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"source\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"externalId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"url\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"fetchedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"topicHits\",\"kind\":\"object\",\"type\":\"TopicHit\",\"relationName\":\"PostToTopicHit\"}],\"dbName\":null},\"TopicHit\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"bucketTime\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"category\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"parentKey\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"parentLabel\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"canonicalParentKey\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"canonicalParentLabel\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"childKey\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"childLabel\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"postId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"post\",\"kind\":\"object\",\"type\":\"Post\",\"relationName\":\"PostToTopicHit\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"Post\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"source\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"externalId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"url\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"externalUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"selftext\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"redditScore\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"numComments\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"subreddit\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"redditListing\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"redditPool\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"linkDomain\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"isSelf\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"fetchedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"topicHits\",\"kind\":\"object\",\"type\":\"TopicHit\",\"relationName\":\"PostToTopicHit\"}],\"dbName\":null},\"TopicHit\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"bucketTime\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"category\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"parentKey\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"parentLabel\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"canonicalParentKey\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"canonicalParentLabel\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"childKey\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"childLabel\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"postId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"post\",\"kind\":\"object\",\"type\":\"Post\",\"relationName\":\"PostToTopicHit\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
-config.engineWasm = undefined
+config.engineWasm = {
+  getRuntime: async () => require('./query_engine_bg.js'),
+  getQueryEngineWasmModule: async () => {
+    const loader = (await import('#wasm-engine-loader')).default
+    const engine = (await loader).default
+    return engine
+  }
+}
 config.compilerWasm = undefined
 
 config.injectableEdgeEnv = () => ({
