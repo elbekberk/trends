@@ -756,7 +756,8 @@ export async function runIngest() {
   ]);
   const redditPosts = redditResult.posts;
   const hnPosts = hnResult.posts;
-  const allPosts = [...redditPosts, ...hnPosts];
+  /** Reddit-only topic pipeline (HN still fetched, not merged into extraction for now). */
+  const allPosts = [...redditPosts];
 
   const uniqueTitleFingerprint = new Set<string>();
   const prepared: Array<{ post: SourcePost; postId: number; candidates: PhraseCandidate[] }> = [];
@@ -862,6 +863,9 @@ export async function runIngest() {
     dedupedByTitle,
     savedPosts,
     topicHitsSaved,
+    redditOnlyMode: true,
+    redditPostCountUsed: redditPosts.length,
+    hnPostCountFetched: hnPosts.length,
   };
 }
 
@@ -962,7 +966,9 @@ function computeCategoryCounts(topics: Array<{ category: string }>) {
 }
 
 function toEvidence(rows: TopicHitWithPost[]) {
-  return rows
+  const redditRows = rows.filter((r) => r.post.source === "reddit");
+  const useRows = redditRows.length > 0 ? redditRows : rows;
+  return useRows
     .sort((a, b) => {
       const aTime = (a.post.createdAt ?? a.post.fetchedAt).getTime();
       const bTime = (b.post.createdAt ?? b.post.fetchedAt).getTime();
@@ -1022,7 +1028,10 @@ export async function getRisingTopics(limit = 30) {
     fetchTopicRows(previousBucket),
   ]);
 
-  const currentByDisplay = groupRowsByDisplayParent(currentRows as TopicHitWithPost[]);
+  const redditCurrentRows = (currentRows as TopicHitWithPost[]).filter(
+    (r) => r.post.source === "reddit",
+  );
+  const currentByDisplay = groupRowsByDisplayParent(redditCurrentRows);
   const previousByDisplay = groupRowsByDisplayParent(previousRows as TopicHitWithPost[]);
 
   const allTopics = [...currentByDisplay.entries()]
