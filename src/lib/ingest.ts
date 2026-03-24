@@ -1,5 +1,6 @@
 import { db } from "@/src/lib/db";
 import { isWeakParentKey, resolveCanonicalParent } from "@/src/lib/canonicalParents";
+import { computeParentTopicMetrics } from "@/src/lib/topicScore";
 
 type SourcePost = {
   source: "reddit" | "hn";
@@ -683,7 +684,6 @@ export async function getRisingTopics(limit = 30) {
     .map(([parentKey, rows]) => {
       const current = rows.length;
       const previous = previousByParent.get(parentKey)?.length ?? 0;
-      const score = current - previous;
       const parentLabel = chooseReadableLabel(
         rows.map((r) => r.canonicalParentLabel ?? r.parentLabel),
       );
@@ -700,19 +700,30 @@ export async function getRisingTopics(limit = 30) {
         .sort((a, b) => b.getTime() - a.getTime())[0]
         ?.toISOString();
 
+      const metrics = computeParentTopicMetrics(current, previous, sourceBreakdown);
+
       return {
         parentKey,
         parentLabel,
         category,
-        current,
-        previous,
-        score,
+        current: metrics.current,
+        previous: metrics.previous,
+        delta: metrics.delta,
+        growthRatio: metrics.growthRatio,
+        sourceCount: metrics.sourceCount,
+        score: metrics.score,
+        confidence: metrics.confidence,
         sourceBreakdown,
         lastSeenAt: lastSeenAt ?? null,
         children: buildChildren(rows),
       };
     })
-    .sort((a, b) => b.score - a.score || b.current - a.current);
+    .sort(
+      (a, b) =>
+        b.score - a.score ||
+        b.delta - a.delta ||
+        b.current - a.current,
+    );
 
   const topics = allTopics.slice(0, limit);
 

@@ -1,4 +1,5 @@
 import styles from "./page.module.css";
+import type { TopicConfidence } from "@/src/lib/topicScore";
 
 export type TopicCardData = {
   parentKey: string;
@@ -6,7 +7,11 @@ export type TopicCardData = {
   category: string;
   current: number;
   previous: number;
+  delta: number;
+  growthRatio: number;
+  sourceCount: number;
   score: number;
+  confidence: TopicConfidence;
   sourceBreakdown: Record<string, number>;
   lastSeenAt: string | null;
   children: Array<{
@@ -22,25 +27,48 @@ export type TopicCardData = {
   }>;
 };
 
+function confidenceClass(c: TopicConfidence) {
+  if (c === "high") return styles.confidenceHigh;
+  if (c === "medium") return styles.confidenceMedium;
+  return styles.confidenceLow;
+}
+
 export function TopicCard({ item }: { item: TopicCardData }) {
   return (
     <article className={styles.card}>
-      <h2>{item.parentLabel}</h2>
-      <div className={styles.metrics}>
-        <span>Current: {item.current}</span>
-        <span>Previous: {item.previous}</span>
-        <span>Score: {item.score}</span>
+      <div className={styles.cardHeader}>
+        <h2>{item.parentLabel}</h2>
+        <span className={`${styles.confidence} ${confidenceClass(item.confidence)}`}>
+          {item.confidence} confidence
+        </span>
       </div>
+
+      <div className={styles.scoreRow}>
+        <span className={styles.primaryScore}>Score {item.score}</span>
+        <span className={styles.scoreHint}>delta + growth bonus + source spread</span>
+      </div>
+
+      <div className={styles.metrics}>
+        <span>Δ {item.delta >= 0 ? "+" : ""}
+          {item.delta}
+        </span>
+        <span>Growth ×{item.growthRatio}</span>
+        <span>Current {item.current}</span>
+        <span>Previous {item.previous}</span>
+        <span>Sources {item.sourceCount}</span>
+      </div>
+
       <div className={styles.meta}>
         <span>Category: {item.category}</span>
         <span>
-          Sources:{" "}
+          Breakdown:{" "}
           {Object.entries(item.sourceBreakdown)
             .map(([source, count]) => `${source} (${count})`)
             .join(", ") || "n/a"}
         </span>
         <span>Last seen: {item.lastSeenAt ?? "n/a"}</span>
       </div>
+
       <details className={styles.details}>
         <summary>Child developments ({item.children.length})</summary>
         {item.children.length === 0 ? (

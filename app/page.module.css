@@ -66,9 +66,60 @@
   padding: 12px;
 }
 
+.cardHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
 .card h2 {
   font-size: 1.05rem;
-  margin-bottom: 8px;
+  margin: 0;
+  flex: 1;
+}
+
+.confidence {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 3px 8px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.confidenceHigh {
+  background: #e8f5e9;
+  color: #1b5e20;
+}
+
+.confidenceMedium {
+  background: #fff8e1;
+  color: #f57f17;
+}
+
+.confidenceLow {
+  background: #f5f5f5;
+  color: #616161;
+}
+
+.scoreRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 12px;
+  margin-bottom: 6px;
+}
+
+.primaryScore {
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.scoreHint {
+  font-size: 0.78rem;
+  color: #777;
 }
 
 .metrics {
