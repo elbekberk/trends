@@ -7,6 +7,27 @@ type SourcePost = {
   createdAt: Date | null;
 };
 
+const SOURCE_CONFIG = {
+  reddit: {
+    subreddits: [
+      "technology",
+      "worldnews",
+      "news",
+      "geopolitics",
+      "economics",
+      "futurology",
+      "singularity",
+    ],
+    listings: ["hot", "new", "rising"] as const,
+    limit: 15,
+    userAgent: "trend-mvp/0.1",
+  },
+  hn: {
+    storyLists: ["topstories", "newstories", "beststories"] as const,
+    limit: 20,
+  },
+};
+
 const STOPWORDS = new Set([
   "the",
   "and",
@@ -65,75 +86,109 @@ function extractTopics(title: string): string[] {
   );
 }
 
-async function fetchRedditPosts(): Promise<SourcePost[]> {
-  const subreddits = ["technology", "programming", "entrepreneur"];
+async function fetchRedditPosts() {
   const results: SourcePost[] = [];
+  const seen = new Set<string>();
+  const listingCounts: Record<string, number> = {};
 
-  for (const subreddit of subreddits) {
-    const res = await fetch(
-      `https://www.reddit.com/r/${subreddit}/hot.json?limit=30`,
-      {
-        headers: { "User-Agent": "trend-mvp/0.1" },
-        cache: "no-store",
-      },
-    );
+  for (const subreddit of SOURCE_CONFIG.reddit.subreddits) {
+    for (const listing of SOURCE_CONFIG.reddit.listings) {
+      const key = `${subreddit}.${listing}`;
+      listingCounts[key] = 0;
 
-    if (!res.ok) continue;
-    const data = await res.json();
-    const posts = data?.data?.children ?? [];
+      const res = await fetch(
+        `https://www.reddit.com/r/${subreddit}/${listing}.json?limit=${SOURCE_CONFIG.reddit.limit}`,
+        {
+          headers: { "User-Agent": SOURCE_CONFIG.reddit.userAgent },
+          cache: "no-store",
+        },
+      );
 
-    for (const item of posts) {
-      const p = item?.data;
-      if (!p?.id || !p?.title) continue;
-      results.push({
-        source: "reddit",
-        externalId: p.id,
-        title: String(p.title),
-        createdAt: p.created_utc ? new Date(p.created_utc * 1000) : null,
-      });
+      if (!res.ok) continue;
+      const data = await res.json();
+      const posts = data?.data?.children ?? [];
+
+      for (const item of posts) {
+        const p = item?.data;
+        if (!p?.id || !p?.title) continue;
+
+        const dedupeKey = `reddit:${p.id}`;
+        if (seen.has(dedupeKey)) continue;
+        seen.add(dedupeKey);
+
+        results.push({
+          source: "reddit",
+          externalId: String(p.id),
+          title: String(p.title),
+          createdAt: p.created_utc ? new Date(p.created_utc * 1000) : null,
+        });
+        listingCounts[key] += 1;
+      }
     }
   }
 
-  return results;
+  return {
+    posts: results,
+    listingCounts,
+    dedupedCount: results.length,
+  };
 }
 
-async function fetchHnPosts(): Promise<SourcePost[]> {
-  const idsRes = await fetch(
-    "https://hacker-news.firebaseio.com/v0/topstories.json",
-    { cache: "no-store" },
-  );
-  if (!idsRes.ok) return [];
-
-  const ids: number[] = (await idsRes.json()).slice(0, 60);
+async function fetchHnPosts() {
   const results: SourcePost[] = [];
+  const seen = new Set<string>();
+  const listCounts: Record<string, number> = {};
 
-  for (const id of ids) {
-    const itemRes = await fetch(
-      `https://hacker-news.firebaseio.com/v0/item/${id}.json`,
+  for (const listType of SOURCE_CONFIG.hn.storyLists) {
+    listCounts[listType] = 0;
+    const idsRes = await fetch(
+      `https://hacker-news.firebaseio.com/v0/${listType}.json`,
       { cache: "no-store" },
     );
-    if (!itemRes.ok) continue;
-    const item = await itemRes.json();
-    if (!item?.id || !item?.title || item?.type !== "story") continue;
-    results.push({
-      source: "hn",
-      externalId: String(item.id),
-      title: String(item.title),
-      createdAt: item.time ? new Date(item.time * 1000) : null,
-    });
+    if (!idsRes.ok) continue;
+
+    const ids: number[] = (await idsRes.json()).slice(0, SOURCE_CONFIG.hn.limit);
+
+    for (const id of ids) {
+      const dedupeKey = String(id);
+      if (seen.has(dedupeKey)) continue;
+
+      const itemRes = await fetch(
+        `https://hacker-news.firebaseio.com/v0/item/${id}.json`,
+        { cache: "no-store" },
+      );
+      if (!itemRes.ok) continue;
+      const item = await itemRes.json();
+      if (!item?.id || !item?.title || item?.type !== "story") continue;
+
+      seen.add(dedupeKey);
+      results.push({
+        source: "hn",
+        externalId: String(item.id),
+        title: String(item.title),
+        createdAt: item.time ? new Date(item.time * 1000) : null,
+      });
+      listCounts[listType] += 1;
+    }
   }
 
-  return results;
+  return {
+    posts: results,
+    listCounts,
+    dedupedCount: results.length,
+  };
 }
 
 export async function runIngest() {
   const fetchedAt = new Date();
   const bucketTime = getBucketTime(fetchedAt);
 
-  const [redditPosts, hnPosts] = await Promise.all([
+  const [redditResult, hnResult] = await Promise.all([
     fetchRedditPosts(),
     fetchHnPosts(),
   ]);
+  const redditPosts = redditResult.posts;
+  const hnPosts = hnResult.posts;
   const allPosts = [...redditPosts, ...hnPosts];
 
   let savedPosts = 0;
@@ -190,8 +245,17 @@ export async function runIngest() {
   return {
     fetchedAt: fetchedAt.toISOString(),
     bucketTime: bucketTime.toISOString(),
-    redditPosts: redditPosts.length,
-    hnPosts: hnPosts.length,
+    fetched: {
+      reddit: {
+        totalUniquePosts: redditResult.dedupedCount,
+        bySubredditListing: redditResult.listingCounts,
+      },
+      hackerNews: {
+        totalUniquePosts: hnResult.dedupedCount,
+        byListType: hnResult.listCounts,
+      },
+    },
+    totalUniquePosts: allPosts.length,
     savedPosts,
     topicsUpdated: updatedTopics,
   };
