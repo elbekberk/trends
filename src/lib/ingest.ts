@@ -17,7 +17,7 @@ import {
 } from "@/src/lib/topicMerge";
 
 /** Which Reddit pool a post was first ingested from (for stats only). */
-export type RedditSourcePool = "technology" | "economy" | "geopolitics";
+export type RedditSourcePool = "technology" | "economy" | "geopolitics" | "general";
 
 export type RedditListing = "hot" | "new" | "rising";
 
@@ -39,9 +39,9 @@ type SourcePost = {
 
 /**
  * Central Reddit source config: tune subreddit lists per high-level pool here only.
- * Each subreddit is still fetched with hot / new / rising (see `listings`).
+ * Each subreddit is fetched for hot / new / rising (see `listings`) with per-listing limits.
  *
- * Noise / volume control: lower `limit` per request, remove a subreddit, or trim `listings`
+ * Noise / volume: adjust `limitsByListing`, remove a subreddit, or trim `listings`
  * — do not add alternate listing types without updating fetch loops.
  */
 const SOURCE_CONFIG = {
@@ -57,6 +57,24 @@ const SOURCE_CONFIG = {
         "LocalLLaMA",
         "cybersecurity",
         "hardware",
+        "Futurology",
+        "singularity",
+        "ChatGPT",
+        "DataScience",
+        "netsec",
+        "gadgets",
+        "buildapc",
+        "webdev",
+        "devops",
+        "startups",
+        "SaaS",
+        "SideProject",
+        "Entrepreneur",
+        "NoCode",
+        "electricvehicles",
+        "teslamotors",
+        "space",
+        "nuclear",
       ],
       economy: [
         "economics",
@@ -65,6 +83,16 @@ const SOURCE_CONFIG = {
         "stocks",
         "energy",
         "investing",
+        "wallstreetbets",
+        "StockMarket",
+        "CryptoCurrency",
+        "Bitcoin",
+        "RealEstate",
+        "PersonalFinance",
+        "fluentinfinance",
+        "EconomicCollapse",
+        "REBubble",
+        "Options",
       ],
       geopolitics: [
         "worldnews",
@@ -73,11 +101,43 @@ const SOURCE_CONFIG = {
         "europe",
         "CredibleDefense",
         "inthenews",
+        "CombatFootage",
+        "UkraineWarVideoReport",
+        "LessCredibleDefence",
+        "EndlessWar",
+        "WarCollege",
+        "InternationalNews",
+        "China",
+        "Russia",
+        "MiddleEast",
+        "europeanunion",
+        "PoliticalDiscussion",
+        "GlobalTalk",
+        "WorldEvents",
+        "anime_titties",
+      ],
+      general: [
+        "OutOfTheLoop",
+        "NoStupidQuestions",
+        "TooAfraidToAsk",
+        "AskReddit",
+        "popular",
+        "trending",
+        "TrueOffMyChest",
+        "AmItheAsshole",
+        "relationship_advice",
+        "confession",
+        "todayilearned",
+        "interestingasfuck",
       ],
     } satisfies Record<RedditSourcePool, readonly string[]>,
     listings: ["hot", "new", "rising"] as const,
-    /** Max posts per subreddit listing request (Reddit JSON `limit`). */
-    limit: 15,
+    /** Reddit JSON `limit` per listing type (≈20 posts max per subreddit before dedupe). */
+    limitsByListing: {
+      hot: 8,
+      new: 8,
+      rising: 4,
+    } satisfies Record<RedditListing, number>,
     userAgent: "trend-mvp/0.1",
   },
   hn: {
@@ -457,9 +517,11 @@ async function fetchRedditPosts() {
     technology: { bySubredditListing: {}, uniquePosts: 0 },
     economy: { bySubredditListing: {}, uniquePosts: 0 },
     geopolitics: { bySubredditListing: {}, uniquePosts: 0 },
+    general: { bySubredditListing: {}, uniquePosts: 0 },
   };
 
   const pools = SOURCE_CONFIG.reddit.pools;
+  const limitsByListing = SOURCE_CONFIG.reddit.limitsByListing;
   for (const pool of Object.keys(pools) as RedditSourcePool[]) {
     for (const subreddit of pools[pool]) {
       for (const listing of SOURCE_CONFIG.reddit.listings) {
@@ -467,8 +529,9 @@ async function fetchRedditPosts() {
         const subListingKey = `${subreddit}.${listing}`;
         listingCounts[flatKey] = 0;
 
+        const limit = limitsByListing[listing];
         const res = await fetch(
-          `https://www.reddit.com/r/${subreddit}/${listing}.json?limit=${SOURCE_CONFIG.reddit.limit}`,
+          `https://www.reddit.com/r/${subreddit}/${listing}.json?limit=${limit}`,
           {
             headers: { "User-Agent": SOURCE_CONFIG.reddit.userAgent },
             cache: "no-store",
@@ -513,6 +576,7 @@ async function fetchRedditPosts() {
     technology: pools.technology.length,
     economy: pools.economy.length,
     geopolitics: pools.geopolitics.length,
+    general: pools.general.length,
   } satisfies Record<RedditSourcePool, number>;
 
   return {
@@ -522,7 +586,7 @@ async function fetchRedditPosts() {
     dedupedCount: results.length,
     configSummary: {
       listings: [...SOURCE_CONFIG.reddit.listings],
-      limitPerListing: SOURCE_CONFIG.reddit.limit,
+      limitsByListing: { ...limitsByListing },
       subredditsByPool,
       fetchAttempts,
     },
