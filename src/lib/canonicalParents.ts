@@ -42,7 +42,24 @@ const WEAK_TOKEN = new Set([
   "after",
   "over",
   "amid",
+  "before",
+  "during",
+  "near",
+  "attack",
 ]);
+
+/** First token in a two-word fragment that usually should not stand alone as a parent. */
+const WEAK_FIRST_TOKEN = new Set([
+  "before",
+  "after",
+  "amid",
+  "during",
+  "near",
+  "show",
+  "attack",
+]);
+
+const PLACE_FRAGMENTS = new Set(["raf", "fairford"]);
 
 const GENERIC_PARENT_FRAGMENTS = new Set([
   "recent calls",
@@ -68,10 +85,14 @@ export function formatFallbackParentLabel(rawLabel: string): string {
   return titleCasePhrase(trimmed);
 }
 
+/** Fallback parent when every phrase candidate is too weak and no anchor matches. */
+export const GENERAL_DISCOURSE_PARENT_KEY = "general-discourse";
+export const GENERAL_DISCOURSE_PARENT_LABEL = "General discourse";
+
 /**
  * Ordered rules: first match wins. Keep this list short and maintainable.
  */
-function matchMajorTheme(
+export function matchMajorTheme(
   rawParentKey: string,
   titleLower: string,
   normalizedTitleTokens: Set<string>,
@@ -160,6 +181,19 @@ export function isWeakParentKey(rawParentKey: string): boolean {
   if (WEAK_PAIR_KEYS.has(k)) return true;
 
   const parts = k.split(/\s+/).filter(Boolean);
+
+  if (parts.length === 2 && WEAK_FIRST_TOKEN.has(parts[0])) {
+    return true;
+  }
+
+  if (parts.length === 2) {
+    const hasPlace = parts.some((p) => PLACE_FRAGMENTS.has(p));
+    const otherGeneric =
+      parts.some((p) => WEAK_TOKEN.has(p) || WEAK_FIRST_TOKEN.has(p)) ||
+      parts.some((p) => p === "near" || p === "base");
+    if (hasPlace && otherGeneric) return true;
+  }
+
   if (parts.length >= 2) {
     const allWeak = parts.every((p) => WEAK_TOKEN.has(p));
     if (allWeak) return true;

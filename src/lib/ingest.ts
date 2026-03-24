@@ -1,6 +1,31 @@
 import { db } from "@/src/lib/db";
-import { isWeakParentKey, resolveCanonicalParent } from "@/src/lib/canonicalParents";
+import {
+  formatFallbackParentLabel,
+  GENERAL_DISCOURSE_PARENT_KEY,
+  GENERAL_DISCOURSE_PARENT_LABEL,
+  isWeakParentKey,
+  matchMajorTheme,
+  resolveCanonicalParent,
+} from "@/src/lib/canonicalParents";
 import { computeParentTopicMetrics } from "@/src/lib/topicScore";
+import {
+  assignCategoryFromKeyAndTitle,
+  displayParentForRow,
+  groupRowsByDisplayParent,
+  inferTopicCategory,
+  type TopicCategory,
+} from "@/src/lib/topicMerge";
+
+/** Which Reddit pool a post was first ingested from (for stats only). */
+export type RedditSourcePool = "technology" | "economy" | "geopolitics";
+
+export type RedditListing = "hot" | "new" | "rising";
+
+export type RedditFetchMeta = {
+  pool: RedditSourcePool;
+  subreddit: string;
+  listing: RedditListing;
+};
 
 type SourcePost = {
   source: "reddit" | "hn";
@@ -8,20 +33,50 @@ type SourcePost = {
   title: string;
   url: string | null;
   createdAt: Date | null;
+  /** Set for Reddit posts — used for ingest breakdown by pool/subreddit/listing. */
+  redditMeta?: RedditFetchMeta;
 };
 
+/**
+ * Central Reddit source config: tune subreddit lists per high-level pool here only.
+ * Each subreddit is still fetched with hot / new / rising (see `listings`).
+ *
+ * Noise / volume control: lower `limit` per request, remove a subreddit, or trim `listings`
+ * — do not add alternate listing types without updating fetch loops.
+ */
 const SOURCE_CONFIG = {
   reddit: {
-    subreddits: [
-      "technology",
-      "worldnews",
-      "news",
-      "geopolitics",
-      "economics",
-      "futurology",
-      "singularity",
-    ],
+    /** Subreddits grouped by the topic lane we want more coverage for (not the post `category` field). */
+    pools: {
+      technology: [
+        "technology",
+        "programming",
+        "MachineLearning",
+        "artificial",
+        "OpenAI",
+        "LocalLLaMA",
+        "cybersecurity",
+        "hardware",
+      ],
+      economy: [
+        "economics",
+        "business",
+        "finance",
+        "stocks",
+        "energy",
+        "investing",
+      ],
+      geopolitics: [
+        "worldnews",
+        "geopolitics",
+        "news",
+        "europe",
+        "CredibleDefense",
+        "inthenews",
+      ],
+    } satisfies Record<RedditSourcePool, readonly string[]>,
     listings: ["hot", "new", "rising"] as const,
+    /** Max posts per subreddit listing request (Reddit JSON `limit`). */
     limit: 15,
     userAgent: "trend-mvp/0.1",
   },
@@ -29,7 +84,7 @@ const SOURCE_CONFIG = {
     storyLists: ["topstories", "newstories", "beststories"] as const,
     limit: 20,
   },
-};
+} as const;
 
 const STOPWORDS = new Set([
   "the",
@@ -101,48 +156,6 @@ const DOMAIN_HINTS = [
   "oil",
 ];
 
-const CATEGORY_KEYWORDS = {
-  geopolitics: [
-    "iran",
-    "israel",
-    "ukraine",
-    "war",
-    "conflict",
-    "military",
-    "diplomatic",
-    "sanction",
-    "trump",
-    "saudi",
-    "uk",
-  ],
-  technology: [
-    "ai",
-    "openai",
-    "anthropic",
-    "chip",
-    "software",
-    "cloud",
-    "github",
-    "microsoft",
-    "google",
-    "apple",
-    "cyber",
-    "model",
-  ],
-  economy: [
-    "economy",
-    "inflation",
-    "market",
-    "stocks",
-    "gdp",
-    "trade",
-    "oil",
-    "rates",
-    "jobs",
-    "recession",
-  ],
-} as const;
-
 type PhraseCandidate = {
   key: string;
   label: string;
@@ -152,10 +165,15 @@ type PhraseCandidate = {
 type AssignedTopic = {
   parentKey: string;
   parentLabel: string;
+  canonicalParentKey: string;
+  canonicalParentLabel: string;
   childKey: string | null;
   childLabel: string | null;
-  category: "geopolitics" | "technology" | "economy" | "general";
+  category: TopicCategory;
 };
+
+/** Max child developments shown per parent (phrase + merge fragments). */
+const MAX_CHILDREN_PER_PARENT = 5;
 
 function getBucketTime(input = new Date()): Date {
   const d = new Date(input);
@@ -256,12 +274,17 @@ function rankParentCandidates(
   return scored.map((s) => s.candidate);
 }
 
-function pickParentWithRetries(
+/**
+ * Always prefers a strong top-level parent: themed canonical, non-weak phrase, anchor merge, or general-discourse.
+ * Never drops the post when phrase candidates exist.
+ */
+function pickParentForPost(
   candidates: PhraseCandidate[],
   title: string,
   frequencyMap: Map<string, number>,
   sourceSpreadMap: Map<string, Set<SourcePost["source"]>>,
-): { raw: PhraseCandidate; canonical: ReturnType<typeof resolveCanonicalParent> } | null {
+  candidateLabels: Map<string, string[]>,
+): AssignedTopic | null {
   const ranked = rankParentCandidates(candidates, frequencyMap, sourceSpreadMap);
   if (ranked.length === 0) return null;
 
@@ -275,20 +298,121 @@ function pickParentWithRetries(
       titleLower,
       normalizedTitleTokens,
     );
-    if (canonical.matchedTheme) return { raw: candidate, canonical };
+    if (canonical.matchedTheme) {
+      if (isWeakParentKey(candidate.key)) {
+        const childLabel = formatFallbackParentLabel(
+          chooseReadableLabel(candidateLabels.get(candidate.key) ?? [candidate.label]),
+        );
+        return {
+          parentKey: canonical.canonicalParentKey,
+          parentLabel: canonical.canonicalParentLabel,
+          canonicalParentKey: canonical.canonicalParentKey,
+          canonicalParentLabel: canonical.canonicalParentLabel,
+          childKey: candidate.key,
+          childLabel,
+          category: assignCategoryFromKeyAndTitle(canonical.canonicalParentKey, titleLower),
+        };
+      }
+      const child = pickBestChild(candidates, candidate.key);
+      const parentLabel = chooseReadableLabel(
+        candidateLabels.get(candidate.key) ?? [candidate.label],
+      );
+      const childLabel = child
+        ? chooseReadableLabel(candidateLabels.get(child.key) ?? [child.label])
+        : null;
+      return {
+        parentKey: candidate.key,
+        parentLabel,
+        canonicalParentKey: canonical.canonicalParentKey,
+        canonicalParentLabel: canonical.canonicalParentLabel,
+        childKey: child?.key ?? null,
+        childLabel,
+        category: assignCategoryFromKeyAndTitle(canonical.canonicalParentKey, titleLower),
+      };
+    }
   }
 
   for (const candidate of ranked) {
+    if (!isWeakParentKey(candidate.key)) {
+      const canonical = resolveCanonicalParent(
+        candidate.key,
+        candidate.label,
+        titleLower,
+        normalizedTitleTokens,
+      );
+      const child = pickBestChild(candidates, candidate.key);
+      const parentLabel = chooseReadableLabel(
+        candidateLabels.get(candidate.key) ?? [candidate.label],
+      );
+      const childLabel = child
+        ? chooseReadableLabel(candidateLabels.get(child.key) ?? [child.label])
+        : null;
+      return {
+        parentKey: candidate.key,
+        parentLabel,
+        canonicalParentKey: canonical.canonicalParentKey,
+        canonicalParentLabel: canonical.canonicalParentLabel,
+        childKey: child?.key ?? null,
+        childLabel,
+        category: assignCategoryFromKeyAndTitle(canonical.canonicalParentKey, titleLower),
+      };
+    }
+  }
+
+  for (const candidate of ranked) {
+    const themed = matchMajorTheme(candidate.key, titleLower, normalizedTitleTokens);
+    if (themed) {
+      const childLabel = formatFallbackParentLabel(
+        chooseReadableLabel(candidateLabels.get(candidate.key) ?? [candidate.label]),
+      );
+      return {
+        parentKey: themed.canonicalParentKey,
+        parentLabel: themed.canonicalParentLabel,
+        canonicalParentKey: themed.canonicalParentKey,
+        canonicalParentLabel: themed.canonicalParentLabel,
+        childKey: candidate.key,
+        childLabel,
+        category: assignCategoryFromKeyAndTitle(themed.canonicalParentKey, titleLower),
+      };
+    }
+  }
+
+  const strong = ranked.find((c) => !isWeakParentKey(c.key));
+  const weak = ranked[0];
+  if (strong && weak && weak.key !== strong.key) {
     const canonical = resolveCanonicalParent(
-      candidate.key,
-      candidate.label,
+      strong.key,
+      strong.label,
       titleLower,
       normalizedTitleTokens,
     );
-    if (!isWeakParentKey(candidate.key)) return { raw: candidate, canonical };
+    const childLabel = formatFallbackParentLabel(
+      chooseReadableLabel(candidateLabels.get(weak.key) ?? [weak.label]),
+    );
+    return {
+      parentKey: canonical.canonicalParentKey,
+      parentLabel: canonical.canonicalParentLabel,
+      canonicalParentKey: canonical.canonicalParentKey,
+      canonicalParentLabel: canonical.canonicalParentLabel,
+      childKey: weak.key,
+      childLabel,
+      category: assignCategoryFromKeyAndTitle(canonical.canonicalParentKey, titleLower),
+    };
   }
 
-  return null;
+  const w = ranked[0];
+  const childLabel = formatFallbackParentLabel(
+    chooseReadableLabel(candidateLabels.get(w.key) ?? [w.label]),
+  );
+  return {
+    parentKey: GENERAL_DISCOURSE_PARENT_KEY,
+    parentLabel: GENERAL_DISCOURSE_PARENT_LABEL,
+    canonicalParentKey: GENERAL_DISCOURSE_PARENT_KEY,
+    canonicalParentLabel: GENERAL_DISCOURSE_PARENT_LABEL,
+    childKey: w.key,
+    childLabel,
+    category: assignCategoryFromKeyAndTitle(GENERAL_DISCOURSE_PARENT_KEY, titleLower),
+  };
 }
 
 function pickBestChild(
@@ -304,25 +428,6 @@ function pickBestChild(
     if (!best || score > best.score) best = { candidate, score };
   }
   return best?.candidate ?? null;
-}
-
-function assignCategory(canonicalOrRawKey: string): AssignedTopic["category"] {
-  const k = canonicalOrRawKey.toLowerCase();
-  if (
-    k.startsWith("us-iran") ||
-    k.startsWith("ukraine-russia") ||
-    k.includes("conflict") ||
-    k.includes("sanction")
-  ) {
-    return "geopolitics";
-  }
-  if (k.startsWith("apple-") || k.startsWith("us-router")) return "technology";
-  if (k.startsWith("oil-energy")) return "economy";
-
-  if (CATEGORY_KEYWORDS.geopolitics.some((w) => k.includes(w))) return "geopolitics";
-  if (CATEGORY_KEYWORDS.technology.some((w) => k.includes(w))) return "technology";
-  if (CATEGORY_KEYWORDS.economy.some((w) => k.includes(w))) return "economy";
-  return "general";
 }
 
 function chooseReadableLabel(labels: string[]): string {
@@ -343,49 +448,84 @@ function chooseReadableLabel(labels: string[]): string {
 async function fetchRedditPosts() {
   const results: SourcePost[] = [];
   const seen = new Set<string>();
+  /** Flat: `pool.subreddit.listing` → posts first attributed to that fetch (after dedupe). */
   const listingCounts: Record<string, number> = {};
+  const byPool: Record<
+    RedditSourcePool,
+    { bySubredditListing: Record<string, number>; uniquePosts: number }
+  > = {
+    technology: { bySubredditListing: {}, uniquePosts: 0 },
+    economy: { bySubredditListing: {}, uniquePosts: 0 },
+    geopolitics: { bySubredditListing: {}, uniquePosts: 0 },
+  };
 
-  for (const subreddit of SOURCE_CONFIG.reddit.subreddits) {
-    for (const listing of SOURCE_CONFIG.reddit.listings) {
-      const key = `${subreddit}.${listing}`;
-      listingCounts[key] = 0;
+  const pools = SOURCE_CONFIG.reddit.pools;
+  for (const pool of Object.keys(pools) as RedditSourcePool[]) {
+    for (const subreddit of pools[pool]) {
+      for (const listing of SOURCE_CONFIG.reddit.listings) {
+        const flatKey = `${pool}.${subreddit}.${listing}`;
+        const subListingKey = `${subreddit}.${listing}`;
+        listingCounts[flatKey] = 0;
 
-      const res = await fetch(
-        `https://www.reddit.com/r/${subreddit}/${listing}.json?limit=${SOURCE_CONFIG.reddit.limit}`,
-        {
-          headers: { "User-Agent": SOURCE_CONFIG.reddit.userAgent },
-          cache: "no-store",
-        },
-      );
+        const res = await fetch(
+          `https://www.reddit.com/r/${subreddit}/${listing}.json?limit=${SOURCE_CONFIG.reddit.limit}`,
+          {
+            headers: { "User-Agent": SOURCE_CONFIG.reddit.userAgent },
+            cache: "no-store",
+          },
+        );
 
-      if (!res.ok) continue;
-      const data = await res.json();
-      const posts = data?.data?.children ?? [];
+        if (!res.ok) continue;
+        const data = await res.json();
+        const posts = data?.data?.children ?? [];
 
-      for (const item of posts) {
-        const p = item?.data;
-        if (!p?.id || !p?.title) continue;
+        for (const item of posts) {
+          const p = item?.data;
+          if (!p?.id || !p?.title) continue;
 
-        const dedupeKey = `reddit:${p.id}`;
-        if (seen.has(dedupeKey)) continue;
-        seen.add(dedupeKey);
+          const dedupeKey = `reddit:${p.id}`;
+          if (seen.has(dedupeKey)) continue;
+          seen.add(dedupeKey);
 
-        results.push({
-          source: "reddit",
-          externalId: String(p.id),
-          title: String(p.title),
-          url: p.url ? String(p.url) : `https://www.reddit.com${String(p.permalink ?? "")}`,
-          createdAt: p.created_utc ? new Date(p.created_utc * 1000) : null,
-        });
-        listingCounts[key] += 1;
+          results.push({
+            source: "reddit",
+            externalId: String(p.id),
+            title: String(p.title),
+            url: p.url ? String(p.url) : `https://www.reddit.com${String(p.permalink ?? "")}`,
+            createdAt: p.created_utc ? new Date(p.created_utc * 1000) : null,
+            redditMeta: { pool, subreddit, listing },
+          });
+          listingCounts[flatKey] += 1;
+          byPool[pool].bySubredditListing[subListingKey] =
+            (byPool[pool].bySubredditListing[subListingKey] ?? 0) + 1;
+          byPool[pool].uniquePosts += 1;
+        }
       }
     }
   }
 
+  let fetchAttempts = 0;
+  for (const pool of Object.keys(pools) as RedditSourcePool[]) {
+    fetchAttempts += pools[pool].length * SOURCE_CONFIG.reddit.listings.length;
+  }
+
+  const subredditsByPool = {
+    technology: pools.technology.length,
+    economy: pools.economy.length,
+    geopolitics: pools.geopolitics.length,
+  } satisfies Record<RedditSourcePool, number>;
+
   return {
     posts: results,
     listingCounts,
+    byPool,
     dedupedCount: results.length,
+    configSummary: {
+      listings: [...SOURCE_CONFIG.reddit.listings],
+      limitPerListing: SOURCE_CONFIG.reddit.limit,
+      subredditsByPool,
+      fetchAttempts,
+    },
   };
 }
 
@@ -508,30 +648,14 @@ export async function runIngest() {
 
   let topicHitsSaved = 0;
   for (const item of prepared) {
-    const picked = pickParentWithRetries(
+    const assigned = pickParentForPost(
       item.candidates,
       item.post.title,
       candidateFrequency,
       candidateSourceSpread,
+      candidateLabels,
     );
-    if (!picked) continue;
-
-    const parent = picked.raw;
-    const canonical = picked.canonical;
-    const child = pickBestChild(item.candidates, parent.key);
-    const parentLabel = chooseReadableLabel(
-      candidateLabels.get(parent.key) ?? [parent.label],
-    );
-    const childLabel =
-      child ? chooseReadableLabel(candidateLabels.get(child.key) ?? [child.label]) : null;
-
-    const assigned: AssignedTopic = {
-      parentKey: parent.key,
-      parentLabel,
-      childKey: child?.key ?? null,
-      childLabel,
-      category: assignCategory(canonical.canonicalParentKey),
-    };
+    if (!assigned) continue;
 
     await db.topicHit.create({
       data: {
@@ -539,8 +663,8 @@ export async function runIngest() {
         category: assigned.category,
         parentKey: assigned.parentKey,
         parentLabel: assigned.parentLabel,
-        canonicalParentKey: canonical.canonicalParentKey,
-        canonicalParentLabel: canonical.canonicalParentLabel,
+        canonicalParentKey: assigned.canonicalParentKey,
+        canonicalParentLabel: assigned.canonicalParentLabel,
         childKey: assigned.childKey,
         childLabel: assigned.childLabel,
         postId: item.postId,
@@ -555,14 +679,21 @@ export async function runIngest() {
     fetched: {
       reddit: {
         totalUniquePosts: redditResult.dedupedCount,
+        configSummary: redditResult.configSummary,
+        /** Per pool: unique posts first seen from that pool’s subreddits (after cross-pool dedupe). */
+        byPool: redditResult.byPool,
+        /** Flat map: `pool.subreddit.listing` → posts attributed to that request (dedupe across pools: first win). */
         bySubredditListing: redditResult.listingCounts,
       },
       hackerNews: {
         totalUniquePosts: hnResult.dedupedCount,
         byListType: hnResult.listCounts,
+        configSummary: {
+          storyLists: [...SOURCE_CONFIG.hn.storyLists],
+          limitPerList: SOURCE_CONFIG.hn.limit,
+        },
       },
-    }
-    ,
+    },
     totalUniquePosts: allPosts.length,
     dedupedByTitle,
     savedPosts,
@@ -580,13 +711,82 @@ type TopicHitWithPost = Awaited<ReturnType<typeof db.topicHit.findMany>>[number]
   };
 };
 
-function groupByCanonicalParent(rows: TopicHitWithPost[]) {
-  const map = new Map<string, TopicHitWithPost[]>();
+function rowOriginalParentKey(row: TopicHitWithPost): string {
+  return row.canonicalParentKey ?? row.parentKey;
+}
+
+type ChildBlock = {
+  childKey: string;
+  childLabel: string;
+  count: number;
+  evidence: ReturnType<typeof toEvidence>;
+};
+
+/** Phrase-based children (no cap here — combined step sorts and caps). */
+function buildChildren(rows: TopicHitWithPost[]) {
+  const childMap = new Map<string, TopicHitWithPost[]>();
   for (const row of rows) {
-    const key = row.canonicalParentKey ?? row.parentKey;
-    map.set(key, [...(map.get(key) ?? []), row]);
+    if (!row.childKey || !row.childLabel) continue;
+    const key = `${row.childKey}::${row.childLabel}`;
+    childMap.set(key, [...(childMap.get(key) ?? []), row]);
   }
-  return map;
+  return [...childMap.entries()]
+    .map(([key, childRows]) => {
+      const sep = key.indexOf("::");
+      const childKey = sep === -1 ? key : key.slice(0, sep);
+      const childLabel = sep === -1 ? "" : key.slice(sep + 2);
+      return {
+        childKey,
+        childLabel,
+        count: childRows.length,
+        evidence: toEvidence(childRows),
+      };
+    })
+    .sort((a, b) => b.count - a.count);
+}
+
+/** Original parent keys absorbed into a display merge become extra child rows. */
+function mergeFragmentChildren(rows: TopicHitWithPost[], displayKey: string): ChildBlock[] {
+  const byKey = new Map<string, TopicHitWithPost[]>();
+  for (const row of rows) {
+    const ok = rowOriginalParentKey(row);
+    if (ok === displayKey) continue;
+    byKey.set(ok, [...(byKey.get(ok) ?? []), row]);
+  }
+  return [...byKey.entries()].map(([childKey, sub]) => ({
+    childKey,
+    childLabel:
+      sub[0]?.canonicalParentLabel ??
+      sub[0]?.parentLabel ??
+      formatFallbackParentLabel(childKey),
+    count: sub.length,
+    evidence: toEvidence(sub),
+  }));
+}
+
+function combineChildrenForParent(rows: TopicHitWithPost[], displayKey: string): ChildBlock[] {
+  const phrase = buildChildren(rows);
+  const merged = mergeFragmentChildren(rows, displayKey);
+  const byChildKey = new Map<string, ChildBlock>();
+  for (const c of [...merged, ...phrase]) {
+    const prev = byChildKey.get(c.childKey);
+    if (!prev) {
+      byChildKey.set(c.childKey, { ...c });
+      continue;
+    }
+    prev.count += c.count;
+    const seen = new Set<string>();
+    prev.evidence = [...prev.evidence, ...c.evidence].filter((e) => {
+      const id = `${e.title}|${e.timestamp}`;
+      if (seen.has(id)) return false;
+      seen.add(id);
+      return true;
+    });
+    prev.evidence = prev.evidence.slice(0, 3);
+  }
+  return [...byChildKey.values()]
+    .sort((a, b) => b.count - a.count)
+    .slice(0, MAX_CHILDREN_PER_PARENT);
 }
 
 function computeCategoryCounts(topics: Array<{ category: string }>) {
@@ -609,29 +809,6 @@ function toEvidence(rows: TopicHitWithPost[]) {
       timestamp: (row.post.createdAt ?? row.post.fetchedAt).toISOString(),
       url: row.post.url,
     }));
-}
-
-function buildChildren(rows: TopicHitWithPost[]) {
-  const childMap = new Map<string, TopicHitWithPost[]>();
-  for (const row of rows) {
-    if (!row.childKey || !row.childLabel) continue;
-    const key = `${row.childKey}::${row.childLabel}`;
-    childMap.set(key, [...(childMap.get(key) ?? []), row]);
-  }
-  return [...childMap.entries()]
-    .map(([key, childRows]) => {
-      const sep = key.indexOf("::");
-      const childKey = sep === -1 ? key : key.slice(0, sep);
-      const childLabel = sep === -1 ? "" : key.slice(sep + 2);
-      return {
-        childKey,
-        childLabel,
-        count: childRows.length,
-        evidence: toEvidence(childRows),
-      };
-    })
-    .sort((a, b) => b.count - a.count)
-    .slice(0, 4);
 }
 
 async function fetchTopicRows(bucketTime: Date) {
@@ -677,17 +854,16 @@ export async function getRisingTopics(limit = 30) {
     fetchTopicRows(previousBucket),
   ]);
 
-  const currentByParent = groupByCanonicalParent(currentRows as TopicHitWithPost[]);
-  const previousByParent = groupByCanonicalParent(previousRows as TopicHitWithPost[]);
+  const currentByDisplay = groupRowsByDisplayParent(currentRows as TopicHitWithPost[]);
+  const previousByDisplay = groupRowsByDisplayParent(previousRows as TopicHitWithPost[]);
 
-  const allTopics = [...currentByParent.entries()]
+  const allTopics = [...currentByDisplay.entries()]
     .map(([parentKey, rows]) => {
       const current = rows.length;
-      const previous = previousByParent.get(parentKey)?.length ?? 0;
-      const parentLabel = chooseReadableLabel(
-        rows.map((r) => r.canonicalParentLabel ?? r.parentLabel),
-      );
-      const category = rows[0]?.category ?? "general";
+      const previous = previousByDisplay.get(parentKey)?.length ?? 0;
+      const { label: parentLabel } = displayParentForRow(rows[0]);
+      const titles = rows.map((r) => r.post.title);
+      const category = inferTopicCategory(parentKey, titles);
       const sourceBreakdown = rows.reduce(
         (acc, row) => {
           acc[row.post.source] = (acc[row.post.source] ?? 0) + 1;
@@ -715,9 +891,10 @@ export async function getRisingTopics(limit = 30) {
         confidence: metrics.confidence,
         sourceBreakdown,
         lastSeenAt: lastSeenAt ?? null,
-        children: buildChildren(rows),
+        children: combineChildrenForParent(rows, parentKey),
       };
     })
+    .filter((t) => t.current >= 3 || t.sourceCount >= 2)
     .sort(
       (a, b) =>
         b.score - a.score ||
