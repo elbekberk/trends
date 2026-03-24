@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
 }
 
 datasource db {
@@ -14,6 +15,7 @@ model Post {
   title      String
   createdAt  DateTime?
   fetchedAt  DateTime @default(now())
+  evidences  TopicEvidence[]
 
   @@unique([source, externalId])
 }
@@ -21,8 +23,21 @@ model Post {
 model TopicCount {
   id         Int      @id @default(autoincrement())
   topic      String
+  topicLabel String   @default("")
   bucketTime DateTime
   count      Int
 
   @@unique([topic, bucketTime])
+}
+
+model TopicEvidence {
+  id         Int      @id @default(autoincrement())
+  topic      String
+  bucketTime DateTime
+  postId     Int
+  createdAt  DateTime @default(now())
+  post       Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@unique([topic, bucketTime, postId])
+  @@index([topic, bucketTime])
 }
