@@ -5,6 +5,7 @@
 
 import {
   LANE_ORDER,
+  laneVisitOrderForRun,
   type RedditCollectorState,
 } from "@/src/lib/reddit/collectorState";
 import { commentSubBudgetSlots } from "@/src/lib/reddit/adaptiveBudget";
@@ -172,6 +173,10 @@ export async function runRedditListingFetchPhase(input: {
   collector.currentCycleStatus = "collecting";
   collector.currentLane = null;
 
+  /** Lanes deferred from the previous run — slight penalty relief so they get a fair shot this run. */
+  const resumeDeferred = new Set(collector.deferredLanes ?? []);
+  const visitLanes = laneVisitOrderForRun(collector);
+
   const results: SourcePost[] = [];
   const seen = new Set<string>();
   const listingCounts: Record<string, number> = {};
@@ -213,12 +218,13 @@ export async function runRedditListingFetchPhase(input: {
     skippedReason: null as ListingFetchResult["metrics"]["skippedReason"],
   };
 
-  for (const pool of LANE_ORDER) {
+  for (const pool of visitLanes) {
     if (abortListings) break;
     collector.currentLane = pool;
     const penalty = Math.min(0.5, collector.lanePenalty[pool] ?? 0);
+    const effectivePenalty = resumeDeferred.has(pool) ? Math.max(0, penalty - 0.08) : penalty;
     const batchBase = redditEnv.batchSizeByPool[pool];
-    const take = Math.max(0, Math.floor(batchBase * (1 - penalty)));
+    const take = Math.max(0, Math.floor(batchBase * (1 - effectivePenalty)));
     const all = pools[pool];
     if (take === 0 || all.length === 0) {
       completedLanes.push(pool);

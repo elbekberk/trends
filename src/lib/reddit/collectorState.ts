@@ -20,6 +20,15 @@ export const LANE_ORDER: readonly RedditSourcePool[] = [
   "general",
 ] as const;
 
+/** Next run visits deferred/unfinished lanes first (stable lane order), then the rest — avoids starving tail pools. */
+export function laneVisitOrderForRun(collector: RedditCollectorState): RedditSourcePool[] {
+  const raw = collector.deferredLanes ?? [];
+  if (raw.length === 0) return [...LANE_ORDER];
+  const deferredOrdered = LANE_ORDER.filter((p) => raw.includes(p));
+  const rest = LANE_ORDER.filter((p) => !raw.includes(p));
+  return [...deferredOrdered, ...rest];
+}
+
 export type CollectorCycleStatus =
   | "idle"
   | "collecting"

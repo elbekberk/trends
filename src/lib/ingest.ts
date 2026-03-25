@@ -1342,6 +1342,73 @@ function isPublishableIngestOutcome(o: {
   );
 }
 
+function countLanesWithUniquePosts(
+  byPool: Record<RedditSourcePool, { uniquePosts: number }>,
+): number {
+  return LANE_ORDER.filter((l) => (byPool[l]?.uniquePosts ?? 0) > 0).length;
+}
+
+function countLanesWithUniquePostsFromHealth(h: IngestHealthSnapshot): number {
+  const m = h.redditUniquePostsByPool ?? {};
+  return LANE_ORDER.filter((l) => (m[l] ?? 0) > 0).length;
+}
+
+/**
+ * Avoid replacing the latest visible ingest snapshot with a weaker partial run (narrower lanes or fewer hits).
+ * Full cycles always publish; first snapshot or near-empty previous always allows.
+ */
+function qualityAllowsReplacingLatestSnapshot(args: {
+  prev: IngestHealthSnapshot | null;
+  newCycleStatus: RedditCollectorState["currentCycleStatus"];
+  newCompletedLanes: readonly string[];
+  newByPool: Record<RedditSourcePool, { uniquePosts: number }>;
+  newTopicHits: number;
+  newRedditPosts: number;
+}): { allow: boolean; reason: string } {
+  const { prev, newCycleStatus, newCompletedLanes, newByPool, newTopicHits, newRedditPosts } =
+    args;
+  if (!prev) return { allow: true, reason: "first_snapshot" };
+
+  const prevNearEmpty =
+    (prev.topicHitsSaved ?? 0) === 0 && (prev.redditPostsFetched ?? 0) < 5;
+  if (prevNearEmpty) return { allow: true, reason: "previous_near_empty" };
+
+  if (newCycleStatus === "complete") return { allow: true, reason: "cycle_complete" };
+
+  const prevCov = countLanesWithUniquePostsFromHealth(prev);
+  const newCov = countLanesWithUniquePosts(newByPool);
+  const prevHits = prev.topicHitsSaved ?? 0;
+  const prevPosts = prev.redditPostsFetched ?? 0;
+  const prevCompleted = (prev.completedLanes ?? []).length;
+  const newCompleted = newCompletedLanes.length;
+
+  if (newCov > prevCov) return { allow: true, reason: "better_lane_coverage" };
+
+  if (newCov === prevCov && newCompleted > prevCompleted) {
+    return { allow: true, reason: "more_lanes_completed_same_post_coverage" };
+  }
+
+  if (newCov < prevCov) {
+    return { allow: false, reason: "snapshot_quality_below_previous_narrower_lanes" };
+  }
+
+  const hitsOk = newTopicHits >= prevHits - 1;
+  const postsOk = newRedditPosts >= prevPosts - 2;
+  if (hitsOk && postsOk) {
+    return { allow: true, reason: "equal_coverage_not_weaker_volume" };
+  }
+
+  if (newTopicHits < prevHits - 2 && newRedditPosts < prevPosts - 4) {
+    return { allow: false, reason: "snapshot_quality_below_previous_weaker_volume" };
+  }
+
+  if (newTopicHits < prevHits - 2) {
+    return { allow: false, reason: "snapshot_quality_below_previous_fewer_topic_hits" };
+  }
+
+  return { allow: true, reason: "equal_coverage_marginal" };
+}
+
 /**
  * Full ingest: loads persisted `RedditCollectorState` (cursors, budgets) and runs listing fetch.
  * If the previous run stopped with `aborted_budget` / partial lanes, the next call continues from
@@ -1351,6 +1418,8 @@ export async function runIngest() {
   const fetchedAt = new Date();
   const bucketTime = getIngestBucketTime(fetchedAt);
   const bucketTimeIso = bucketTime.toISOString();
+
+  const previousSnapshotRow = await getLatestIngestSnapshot();
 
   let { state: collector } = await loadRedditCollectorState(fetchedAt);
 
@@ -1397,6 +1466,10 @@ export async function runIngest() {
   };
 
   const redditPosts = redditResult.posts;
+  /** Comment enrichment only when listing finished a full cycle — keeps HTTP and focus on lane fairness. */
+  const allowCommentEnrichment =
+    listingPhase.collector.currentCycleStatus === "complete" &&
+    !listingPhase.metrics.abortedEarly;
   let commentsFetched = 0;
   let commentsUsed = 0;
   let commentSnippetFetchFailures = 0;
@@ -1435,6 +1508,7 @@ export async function runIngest() {
         post.source === "reddit" &&
         post.reddit &&
         redditResult.redditClient &&
+        allowCommentEnrichment &&
         shouldFetchCommentSnippets(
           post.reddit.pool,
           post.reddit.score,
@@ -1524,6 +1598,18 @@ export async function runIngest() {
       topicHitsSaved += 1;
     }
 
+    const quality = qualityAllowsReplacingLatestSnapshot({
+      prev: previousSnapshotRow?.health ?? null,
+      newCycleStatus: listingPhase.collector.currentCycleStatus,
+      newCompletedLanes: listingPhase.collector.completedLanes,
+      newByPool: redditResult.byPool,
+      newTopicHits: topicHitsSaved,
+      newRedditPosts: redditResult.dedupedCount,
+    });
+    if (!quality.allow) {
+      throw new SkipSnapshotPublishError(`snapshot_quality_below_previous:${quality.reason}`);
+    }
+
     if (
       !isPublishableIngestOutcome({
         totalRedditRequests: redditResult.redditHttp.totalRedditRequests,
@@ -1569,6 +1655,7 @@ export async function runIngest() {
     listingHttp: redditResult.listingHttpAttempts,
     commentHttp: commentHttpBudgetUsed,
     abortedEarly: listingPhase.metrics.abortedEarly,
+    listingAbortReason: listingPhase.metrics.abortReason,
     worstLane: worst,
   });
   const adaptiveOut = computeNextAdaptiveBudget(collector, sig);
