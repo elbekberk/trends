@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
 import { runIngest } from "@/src/lib/ingest";
 
+/**
+ * Triggers a full ingest run (Reddit listing + topic pipeline + snapshot publish).
+ * This is the only HTTP route that performs collection — `GET /api/ingest/latest` only reads DB state.
+ */
 export async function POST() {
   try {
     const result = await runIngest();

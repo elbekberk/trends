@@ -19,6 +19,17 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  */
 export type Post = $Result.DefaultSelection<Prisma.$PostPayload>
 /**
+ * Model RedditIngestState
+ * Singleton (id=1): interim adaptive Reddit collector — cursors + scheduling JSON (UTC timestamps in JSON).
+ * Replaceable when a fuller OAuth/API collector ships; see `collectorJson` docs in code.
+ */
+export type RedditIngestState = $Result.DefaultSelection<Prisma.$RedditIngestStatePayload>
+/**
+ * Model IngestSnapshot
+ * Append-only ingest runs: full health payload for UI / API.
+ */
+export type IngestSnapshot = $Result.DefaultSelection<Prisma.$IngestSnapshotPayload>
+/**
  * Model TopicHit
  * 
  */
@@ -151,6 +162,26 @@ export class PrismaClient<
     * ```
     */
   get post(): Prisma.PostDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.redditIngestState`: Exposes CRUD operations for the **RedditIngestState** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more RedditIngestStates
+    * const redditIngestStates = await prisma.redditIngestState.findMany()
+    * ```
+    */
+  get redditIngestState(): Prisma.RedditIngestStateDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.ingestSnapshot`: Exposes CRUD operations for the **IngestSnapshot** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more IngestSnapshots
+    * const ingestSnapshots = await prisma.ingestSnapshot.findMany()
+    * ```
+    */
+  get ingestSnapshot(): Prisma.IngestSnapshotDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.topicHit`: Exposes CRUD operations for the **TopicHit** model.
@@ -603,6 +634,8 @@ export namespace Prisma {
 
   export const ModelName: {
     Post: 'Post',
+    RedditIngestState: 'RedditIngestState',
+    IngestSnapshot: 'IngestSnapshot',
     TopicHit: 'TopicHit'
   };
 
@@ -622,7 +655,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "post" | "topicHit"
+      modelProps: "post" | "redditIngestState" | "ingestSnapshot" | "topicHit"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -697,6 +730,154 @@ export namespace Prisma {
           count: {
             args: Prisma.PostCountArgs<ExtArgs>
             result: $Utils.Optional<PostCountAggregateOutputType> | number
+          }
+        }
+      }
+      RedditIngestState: {
+        payload: Prisma.$RedditIngestStatePayload<ExtArgs>
+        fields: Prisma.RedditIngestStateFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.RedditIngestStateFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RedditIngestStatePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.RedditIngestStateFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RedditIngestStatePayload>
+          }
+          findFirst: {
+            args: Prisma.RedditIngestStateFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RedditIngestStatePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.RedditIngestStateFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RedditIngestStatePayload>
+          }
+          findMany: {
+            args: Prisma.RedditIngestStateFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RedditIngestStatePayload>[]
+          }
+          create: {
+            args: Prisma.RedditIngestStateCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RedditIngestStatePayload>
+          }
+          createMany: {
+            args: Prisma.RedditIngestStateCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.RedditIngestStateCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RedditIngestStatePayload>[]
+          }
+          delete: {
+            args: Prisma.RedditIngestStateDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RedditIngestStatePayload>
+          }
+          update: {
+            args: Prisma.RedditIngestStateUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RedditIngestStatePayload>
+          }
+          deleteMany: {
+            args: Prisma.RedditIngestStateDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.RedditIngestStateUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.RedditIngestStateUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RedditIngestStatePayload>[]
+          }
+          upsert: {
+            args: Prisma.RedditIngestStateUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RedditIngestStatePayload>
+          }
+          aggregate: {
+            args: Prisma.RedditIngestStateAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateRedditIngestState>
+          }
+          groupBy: {
+            args: Prisma.RedditIngestStateGroupByArgs<ExtArgs>
+            result: $Utils.Optional<RedditIngestStateGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.RedditIngestStateCountArgs<ExtArgs>
+            result: $Utils.Optional<RedditIngestStateCountAggregateOutputType> | number
+          }
+        }
+      }
+      IngestSnapshot: {
+        payload: Prisma.$IngestSnapshotPayload<ExtArgs>
+        fields: Prisma.IngestSnapshotFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.IngestSnapshotFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IngestSnapshotPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.IngestSnapshotFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IngestSnapshotPayload>
+          }
+          findFirst: {
+            args: Prisma.IngestSnapshotFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IngestSnapshotPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.IngestSnapshotFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IngestSnapshotPayload>
+          }
+          findMany: {
+            args: Prisma.IngestSnapshotFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IngestSnapshotPayload>[]
+          }
+          create: {
+            args: Prisma.IngestSnapshotCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IngestSnapshotPayload>
+          }
+          createMany: {
+            args: Prisma.IngestSnapshotCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.IngestSnapshotCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IngestSnapshotPayload>[]
+          }
+          delete: {
+            args: Prisma.IngestSnapshotDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IngestSnapshotPayload>
+          }
+          update: {
+            args: Prisma.IngestSnapshotUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IngestSnapshotPayload>
+          }
+          deleteMany: {
+            args: Prisma.IngestSnapshotDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.IngestSnapshotUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.IngestSnapshotUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IngestSnapshotPayload>[]
+          }
+          upsert: {
+            args: Prisma.IngestSnapshotUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IngestSnapshotPayload>
+          }
+          aggregate: {
+            args: Prisma.IngestSnapshotAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateIngestSnapshot>
+          }
+          groupBy: {
+            args: Prisma.IngestSnapshotGroupByArgs<ExtArgs>
+            result: $Utils.Optional<IngestSnapshotGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.IngestSnapshotCountArgs<ExtArgs>
+            result: $Utils.Optional<IngestSnapshotCountAggregateOutputType> | number
           }
         }
       }
@@ -871,6 +1052,8 @@ export namespace Prisma {
   }
   export type GlobalOmitConfig = {
     post?: PostOmit
+    redditIngestState?: RedditIngestStateOmit
+    ingestSnapshot?: IngestSnapshotOmit
     topicHit?: TopicHitOmit
   }
 
@@ -1021,6 +1204,7 @@ export namespace Prisma {
     redditPool: string | null
     linkDomain: string | null
     isSelf: boolean | null
+    commentsJson: string | null
     createdAt: Date | null
     fetchedAt: Date | null
   }
@@ -1040,6 +1224,7 @@ export namespace Prisma {
     redditPool: string | null
     linkDomain: string | null
     isSelf: boolean | null
+    commentsJson: string | null
     createdAt: Date | null
     fetchedAt: Date | null
   }
@@ -1059,6 +1244,7 @@ export namespace Prisma {
     redditPool: number
     linkDomain: number
     isSelf: number
+    commentsJson: number
     createdAt: number
     fetchedAt: number
     _all: number
@@ -1092,6 +1278,7 @@ export namespace Prisma {
     redditPool?: true
     linkDomain?: true
     isSelf?: true
+    commentsJson?: true
     createdAt?: true
     fetchedAt?: true
   }
@@ -1111,6 +1298,7 @@ export namespace Prisma {
     redditPool?: true
     linkDomain?: true
     isSelf?: true
+    commentsJson?: true
     createdAt?: true
     fetchedAt?: true
   }
@@ -1130,6 +1318,7 @@ export namespace Prisma {
     redditPool?: true
     linkDomain?: true
     isSelf?: true
+    commentsJson?: true
     createdAt?: true
     fetchedAt?: true
     _all?: true
@@ -1236,6 +1425,7 @@ export namespace Prisma {
     redditPool: string | null
     linkDomain: string | null
     isSelf: boolean | null
+    commentsJson: string | null
     createdAt: Date | null
     fetchedAt: Date
     _count: PostCountAggregateOutputType | null
@@ -1274,6 +1464,7 @@ export namespace Prisma {
     redditPool?: boolean
     linkDomain?: boolean
     isSelf?: boolean
+    commentsJson?: boolean
     createdAt?: boolean
     fetchedAt?: boolean
     topicHits?: boolean | Post$topicHitsArgs<ExtArgs>
@@ -1295,6 +1486,7 @@ export namespace Prisma {
     redditPool?: boolean
     linkDomain?: boolean
     isSelf?: boolean
+    commentsJson?: boolean
     createdAt?: boolean
     fetchedAt?: boolean
   }, ExtArgs["result"]["post"]>
@@ -1314,6 +1506,7 @@ export namespace Prisma {
     redditPool?: boolean
     linkDomain?: boolean
     isSelf?: boolean
+    commentsJson?: boolean
     createdAt?: boolean
     fetchedAt?: boolean
   }, ExtArgs["result"]["post"]>
@@ -1333,11 +1526,12 @@ export namespace Prisma {
     redditPool?: boolean
     linkDomain?: boolean
     isSelf?: boolean
+    commentsJson?: boolean
     createdAt?: boolean
     fetchedAt?: boolean
   }
 
-  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "source" | "externalId" | "title" | "url" | "externalUrl" | "selftext" | "redditScore" | "numComments" | "subreddit" | "redditListing" | "redditPool" | "linkDomain" | "isSelf" | "createdAt" | "fetchedAt", ExtArgs["result"]["post"]>
+  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "source" | "externalId" | "title" | "url" | "externalUrl" | "selftext" | "redditScore" | "numComments" | "subreddit" | "redditListing" | "redditPool" | "linkDomain" | "isSelf" | "commentsJson" | "createdAt" | "fetchedAt", ExtArgs["result"]["post"]>
   export type PostInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     topicHits?: boolean | Post$topicHitsArgs<ExtArgs>
     _count?: boolean | PostCountOutputTypeDefaultArgs<ExtArgs>
@@ -1368,6 +1562,10 @@ export namespace Prisma {
       redditPool: string | null
       linkDomain: string | null
       isSelf: boolean | null
+      /**
+       * JSON array of trimmed top-level comment bodies (enrichment only; not used for topic extraction).
+       */
+      commentsJson: string | null
       createdAt: Date | null
       fetchedAt: Date
     }, ExtArgs["result"]["post"]>
@@ -1808,6 +2006,7 @@ export namespace Prisma {
     readonly redditPool: FieldRef<"Post", 'String'>
     readonly linkDomain: FieldRef<"Post", 'String'>
     readonly isSelf: FieldRef<"Post", 'Boolean'>
+    readonly commentsJson: FieldRef<"Post", 'String'>
     readonly createdAt: FieldRef<"Post", 'DateTime'>
     readonly fetchedAt: FieldRef<"Post", 'DateTime'>
   }
@@ -2235,6 +2434,2037 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: PostInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model RedditIngestState
+   */
+
+  export type AggregateRedditIngestState = {
+    _count: RedditIngestStateCountAggregateOutputType | null
+    _avg: RedditIngestStateAvgAggregateOutputType | null
+    _sum: RedditIngestStateSumAggregateOutputType | null
+    _min: RedditIngestStateMinAggregateOutputType | null
+    _max: RedditIngestStateMaxAggregateOutputType | null
+  }
+
+  export type RedditIngestStateAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type RedditIngestStateSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type RedditIngestStateMinAggregateOutputType = {
+    id: number | null
+    cursorJson: string | null
+    collectorJson: string | null
+    updatedAt: Date | null
+  }
+
+  export type RedditIngestStateMaxAggregateOutputType = {
+    id: number | null
+    cursorJson: string | null
+    collectorJson: string | null
+    updatedAt: Date | null
+  }
+
+  export type RedditIngestStateCountAggregateOutputType = {
+    id: number
+    cursorJson: number
+    collectorJson: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type RedditIngestStateAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type RedditIngestStateSumAggregateInputType = {
+    id?: true
+  }
+
+  export type RedditIngestStateMinAggregateInputType = {
+    id?: true
+    cursorJson?: true
+    collectorJson?: true
+    updatedAt?: true
+  }
+
+  export type RedditIngestStateMaxAggregateInputType = {
+    id?: true
+    cursorJson?: true
+    collectorJson?: true
+    updatedAt?: true
+  }
+
+  export type RedditIngestStateCountAggregateInputType = {
+    id?: true
+    cursorJson?: true
+    collectorJson?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type RedditIngestStateAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which RedditIngestState to aggregate.
+     */
+    where?: RedditIngestStateWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RedditIngestStates to fetch.
+     */
+    orderBy?: RedditIngestStateOrderByWithRelationInput | RedditIngestStateOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: RedditIngestStateWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RedditIngestStates from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RedditIngestStates.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned RedditIngestStates
+    **/
+    _count?: true | RedditIngestStateCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: RedditIngestStateAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: RedditIngestStateSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: RedditIngestStateMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: RedditIngestStateMaxAggregateInputType
+  }
+
+  export type GetRedditIngestStateAggregateType<T extends RedditIngestStateAggregateArgs> = {
+        [P in keyof T & keyof AggregateRedditIngestState]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateRedditIngestState[P]>
+      : GetScalarType<T[P], AggregateRedditIngestState[P]>
+  }
+
+
+
+
+  export type RedditIngestStateGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RedditIngestStateWhereInput
+    orderBy?: RedditIngestStateOrderByWithAggregationInput | RedditIngestStateOrderByWithAggregationInput[]
+    by: RedditIngestStateScalarFieldEnum[] | RedditIngestStateScalarFieldEnum
+    having?: RedditIngestStateScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: RedditIngestStateCountAggregateInputType | true
+    _avg?: RedditIngestStateAvgAggregateInputType
+    _sum?: RedditIngestStateSumAggregateInputType
+    _min?: RedditIngestStateMinAggregateInputType
+    _max?: RedditIngestStateMaxAggregateInputType
+  }
+
+  export type RedditIngestStateGroupByOutputType = {
+    id: number
+    cursorJson: string
+    collectorJson: string | null
+    updatedAt: Date
+    _count: RedditIngestStateCountAggregateOutputType | null
+    _avg: RedditIngestStateAvgAggregateOutputType | null
+    _sum: RedditIngestStateSumAggregateOutputType | null
+    _min: RedditIngestStateMinAggregateOutputType | null
+    _max: RedditIngestStateMaxAggregateOutputType | null
+  }
+
+  type GetRedditIngestStateGroupByPayload<T extends RedditIngestStateGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<RedditIngestStateGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof RedditIngestStateGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], RedditIngestStateGroupByOutputType[P]>
+            : GetScalarType<T[P], RedditIngestStateGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type RedditIngestStateSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    cursorJson?: boolean
+    collectorJson?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["redditIngestState"]>
+
+  export type RedditIngestStateSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    cursorJson?: boolean
+    collectorJson?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["redditIngestState"]>
+
+  export type RedditIngestStateSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    cursorJson?: boolean
+    collectorJson?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["redditIngestState"]>
+
+  export type RedditIngestStateSelectScalar = {
+    id?: boolean
+    cursorJson?: boolean
+    collectorJson?: boolean
+    updatedAt?: boolean
+  }
+
+  export type RedditIngestStateOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "cursorJson" | "collectorJson" | "updatedAt", ExtArgs["result"]["redditIngestState"]>
+
+  export type $RedditIngestStatePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "RedditIngestState"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      cursorJson: string
+      /**
+       * Durable collector state: budgets, lanes, cycles, backoff (see `src/lib/reddit/collectorState.ts`).
+       */
+      collectorJson: string | null
+      updatedAt: Date
+    }, ExtArgs["result"]["redditIngestState"]>
+    composites: {}
+  }
+
+  type RedditIngestStateGetPayload<S extends boolean | null | undefined | RedditIngestStateDefaultArgs> = $Result.GetResult<Prisma.$RedditIngestStatePayload, S>
+
+  type RedditIngestStateCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<RedditIngestStateFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: RedditIngestStateCountAggregateInputType | true
+    }
+
+  export interface RedditIngestStateDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['RedditIngestState'], meta: { name: 'RedditIngestState' } }
+    /**
+     * Find zero or one RedditIngestState that matches the filter.
+     * @param {RedditIngestStateFindUniqueArgs} args - Arguments to find a RedditIngestState
+     * @example
+     * // Get one RedditIngestState
+     * const redditIngestState = await prisma.redditIngestState.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends RedditIngestStateFindUniqueArgs>(args: SelectSubset<T, RedditIngestStateFindUniqueArgs<ExtArgs>>): Prisma__RedditIngestStateClient<$Result.GetResult<Prisma.$RedditIngestStatePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one RedditIngestState that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {RedditIngestStateFindUniqueOrThrowArgs} args - Arguments to find a RedditIngestState
+     * @example
+     * // Get one RedditIngestState
+     * const redditIngestState = await prisma.redditIngestState.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends RedditIngestStateFindUniqueOrThrowArgs>(args: SelectSubset<T, RedditIngestStateFindUniqueOrThrowArgs<ExtArgs>>): Prisma__RedditIngestStateClient<$Result.GetResult<Prisma.$RedditIngestStatePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first RedditIngestState that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RedditIngestStateFindFirstArgs} args - Arguments to find a RedditIngestState
+     * @example
+     * // Get one RedditIngestState
+     * const redditIngestState = await prisma.redditIngestState.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends RedditIngestStateFindFirstArgs>(args?: SelectSubset<T, RedditIngestStateFindFirstArgs<ExtArgs>>): Prisma__RedditIngestStateClient<$Result.GetResult<Prisma.$RedditIngestStatePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first RedditIngestState that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RedditIngestStateFindFirstOrThrowArgs} args - Arguments to find a RedditIngestState
+     * @example
+     * // Get one RedditIngestState
+     * const redditIngestState = await prisma.redditIngestState.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends RedditIngestStateFindFirstOrThrowArgs>(args?: SelectSubset<T, RedditIngestStateFindFirstOrThrowArgs<ExtArgs>>): Prisma__RedditIngestStateClient<$Result.GetResult<Prisma.$RedditIngestStatePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more RedditIngestStates that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RedditIngestStateFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all RedditIngestStates
+     * const redditIngestStates = await prisma.redditIngestState.findMany()
+     * 
+     * // Get first 10 RedditIngestStates
+     * const redditIngestStates = await prisma.redditIngestState.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const redditIngestStateWithIdOnly = await prisma.redditIngestState.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends RedditIngestStateFindManyArgs>(args?: SelectSubset<T, RedditIngestStateFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RedditIngestStatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a RedditIngestState.
+     * @param {RedditIngestStateCreateArgs} args - Arguments to create a RedditIngestState.
+     * @example
+     * // Create one RedditIngestState
+     * const RedditIngestState = await prisma.redditIngestState.create({
+     *   data: {
+     *     // ... data to create a RedditIngestState
+     *   }
+     * })
+     * 
+     */
+    create<T extends RedditIngestStateCreateArgs>(args: SelectSubset<T, RedditIngestStateCreateArgs<ExtArgs>>): Prisma__RedditIngestStateClient<$Result.GetResult<Prisma.$RedditIngestStatePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many RedditIngestStates.
+     * @param {RedditIngestStateCreateManyArgs} args - Arguments to create many RedditIngestStates.
+     * @example
+     * // Create many RedditIngestStates
+     * const redditIngestState = await prisma.redditIngestState.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends RedditIngestStateCreateManyArgs>(args?: SelectSubset<T, RedditIngestStateCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many RedditIngestStates and returns the data saved in the database.
+     * @param {RedditIngestStateCreateManyAndReturnArgs} args - Arguments to create many RedditIngestStates.
+     * @example
+     * // Create many RedditIngestStates
+     * const redditIngestState = await prisma.redditIngestState.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many RedditIngestStates and only return the `id`
+     * const redditIngestStateWithIdOnly = await prisma.redditIngestState.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends RedditIngestStateCreateManyAndReturnArgs>(args?: SelectSubset<T, RedditIngestStateCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RedditIngestStatePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a RedditIngestState.
+     * @param {RedditIngestStateDeleteArgs} args - Arguments to delete one RedditIngestState.
+     * @example
+     * // Delete one RedditIngestState
+     * const RedditIngestState = await prisma.redditIngestState.delete({
+     *   where: {
+     *     // ... filter to delete one RedditIngestState
+     *   }
+     * })
+     * 
+     */
+    delete<T extends RedditIngestStateDeleteArgs>(args: SelectSubset<T, RedditIngestStateDeleteArgs<ExtArgs>>): Prisma__RedditIngestStateClient<$Result.GetResult<Prisma.$RedditIngestStatePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one RedditIngestState.
+     * @param {RedditIngestStateUpdateArgs} args - Arguments to update one RedditIngestState.
+     * @example
+     * // Update one RedditIngestState
+     * const redditIngestState = await prisma.redditIngestState.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends RedditIngestStateUpdateArgs>(args: SelectSubset<T, RedditIngestStateUpdateArgs<ExtArgs>>): Prisma__RedditIngestStateClient<$Result.GetResult<Prisma.$RedditIngestStatePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more RedditIngestStates.
+     * @param {RedditIngestStateDeleteManyArgs} args - Arguments to filter RedditIngestStates to delete.
+     * @example
+     * // Delete a few RedditIngestStates
+     * const { count } = await prisma.redditIngestState.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends RedditIngestStateDeleteManyArgs>(args?: SelectSubset<T, RedditIngestStateDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more RedditIngestStates.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RedditIngestStateUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many RedditIngestStates
+     * const redditIngestState = await prisma.redditIngestState.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends RedditIngestStateUpdateManyArgs>(args: SelectSubset<T, RedditIngestStateUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more RedditIngestStates and returns the data updated in the database.
+     * @param {RedditIngestStateUpdateManyAndReturnArgs} args - Arguments to update many RedditIngestStates.
+     * @example
+     * // Update many RedditIngestStates
+     * const redditIngestState = await prisma.redditIngestState.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more RedditIngestStates and only return the `id`
+     * const redditIngestStateWithIdOnly = await prisma.redditIngestState.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends RedditIngestStateUpdateManyAndReturnArgs>(args: SelectSubset<T, RedditIngestStateUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RedditIngestStatePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one RedditIngestState.
+     * @param {RedditIngestStateUpsertArgs} args - Arguments to update or create a RedditIngestState.
+     * @example
+     * // Update or create a RedditIngestState
+     * const redditIngestState = await prisma.redditIngestState.upsert({
+     *   create: {
+     *     // ... data to create a RedditIngestState
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the RedditIngestState we want to update
+     *   }
+     * })
+     */
+    upsert<T extends RedditIngestStateUpsertArgs>(args: SelectSubset<T, RedditIngestStateUpsertArgs<ExtArgs>>): Prisma__RedditIngestStateClient<$Result.GetResult<Prisma.$RedditIngestStatePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of RedditIngestStates.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RedditIngestStateCountArgs} args - Arguments to filter RedditIngestStates to count.
+     * @example
+     * // Count the number of RedditIngestStates
+     * const count = await prisma.redditIngestState.count({
+     *   where: {
+     *     // ... the filter for the RedditIngestStates we want to count
+     *   }
+     * })
+    **/
+    count<T extends RedditIngestStateCountArgs>(
+      args?: Subset<T, RedditIngestStateCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], RedditIngestStateCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a RedditIngestState.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RedditIngestStateAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends RedditIngestStateAggregateArgs>(args: Subset<T, RedditIngestStateAggregateArgs>): Prisma.PrismaPromise<GetRedditIngestStateAggregateType<T>>
+
+    /**
+     * Group by RedditIngestState.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RedditIngestStateGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends RedditIngestStateGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: RedditIngestStateGroupByArgs['orderBy'] }
+        : { orderBy?: RedditIngestStateGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, RedditIngestStateGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetRedditIngestStateGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the RedditIngestState model
+   */
+  readonly fields: RedditIngestStateFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for RedditIngestState.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__RedditIngestStateClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the RedditIngestState model
+   */
+  interface RedditIngestStateFieldRefs {
+    readonly id: FieldRef<"RedditIngestState", 'Int'>
+    readonly cursorJson: FieldRef<"RedditIngestState", 'String'>
+    readonly collectorJson: FieldRef<"RedditIngestState", 'String'>
+    readonly updatedAt: FieldRef<"RedditIngestState", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * RedditIngestState findUnique
+   */
+  export type RedditIngestStateFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RedditIngestState
+     */
+    select?: RedditIngestStateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RedditIngestState
+     */
+    omit?: RedditIngestStateOmit<ExtArgs> | null
+    /**
+     * Filter, which RedditIngestState to fetch.
+     */
+    where: RedditIngestStateWhereUniqueInput
+  }
+
+  /**
+   * RedditIngestState findUniqueOrThrow
+   */
+  export type RedditIngestStateFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RedditIngestState
+     */
+    select?: RedditIngestStateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RedditIngestState
+     */
+    omit?: RedditIngestStateOmit<ExtArgs> | null
+    /**
+     * Filter, which RedditIngestState to fetch.
+     */
+    where: RedditIngestStateWhereUniqueInput
+  }
+
+  /**
+   * RedditIngestState findFirst
+   */
+  export type RedditIngestStateFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RedditIngestState
+     */
+    select?: RedditIngestStateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RedditIngestState
+     */
+    omit?: RedditIngestStateOmit<ExtArgs> | null
+    /**
+     * Filter, which RedditIngestState to fetch.
+     */
+    where?: RedditIngestStateWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RedditIngestStates to fetch.
+     */
+    orderBy?: RedditIngestStateOrderByWithRelationInput | RedditIngestStateOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for RedditIngestStates.
+     */
+    cursor?: RedditIngestStateWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RedditIngestStates from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RedditIngestStates.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of RedditIngestStates.
+     */
+    distinct?: RedditIngestStateScalarFieldEnum | RedditIngestStateScalarFieldEnum[]
+  }
+
+  /**
+   * RedditIngestState findFirstOrThrow
+   */
+  export type RedditIngestStateFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RedditIngestState
+     */
+    select?: RedditIngestStateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RedditIngestState
+     */
+    omit?: RedditIngestStateOmit<ExtArgs> | null
+    /**
+     * Filter, which RedditIngestState to fetch.
+     */
+    where?: RedditIngestStateWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RedditIngestStates to fetch.
+     */
+    orderBy?: RedditIngestStateOrderByWithRelationInput | RedditIngestStateOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for RedditIngestStates.
+     */
+    cursor?: RedditIngestStateWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RedditIngestStates from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RedditIngestStates.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of RedditIngestStates.
+     */
+    distinct?: RedditIngestStateScalarFieldEnum | RedditIngestStateScalarFieldEnum[]
+  }
+
+  /**
+   * RedditIngestState findMany
+   */
+  export type RedditIngestStateFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RedditIngestState
+     */
+    select?: RedditIngestStateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RedditIngestState
+     */
+    omit?: RedditIngestStateOmit<ExtArgs> | null
+    /**
+     * Filter, which RedditIngestStates to fetch.
+     */
+    where?: RedditIngestStateWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RedditIngestStates to fetch.
+     */
+    orderBy?: RedditIngestStateOrderByWithRelationInput | RedditIngestStateOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing RedditIngestStates.
+     */
+    cursor?: RedditIngestStateWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RedditIngestStates from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RedditIngestStates.
+     */
+    skip?: number
+    distinct?: RedditIngestStateScalarFieldEnum | RedditIngestStateScalarFieldEnum[]
+  }
+
+  /**
+   * RedditIngestState create
+   */
+  export type RedditIngestStateCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RedditIngestState
+     */
+    select?: RedditIngestStateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RedditIngestState
+     */
+    omit?: RedditIngestStateOmit<ExtArgs> | null
+    /**
+     * The data needed to create a RedditIngestState.
+     */
+    data: XOR<RedditIngestStateCreateInput, RedditIngestStateUncheckedCreateInput>
+  }
+
+  /**
+   * RedditIngestState createMany
+   */
+  export type RedditIngestStateCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many RedditIngestStates.
+     */
+    data: RedditIngestStateCreateManyInput | RedditIngestStateCreateManyInput[]
+  }
+
+  /**
+   * RedditIngestState createManyAndReturn
+   */
+  export type RedditIngestStateCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RedditIngestState
+     */
+    select?: RedditIngestStateSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the RedditIngestState
+     */
+    omit?: RedditIngestStateOmit<ExtArgs> | null
+    /**
+     * The data used to create many RedditIngestStates.
+     */
+    data: RedditIngestStateCreateManyInput | RedditIngestStateCreateManyInput[]
+  }
+
+  /**
+   * RedditIngestState update
+   */
+  export type RedditIngestStateUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RedditIngestState
+     */
+    select?: RedditIngestStateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RedditIngestState
+     */
+    omit?: RedditIngestStateOmit<ExtArgs> | null
+    /**
+     * The data needed to update a RedditIngestState.
+     */
+    data: XOR<RedditIngestStateUpdateInput, RedditIngestStateUncheckedUpdateInput>
+    /**
+     * Choose, which RedditIngestState to update.
+     */
+    where: RedditIngestStateWhereUniqueInput
+  }
+
+  /**
+   * RedditIngestState updateMany
+   */
+  export type RedditIngestStateUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update RedditIngestStates.
+     */
+    data: XOR<RedditIngestStateUpdateManyMutationInput, RedditIngestStateUncheckedUpdateManyInput>
+    /**
+     * Filter which RedditIngestStates to update
+     */
+    where?: RedditIngestStateWhereInput
+    /**
+     * Limit how many RedditIngestStates to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * RedditIngestState updateManyAndReturn
+   */
+  export type RedditIngestStateUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RedditIngestState
+     */
+    select?: RedditIngestStateSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the RedditIngestState
+     */
+    omit?: RedditIngestStateOmit<ExtArgs> | null
+    /**
+     * The data used to update RedditIngestStates.
+     */
+    data: XOR<RedditIngestStateUpdateManyMutationInput, RedditIngestStateUncheckedUpdateManyInput>
+    /**
+     * Filter which RedditIngestStates to update
+     */
+    where?: RedditIngestStateWhereInput
+    /**
+     * Limit how many RedditIngestStates to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * RedditIngestState upsert
+   */
+  export type RedditIngestStateUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RedditIngestState
+     */
+    select?: RedditIngestStateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RedditIngestState
+     */
+    omit?: RedditIngestStateOmit<ExtArgs> | null
+    /**
+     * The filter to search for the RedditIngestState to update in case it exists.
+     */
+    where: RedditIngestStateWhereUniqueInput
+    /**
+     * In case the RedditIngestState found by the `where` argument doesn't exist, create a new RedditIngestState with this data.
+     */
+    create: XOR<RedditIngestStateCreateInput, RedditIngestStateUncheckedCreateInput>
+    /**
+     * In case the RedditIngestState was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<RedditIngestStateUpdateInput, RedditIngestStateUncheckedUpdateInput>
+  }
+
+  /**
+   * RedditIngestState delete
+   */
+  export type RedditIngestStateDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RedditIngestState
+     */
+    select?: RedditIngestStateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RedditIngestState
+     */
+    omit?: RedditIngestStateOmit<ExtArgs> | null
+    /**
+     * Filter which RedditIngestState to delete.
+     */
+    where: RedditIngestStateWhereUniqueInput
+  }
+
+  /**
+   * RedditIngestState deleteMany
+   */
+  export type RedditIngestStateDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which RedditIngestStates to delete
+     */
+    where?: RedditIngestStateWhereInput
+    /**
+     * Limit how many RedditIngestStates to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * RedditIngestState without action
+   */
+  export type RedditIngestStateDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RedditIngestState
+     */
+    select?: RedditIngestStateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RedditIngestState
+     */
+    omit?: RedditIngestStateOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model IngestSnapshot
+   */
+
+  export type AggregateIngestSnapshot = {
+    _count: IngestSnapshotCountAggregateOutputType | null
+    _avg: IngestSnapshotAvgAggregateOutputType | null
+    _sum: IngestSnapshotSumAggregateOutputType | null
+    _min: IngestSnapshotMinAggregateOutputType | null
+    _max: IngestSnapshotMaxAggregateOutputType | null
+  }
+
+  export type IngestSnapshotAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type IngestSnapshotSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type IngestSnapshotMinAggregateOutputType = {
+    id: number | null
+    createdAt: Date | null
+    bucketTime: Date | null
+    healthJson: string | null
+  }
+
+  export type IngestSnapshotMaxAggregateOutputType = {
+    id: number | null
+    createdAt: Date | null
+    bucketTime: Date | null
+    healthJson: string | null
+  }
+
+  export type IngestSnapshotCountAggregateOutputType = {
+    id: number
+    createdAt: number
+    bucketTime: number
+    healthJson: number
+    _all: number
+  }
+
+
+  export type IngestSnapshotAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type IngestSnapshotSumAggregateInputType = {
+    id?: true
+  }
+
+  export type IngestSnapshotMinAggregateInputType = {
+    id?: true
+    createdAt?: true
+    bucketTime?: true
+    healthJson?: true
+  }
+
+  export type IngestSnapshotMaxAggregateInputType = {
+    id?: true
+    createdAt?: true
+    bucketTime?: true
+    healthJson?: true
+  }
+
+  export type IngestSnapshotCountAggregateInputType = {
+    id?: true
+    createdAt?: true
+    bucketTime?: true
+    healthJson?: true
+    _all?: true
+  }
+
+  export type IngestSnapshotAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which IngestSnapshot to aggregate.
+     */
+    where?: IngestSnapshotWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of IngestSnapshots to fetch.
+     */
+    orderBy?: IngestSnapshotOrderByWithRelationInput | IngestSnapshotOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: IngestSnapshotWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` IngestSnapshots from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` IngestSnapshots.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned IngestSnapshots
+    **/
+    _count?: true | IngestSnapshotCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: IngestSnapshotAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: IngestSnapshotSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: IngestSnapshotMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: IngestSnapshotMaxAggregateInputType
+  }
+
+  export type GetIngestSnapshotAggregateType<T extends IngestSnapshotAggregateArgs> = {
+        [P in keyof T & keyof AggregateIngestSnapshot]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateIngestSnapshot[P]>
+      : GetScalarType<T[P], AggregateIngestSnapshot[P]>
+  }
+
+
+
+
+  export type IngestSnapshotGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: IngestSnapshotWhereInput
+    orderBy?: IngestSnapshotOrderByWithAggregationInput | IngestSnapshotOrderByWithAggregationInput[]
+    by: IngestSnapshotScalarFieldEnum[] | IngestSnapshotScalarFieldEnum
+    having?: IngestSnapshotScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: IngestSnapshotCountAggregateInputType | true
+    _avg?: IngestSnapshotAvgAggregateInputType
+    _sum?: IngestSnapshotSumAggregateInputType
+    _min?: IngestSnapshotMinAggregateInputType
+    _max?: IngestSnapshotMaxAggregateInputType
+  }
+
+  export type IngestSnapshotGroupByOutputType = {
+    id: number
+    createdAt: Date
+    bucketTime: Date
+    healthJson: string
+    _count: IngestSnapshotCountAggregateOutputType | null
+    _avg: IngestSnapshotAvgAggregateOutputType | null
+    _sum: IngestSnapshotSumAggregateOutputType | null
+    _min: IngestSnapshotMinAggregateOutputType | null
+    _max: IngestSnapshotMaxAggregateOutputType | null
+  }
+
+  type GetIngestSnapshotGroupByPayload<T extends IngestSnapshotGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<IngestSnapshotGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof IngestSnapshotGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], IngestSnapshotGroupByOutputType[P]>
+            : GetScalarType<T[P], IngestSnapshotGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type IngestSnapshotSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    bucketTime?: boolean
+    healthJson?: boolean
+  }, ExtArgs["result"]["ingestSnapshot"]>
+
+  export type IngestSnapshotSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    bucketTime?: boolean
+    healthJson?: boolean
+  }, ExtArgs["result"]["ingestSnapshot"]>
+
+  export type IngestSnapshotSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    bucketTime?: boolean
+    healthJson?: boolean
+  }, ExtArgs["result"]["ingestSnapshot"]>
+
+  export type IngestSnapshotSelectScalar = {
+    id?: boolean
+    createdAt?: boolean
+    bucketTime?: boolean
+    healthJson?: boolean
+  }
+
+  export type IngestSnapshotOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "createdAt" | "bucketTime" | "healthJson", ExtArgs["result"]["ingestSnapshot"]>
+
+  export type $IngestSnapshotPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "IngestSnapshot"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      createdAt: Date
+      bucketTime: Date
+      healthJson: string
+    }, ExtArgs["result"]["ingestSnapshot"]>
+    composites: {}
+  }
+
+  type IngestSnapshotGetPayload<S extends boolean | null | undefined | IngestSnapshotDefaultArgs> = $Result.GetResult<Prisma.$IngestSnapshotPayload, S>
+
+  type IngestSnapshotCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<IngestSnapshotFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: IngestSnapshotCountAggregateInputType | true
+    }
+
+  export interface IngestSnapshotDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['IngestSnapshot'], meta: { name: 'IngestSnapshot' } }
+    /**
+     * Find zero or one IngestSnapshot that matches the filter.
+     * @param {IngestSnapshotFindUniqueArgs} args - Arguments to find a IngestSnapshot
+     * @example
+     * // Get one IngestSnapshot
+     * const ingestSnapshot = await prisma.ingestSnapshot.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends IngestSnapshotFindUniqueArgs>(args: SelectSubset<T, IngestSnapshotFindUniqueArgs<ExtArgs>>): Prisma__IngestSnapshotClient<$Result.GetResult<Prisma.$IngestSnapshotPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one IngestSnapshot that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {IngestSnapshotFindUniqueOrThrowArgs} args - Arguments to find a IngestSnapshot
+     * @example
+     * // Get one IngestSnapshot
+     * const ingestSnapshot = await prisma.ingestSnapshot.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends IngestSnapshotFindUniqueOrThrowArgs>(args: SelectSubset<T, IngestSnapshotFindUniqueOrThrowArgs<ExtArgs>>): Prisma__IngestSnapshotClient<$Result.GetResult<Prisma.$IngestSnapshotPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first IngestSnapshot that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IngestSnapshotFindFirstArgs} args - Arguments to find a IngestSnapshot
+     * @example
+     * // Get one IngestSnapshot
+     * const ingestSnapshot = await prisma.ingestSnapshot.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends IngestSnapshotFindFirstArgs>(args?: SelectSubset<T, IngestSnapshotFindFirstArgs<ExtArgs>>): Prisma__IngestSnapshotClient<$Result.GetResult<Prisma.$IngestSnapshotPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first IngestSnapshot that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IngestSnapshotFindFirstOrThrowArgs} args - Arguments to find a IngestSnapshot
+     * @example
+     * // Get one IngestSnapshot
+     * const ingestSnapshot = await prisma.ingestSnapshot.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends IngestSnapshotFindFirstOrThrowArgs>(args?: SelectSubset<T, IngestSnapshotFindFirstOrThrowArgs<ExtArgs>>): Prisma__IngestSnapshotClient<$Result.GetResult<Prisma.$IngestSnapshotPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more IngestSnapshots that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IngestSnapshotFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all IngestSnapshots
+     * const ingestSnapshots = await prisma.ingestSnapshot.findMany()
+     * 
+     * // Get first 10 IngestSnapshots
+     * const ingestSnapshots = await prisma.ingestSnapshot.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const ingestSnapshotWithIdOnly = await prisma.ingestSnapshot.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends IngestSnapshotFindManyArgs>(args?: SelectSubset<T, IngestSnapshotFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IngestSnapshotPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a IngestSnapshot.
+     * @param {IngestSnapshotCreateArgs} args - Arguments to create a IngestSnapshot.
+     * @example
+     * // Create one IngestSnapshot
+     * const IngestSnapshot = await prisma.ingestSnapshot.create({
+     *   data: {
+     *     // ... data to create a IngestSnapshot
+     *   }
+     * })
+     * 
+     */
+    create<T extends IngestSnapshotCreateArgs>(args: SelectSubset<T, IngestSnapshotCreateArgs<ExtArgs>>): Prisma__IngestSnapshotClient<$Result.GetResult<Prisma.$IngestSnapshotPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many IngestSnapshots.
+     * @param {IngestSnapshotCreateManyArgs} args - Arguments to create many IngestSnapshots.
+     * @example
+     * // Create many IngestSnapshots
+     * const ingestSnapshot = await prisma.ingestSnapshot.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends IngestSnapshotCreateManyArgs>(args?: SelectSubset<T, IngestSnapshotCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many IngestSnapshots and returns the data saved in the database.
+     * @param {IngestSnapshotCreateManyAndReturnArgs} args - Arguments to create many IngestSnapshots.
+     * @example
+     * // Create many IngestSnapshots
+     * const ingestSnapshot = await prisma.ingestSnapshot.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many IngestSnapshots and only return the `id`
+     * const ingestSnapshotWithIdOnly = await prisma.ingestSnapshot.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends IngestSnapshotCreateManyAndReturnArgs>(args?: SelectSubset<T, IngestSnapshotCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IngestSnapshotPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a IngestSnapshot.
+     * @param {IngestSnapshotDeleteArgs} args - Arguments to delete one IngestSnapshot.
+     * @example
+     * // Delete one IngestSnapshot
+     * const IngestSnapshot = await prisma.ingestSnapshot.delete({
+     *   where: {
+     *     // ... filter to delete one IngestSnapshot
+     *   }
+     * })
+     * 
+     */
+    delete<T extends IngestSnapshotDeleteArgs>(args: SelectSubset<T, IngestSnapshotDeleteArgs<ExtArgs>>): Prisma__IngestSnapshotClient<$Result.GetResult<Prisma.$IngestSnapshotPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one IngestSnapshot.
+     * @param {IngestSnapshotUpdateArgs} args - Arguments to update one IngestSnapshot.
+     * @example
+     * // Update one IngestSnapshot
+     * const ingestSnapshot = await prisma.ingestSnapshot.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends IngestSnapshotUpdateArgs>(args: SelectSubset<T, IngestSnapshotUpdateArgs<ExtArgs>>): Prisma__IngestSnapshotClient<$Result.GetResult<Prisma.$IngestSnapshotPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more IngestSnapshots.
+     * @param {IngestSnapshotDeleteManyArgs} args - Arguments to filter IngestSnapshots to delete.
+     * @example
+     * // Delete a few IngestSnapshots
+     * const { count } = await prisma.ingestSnapshot.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends IngestSnapshotDeleteManyArgs>(args?: SelectSubset<T, IngestSnapshotDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more IngestSnapshots.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IngestSnapshotUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many IngestSnapshots
+     * const ingestSnapshot = await prisma.ingestSnapshot.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends IngestSnapshotUpdateManyArgs>(args: SelectSubset<T, IngestSnapshotUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more IngestSnapshots and returns the data updated in the database.
+     * @param {IngestSnapshotUpdateManyAndReturnArgs} args - Arguments to update many IngestSnapshots.
+     * @example
+     * // Update many IngestSnapshots
+     * const ingestSnapshot = await prisma.ingestSnapshot.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more IngestSnapshots and only return the `id`
+     * const ingestSnapshotWithIdOnly = await prisma.ingestSnapshot.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends IngestSnapshotUpdateManyAndReturnArgs>(args: SelectSubset<T, IngestSnapshotUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IngestSnapshotPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one IngestSnapshot.
+     * @param {IngestSnapshotUpsertArgs} args - Arguments to update or create a IngestSnapshot.
+     * @example
+     * // Update or create a IngestSnapshot
+     * const ingestSnapshot = await prisma.ingestSnapshot.upsert({
+     *   create: {
+     *     // ... data to create a IngestSnapshot
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the IngestSnapshot we want to update
+     *   }
+     * })
+     */
+    upsert<T extends IngestSnapshotUpsertArgs>(args: SelectSubset<T, IngestSnapshotUpsertArgs<ExtArgs>>): Prisma__IngestSnapshotClient<$Result.GetResult<Prisma.$IngestSnapshotPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of IngestSnapshots.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IngestSnapshotCountArgs} args - Arguments to filter IngestSnapshots to count.
+     * @example
+     * // Count the number of IngestSnapshots
+     * const count = await prisma.ingestSnapshot.count({
+     *   where: {
+     *     // ... the filter for the IngestSnapshots we want to count
+     *   }
+     * })
+    **/
+    count<T extends IngestSnapshotCountArgs>(
+      args?: Subset<T, IngestSnapshotCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], IngestSnapshotCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a IngestSnapshot.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IngestSnapshotAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends IngestSnapshotAggregateArgs>(args: Subset<T, IngestSnapshotAggregateArgs>): Prisma.PrismaPromise<GetIngestSnapshotAggregateType<T>>
+
+    /**
+     * Group by IngestSnapshot.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IngestSnapshotGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends IngestSnapshotGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: IngestSnapshotGroupByArgs['orderBy'] }
+        : { orderBy?: IngestSnapshotGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, IngestSnapshotGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetIngestSnapshotGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the IngestSnapshot model
+   */
+  readonly fields: IngestSnapshotFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for IngestSnapshot.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__IngestSnapshotClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the IngestSnapshot model
+   */
+  interface IngestSnapshotFieldRefs {
+    readonly id: FieldRef<"IngestSnapshot", 'Int'>
+    readonly createdAt: FieldRef<"IngestSnapshot", 'DateTime'>
+    readonly bucketTime: FieldRef<"IngestSnapshot", 'DateTime'>
+    readonly healthJson: FieldRef<"IngestSnapshot", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * IngestSnapshot findUnique
+   */
+  export type IngestSnapshotFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IngestSnapshot
+     */
+    select?: IngestSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IngestSnapshot
+     */
+    omit?: IngestSnapshotOmit<ExtArgs> | null
+    /**
+     * Filter, which IngestSnapshot to fetch.
+     */
+    where: IngestSnapshotWhereUniqueInput
+  }
+
+  /**
+   * IngestSnapshot findUniqueOrThrow
+   */
+  export type IngestSnapshotFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IngestSnapshot
+     */
+    select?: IngestSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IngestSnapshot
+     */
+    omit?: IngestSnapshotOmit<ExtArgs> | null
+    /**
+     * Filter, which IngestSnapshot to fetch.
+     */
+    where: IngestSnapshotWhereUniqueInput
+  }
+
+  /**
+   * IngestSnapshot findFirst
+   */
+  export type IngestSnapshotFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IngestSnapshot
+     */
+    select?: IngestSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IngestSnapshot
+     */
+    omit?: IngestSnapshotOmit<ExtArgs> | null
+    /**
+     * Filter, which IngestSnapshot to fetch.
+     */
+    where?: IngestSnapshotWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of IngestSnapshots to fetch.
+     */
+    orderBy?: IngestSnapshotOrderByWithRelationInput | IngestSnapshotOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for IngestSnapshots.
+     */
+    cursor?: IngestSnapshotWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` IngestSnapshots from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` IngestSnapshots.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of IngestSnapshots.
+     */
+    distinct?: IngestSnapshotScalarFieldEnum | IngestSnapshotScalarFieldEnum[]
+  }
+
+  /**
+   * IngestSnapshot findFirstOrThrow
+   */
+  export type IngestSnapshotFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IngestSnapshot
+     */
+    select?: IngestSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IngestSnapshot
+     */
+    omit?: IngestSnapshotOmit<ExtArgs> | null
+    /**
+     * Filter, which IngestSnapshot to fetch.
+     */
+    where?: IngestSnapshotWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of IngestSnapshots to fetch.
+     */
+    orderBy?: IngestSnapshotOrderByWithRelationInput | IngestSnapshotOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for IngestSnapshots.
+     */
+    cursor?: IngestSnapshotWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` IngestSnapshots from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` IngestSnapshots.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of IngestSnapshots.
+     */
+    distinct?: IngestSnapshotScalarFieldEnum | IngestSnapshotScalarFieldEnum[]
+  }
+
+  /**
+   * IngestSnapshot findMany
+   */
+  export type IngestSnapshotFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IngestSnapshot
+     */
+    select?: IngestSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IngestSnapshot
+     */
+    omit?: IngestSnapshotOmit<ExtArgs> | null
+    /**
+     * Filter, which IngestSnapshots to fetch.
+     */
+    where?: IngestSnapshotWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of IngestSnapshots to fetch.
+     */
+    orderBy?: IngestSnapshotOrderByWithRelationInput | IngestSnapshotOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing IngestSnapshots.
+     */
+    cursor?: IngestSnapshotWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` IngestSnapshots from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` IngestSnapshots.
+     */
+    skip?: number
+    distinct?: IngestSnapshotScalarFieldEnum | IngestSnapshotScalarFieldEnum[]
+  }
+
+  /**
+   * IngestSnapshot create
+   */
+  export type IngestSnapshotCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IngestSnapshot
+     */
+    select?: IngestSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IngestSnapshot
+     */
+    omit?: IngestSnapshotOmit<ExtArgs> | null
+    /**
+     * The data needed to create a IngestSnapshot.
+     */
+    data: XOR<IngestSnapshotCreateInput, IngestSnapshotUncheckedCreateInput>
+  }
+
+  /**
+   * IngestSnapshot createMany
+   */
+  export type IngestSnapshotCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many IngestSnapshots.
+     */
+    data: IngestSnapshotCreateManyInput | IngestSnapshotCreateManyInput[]
+  }
+
+  /**
+   * IngestSnapshot createManyAndReturn
+   */
+  export type IngestSnapshotCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IngestSnapshot
+     */
+    select?: IngestSnapshotSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the IngestSnapshot
+     */
+    omit?: IngestSnapshotOmit<ExtArgs> | null
+    /**
+     * The data used to create many IngestSnapshots.
+     */
+    data: IngestSnapshotCreateManyInput | IngestSnapshotCreateManyInput[]
+  }
+
+  /**
+   * IngestSnapshot update
+   */
+  export type IngestSnapshotUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IngestSnapshot
+     */
+    select?: IngestSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IngestSnapshot
+     */
+    omit?: IngestSnapshotOmit<ExtArgs> | null
+    /**
+     * The data needed to update a IngestSnapshot.
+     */
+    data: XOR<IngestSnapshotUpdateInput, IngestSnapshotUncheckedUpdateInput>
+    /**
+     * Choose, which IngestSnapshot to update.
+     */
+    where: IngestSnapshotWhereUniqueInput
+  }
+
+  /**
+   * IngestSnapshot updateMany
+   */
+  export type IngestSnapshotUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update IngestSnapshots.
+     */
+    data: XOR<IngestSnapshotUpdateManyMutationInput, IngestSnapshotUncheckedUpdateManyInput>
+    /**
+     * Filter which IngestSnapshots to update
+     */
+    where?: IngestSnapshotWhereInput
+    /**
+     * Limit how many IngestSnapshots to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * IngestSnapshot updateManyAndReturn
+   */
+  export type IngestSnapshotUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IngestSnapshot
+     */
+    select?: IngestSnapshotSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the IngestSnapshot
+     */
+    omit?: IngestSnapshotOmit<ExtArgs> | null
+    /**
+     * The data used to update IngestSnapshots.
+     */
+    data: XOR<IngestSnapshotUpdateManyMutationInput, IngestSnapshotUncheckedUpdateManyInput>
+    /**
+     * Filter which IngestSnapshots to update
+     */
+    where?: IngestSnapshotWhereInput
+    /**
+     * Limit how many IngestSnapshots to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * IngestSnapshot upsert
+   */
+  export type IngestSnapshotUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IngestSnapshot
+     */
+    select?: IngestSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IngestSnapshot
+     */
+    omit?: IngestSnapshotOmit<ExtArgs> | null
+    /**
+     * The filter to search for the IngestSnapshot to update in case it exists.
+     */
+    where: IngestSnapshotWhereUniqueInput
+    /**
+     * In case the IngestSnapshot found by the `where` argument doesn't exist, create a new IngestSnapshot with this data.
+     */
+    create: XOR<IngestSnapshotCreateInput, IngestSnapshotUncheckedCreateInput>
+    /**
+     * In case the IngestSnapshot was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<IngestSnapshotUpdateInput, IngestSnapshotUncheckedUpdateInput>
+  }
+
+  /**
+   * IngestSnapshot delete
+   */
+  export type IngestSnapshotDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IngestSnapshot
+     */
+    select?: IngestSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IngestSnapshot
+     */
+    omit?: IngestSnapshotOmit<ExtArgs> | null
+    /**
+     * Filter which IngestSnapshot to delete.
+     */
+    where: IngestSnapshotWhereUniqueInput
+  }
+
+  /**
+   * IngestSnapshot deleteMany
+   */
+  export type IngestSnapshotDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which IngestSnapshots to delete
+     */
+    where?: IngestSnapshotWhereInput
+    /**
+     * Limit how many IngestSnapshots to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * IngestSnapshot without action
+   */
+  export type IngestSnapshotDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IngestSnapshot
+     */
+    select?: IngestSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IngestSnapshot
+     */
+    omit?: IngestSnapshotOmit<ExtArgs> | null
   }
 
 
@@ -3436,11 +5666,32 @@ export namespace Prisma {
     redditPool: 'redditPool',
     linkDomain: 'linkDomain',
     isSelf: 'isSelf',
+    commentsJson: 'commentsJson',
     createdAt: 'createdAt',
     fetchedAt: 'fetchedAt'
   };
 
   export type PostScalarFieldEnum = (typeof PostScalarFieldEnum)[keyof typeof PostScalarFieldEnum]
+
+
+  export const RedditIngestStateScalarFieldEnum: {
+    id: 'id',
+    cursorJson: 'cursorJson',
+    collectorJson: 'collectorJson',
+    updatedAt: 'updatedAt'
+  };
+
+  export type RedditIngestStateScalarFieldEnum = (typeof RedditIngestStateScalarFieldEnum)[keyof typeof RedditIngestStateScalarFieldEnum]
+
+
+  export const IngestSnapshotScalarFieldEnum: {
+    id: 'id',
+    createdAt: 'createdAt',
+    bucketTime: 'bucketTime',
+    healthJson: 'healthJson'
+  };
+
+  export type IngestSnapshotScalarFieldEnum = (typeof IngestSnapshotScalarFieldEnum)[keyof typeof IngestSnapshotScalarFieldEnum]
 
 
   export const TopicHitScalarFieldEnum: {
@@ -3537,6 +5788,7 @@ export namespace Prisma {
     redditPool?: StringNullableFilter<"Post"> | string | null
     linkDomain?: StringNullableFilter<"Post"> | string | null
     isSelf?: BoolNullableFilter<"Post"> | boolean | null
+    commentsJson?: StringNullableFilter<"Post"> | string | null
     createdAt?: DateTimeNullableFilter<"Post"> | Date | string | null
     fetchedAt?: DateTimeFilter<"Post"> | Date | string
     topicHits?: TopicHitListRelationFilter
@@ -3557,6 +5809,7 @@ export namespace Prisma {
     redditPool?: SortOrderInput | SortOrder
     linkDomain?: SortOrderInput | SortOrder
     isSelf?: SortOrderInput | SortOrder
+    commentsJson?: SortOrderInput | SortOrder
     createdAt?: SortOrderInput | SortOrder
     fetchedAt?: SortOrder
     topicHits?: TopicHitOrderByRelationAggregateInput
@@ -3581,6 +5834,7 @@ export namespace Prisma {
     redditPool?: StringNullableFilter<"Post"> | string | null
     linkDomain?: StringNullableFilter<"Post"> | string | null
     isSelf?: BoolNullableFilter<"Post"> | boolean | null
+    commentsJson?: StringNullableFilter<"Post"> | string | null
     createdAt?: DateTimeNullableFilter<"Post"> | Date | string | null
     fetchedAt?: DateTimeFilter<"Post"> | Date | string
     topicHits?: TopicHitListRelationFilter
@@ -3601,6 +5855,7 @@ export namespace Prisma {
     redditPool?: SortOrderInput | SortOrder
     linkDomain?: SortOrderInput | SortOrder
     isSelf?: SortOrderInput | SortOrder
+    commentsJson?: SortOrderInput | SortOrder
     createdAt?: SortOrderInput | SortOrder
     fetchedAt?: SortOrder
     _count?: PostCountOrderByAggregateInput
@@ -3628,8 +5883,107 @@ export namespace Prisma {
     redditPool?: StringNullableWithAggregatesFilter<"Post"> | string | null
     linkDomain?: StringNullableWithAggregatesFilter<"Post"> | string | null
     isSelf?: BoolNullableWithAggregatesFilter<"Post"> | boolean | null
+    commentsJson?: StringNullableWithAggregatesFilter<"Post"> | string | null
     createdAt?: DateTimeNullableWithAggregatesFilter<"Post"> | Date | string | null
     fetchedAt?: DateTimeWithAggregatesFilter<"Post"> | Date | string
+  }
+
+  export type RedditIngestStateWhereInput = {
+    AND?: RedditIngestStateWhereInput | RedditIngestStateWhereInput[]
+    OR?: RedditIngestStateWhereInput[]
+    NOT?: RedditIngestStateWhereInput | RedditIngestStateWhereInput[]
+    id?: IntFilter<"RedditIngestState"> | number
+    cursorJson?: StringFilter<"RedditIngestState"> | string
+    collectorJson?: StringNullableFilter<"RedditIngestState"> | string | null
+    updatedAt?: DateTimeFilter<"RedditIngestState"> | Date | string
+  }
+
+  export type RedditIngestStateOrderByWithRelationInput = {
+    id?: SortOrder
+    cursorJson?: SortOrder
+    collectorJson?: SortOrderInput | SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type RedditIngestStateWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: RedditIngestStateWhereInput | RedditIngestStateWhereInput[]
+    OR?: RedditIngestStateWhereInput[]
+    NOT?: RedditIngestStateWhereInput | RedditIngestStateWhereInput[]
+    cursorJson?: StringFilter<"RedditIngestState"> | string
+    collectorJson?: StringNullableFilter<"RedditIngestState"> | string | null
+    updatedAt?: DateTimeFilter<"RedditIngestState"> | Date | string
+  }, "id">
+
+  export type RedditIngestStateOrderByWithAggregationInput = {
+    id?: SortOrder
+    cursorJson?: SortOrder
+    collectorJson?: SortOrderInput | SortOrder
+    updatedAt?: SortOrder
+    _count?: RedditIngestStateCountOrderByAggregateInput
+    _avg?: RedditIngestStateAvgOrderByAggregateInput
+    _max?: RedditIngestStateMaxOrderByAggregateInput
+    _min?: RedditIngestStateMinOrderByAggregateInput
+    _sum?: RedditIngestStateSumOrderByAggregateInput
+  }
+
+  export type RedditIngestStateScalarWhereWithAggregatesInput = {
+    AND?: RedditIngestStateScalarWhereWithAggregatesInput | RedditIngestStateScalarWhereWithAggregatesInput[]
+    OR?: RedditIngestStateScalarWhereWithAggregatesInput[]
+    NOT?: RedditIngestStateScalarWhereWithAggregatesInput | RedditIngestStateScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"RedditIngestState"> | number
+    cursorJson?: StringWithAggregatesFilter<"RedditIngestState"> | string
+    collectorJson?: StringNullableWithAggregatesFilter<"RedditIngestState"> | string | null
+    updatedAt?: DateTimeWithAggregatesFilter<"RedditIngestState"> | Date | string
+  }
+
+  export type IngestSnapshotWhereInput = {
+    AND?: IngestSnapshotWhereInput | IngestSnapshotWhereInput[]
+    OR?: IngestSnapshotWhereInput[]
+    NOT?: IngestSnapshotWhereInput | IngestSnapshotWhereInput[]
+    id?: IntFilter<"IngestSnapshot"> | number
+    createdAt?: DateTimeFilter<"IngestSnapshot"> | Date | string
+    bucketTime?: DateTimeFilter<"IngestSnapshot"> | Date | string
+    healthJson?: StringFilter<"IngestSnapshot"> | string
+  }
+
+  export type IngestSnapshotOrderByWithRelationInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    bucketTime?: SortOrder
+    healthJson?: SortOrder
+  }
+
+  export type IngestSnapshotWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: IngestSnapshotWhereInput | IngestSnapshotWhereInput[]
+    OR?: IngestSnapshotWhereInput[]
+    NOT?: IngestSnapshotWhereInput | IngestSnapshotWhereInput[]
+    createdAt?: DateTimeFilter<"IngestSnapshot"> | Date | string
+    bucketTime?: DateTimeFilter<"IngestSnapshot"> | Date | string
+    healthJson?: StringFilter<"IngestSnapshot"> | string
+  }, "id">
+
+  export type IngestSnapshotOrderByWithAggregationInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    bucketTime?: SortOrder
+    healthJson?: SortOrder
+    _count?: IngestSnapshotCountOrderByAggregateInput
+    _avg?: IngestSnapshotAvgOrderByAggregateInput
+    _max?: IngestSnapshotMaxOrderByAggregateInput
+    _min?: IngestSnapshotMinOrderByAggregateInput
+    _sum?: IngestSnapshotSumOrderByAggregateInput
+  }
+
+  export type IngestSnapshotScalarWhereWithAggregatesInput = {
+    AND?: IngestSnapshotScalarWhereWithAggregatesInput | IngestSnapshotScalarWhereWithAggregatesInput[]
+    OR?: IngestSnapshotScalarWhereWithAggregatesInput[]
+    NOT?: IngestSnapshotScalarWhereWithAggregatesInput | IngestSnapshotScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"IngestSnapshot"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"IngestSnapshot"> | Date | string
+    bucketTime?: DateTimeWithAggregatesFilter<"IngestSnapshot"> | Date | string
+    healthJson?: StringWithAggregatesFilter<"IngestSnapshot"> | string
   }
 
   export type TopicHitWhereInput = {
@@ -3734,6 +6088,7 @@ export namespace Prisma {
     redditPool?: string | null
     linkDomain?: string | null
     isSelf?: boolean | null
+    commentsJson?: string | null
     createdAt?: Date | string | null
     fetchedAt?: Date | string
     topicHits?: TopicHitCreateNestedManyWithoutPostInput
@@ -3754,6 +6109,7 @@ export namespace Prisma {
     redditPool?: string | null
     linkDomain?: string | null
     isSelf?: boolean | null
+    commentsJson?: string | null
     createdAt?: Date | string | null
     fetchedAt?: Date | string
     topicHits?: TopicHitUncheckedCreateNestedManyWithoutPostInput
@@ -3773,6 +6129,7 @@ export namespace Prisma {
     redditPool?: NullableStringFieldUpdateOperationsInput | string | null
     linkDomain?: NullableStringFieldUpdateOperationsInput | string | null
     isSelf?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    commentsJson?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fetchedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     topicHits?: TopicHitUpdateManyWithoutPostNestedInput
@@ -3793,6 +6150,7 @@ export namespace Prisma {
     redditPool?: NullableStringFieldUpdateOperationsInput | string | null
     linkDomain?: NullableStringFieldUpdateOperationsInput | string | null
     isSelf?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    commentsJson?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fetchedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     topicHits?: TopicHitUncheckedUpdateManyWithoutPostNestedInput
@@ -3813,6 +6171,7 @@ export namespace Prisma {
     redditPool?: string | null
     linkDomain?: string | null
     isSelf?: boolean | null
+    commentsJson?: string | null
     createdAt?: Date | string | null
     fetchedAt?: Date | string
   }
@@ -3831,6 +6190,7 @@ export namespace Prisma {
     redditPool?: NullableStringFieldUpdateOperationsInput | string | null
     linkDomain?: NullableStringFieldUpdateOperationsInput | string | null
     isSelf?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    commentsJson?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fetchedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -3850,8 +6210,104 @@ export namespace Prisma {
     redditPool?: NullableStringFieldUpdateOperationsInput | string | null
     linkDomain?: NullableStringFieldUpdateOperationsInput | string | null
     isSelf?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    commentsJson?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fetchedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RedditIngestStateCreateInput = {
+    id?: number
+    cursorJson?: string
+    collectorJson?: string | null
+    updatedAt?: Date | string
+  }
+
+  export type RedditIngestStateUncheckedCreateInput = {
+    id?: number
+    cursorJson?: string
+    collectorJson?: string | null
+    updatedAt?: Date | string
+  }
+
+  export type RedditIngestStateUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    cursorJson?: StringFieldUpdateOperationsInput | string
+    collectorJson?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RedditIngestStateUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    cursorJson?: StringFieldUpdateOperationsInput | string
+    collectorJson?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RedditIngestStateCreateManyInput = {
+    id?: number
+    cursorJson?: string
+    collectorJson?: string | null
+    updatedAt?: Date | string
+  }
+
+  export type RedditIngestStateUpdateManyMutationInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    cursorJson?: StringFieldUpdateOperationsInput | string
+    collectorJson?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RedditIngestStateUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    cursorJson?: StringFieldUpdateOperationsInput | string
+    collectorJson?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type IngestSnapshotCreateInput = {
+    createdAt?: Date | string
+    bucketTime: Date | string
+    healthJson: string
+  }
+
+  export type IngestSnapshotUncheckedCreateInput = {
+    id?: number
+    createdAt?: Date | string
+    bucketTime: Date | string
+    healthJson: string
+  }
+
+  export type IngestSnapshotUpdateInput = {
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bucketTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    healthJson?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type IngestSnapshotUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bucketTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    healthJson?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type IngestSnapshotCreateManyInput = {
+    id?: number
+    createdAt?: Date | string
+    bucketTime: Date | string
+    healthJson: string
+  }
+
+  export type IngestSnapshotUpdateManyMutationInput = {
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bucketTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    healthJson?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type IngestSnapshotUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bucketTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    healthJson?: StringFieldUpdateOperationsInput | string
   }
 
   export type TopicHitCreateInput = {
@@ -4060,6 +6516,7 @@ export namespace Prisma {
     redditPool?: SortOrder
     linkDomain?: SortOrder
     isSelf?: SortOrder
+    commentsJson?: SortOrder
     createdAt?: SortOrder
     fetchedAt?: SortOrder
   }
@@ -4085,6 +6542,7 @@ export namespace Prisma {
     redditPool?: SortOrder
     linkDomain?: SortOrder
     isSelf?: SortOrder
+    commentsJson?: SortOrder
     createdAt?: SortOrder
     fetchedAt?: SortOrder
   }
@@ -4104,6 +6562,7 @@ export namespace Prisma {
     redditPool?: SortOrder
     linkDomain?: SortOrder
     isSelf?: SortOrder
+    commentsJson?: SortOrder
     createdAt?: SortOrder
     fetchedAt?: SortOrder
   }
@@ -4214,6 +6673,64 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type RedditIngestStateCountOrderByAggregateInput = {
+    id?: SortOrder
+    cursorJson?: SortOrder
+    collectorJson?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type RedditIngestStateAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type RedditIngestStateMaxOrderByAggregateInput = {
+    id?: SortOrder
+    cursorJson?: SortOrder
+    collectorJson?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type RedditIngestStateMinOrderByAggregateInput = {
+    id?: SortOrder
+    cursorJson?: SortOrder
+    collectorJson?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type RedditIngestStateSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type IngestSnapshotCountOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    bucketTime?: SortOrder
+    healthJson?: SortOrder
+  }
+
+  export type IngestSnapshotAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type IngestSnapshotMaxOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    bucketTime?: SortOrder
+    healthJson?: SortOrder
+  }
+
+  export type IngestSnapshotMinOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    bucketTime?: SortOrder
+    healthJson?: SortOrder
+  }
+
+  export type IngestSnapshotSumOrderByAggregateInput = {
+    id?: SortOrder
   }
 
   export type PostScalarRelationFilter = {
@@ -4652,6 +7169,7 @@ export namespace Prisma {
     redditPool?: string | null
     linkDomain?: string | null
     isSelf?: boolean | null
+    commentsJson?: string | null
     createdAt?: Date | string | null
     fetchedAt?: Date | string
   }
@@ -4671,6 +7189,7 @@ export namespace Prisma {
     redditPool?: string | null
     linkDomain?: string | null
     isSelf?: boolean | null
+    commentsJson?: string | null
     createdAt?: Date | string | null
     fetchedAt?: Date | string
   }
@@ -4705,6 +7224,7 @@ export namespace Prisma {
     redditPool?: NullableStringFieldUpdateOperationsInput | string | null
     linkDomain?: NullableStringFieldUpdateOperationsInput | string | null
     isSelf?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    commentsJson?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fetchedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -4724,6 +7244,7 @@ export namespace Prisma {
     redditPool?: NullableStringFieldUpdateOperationsInput | string | null
     linkDomain?: NullableStringFieldUpdateOperationsInput | string | null
     isSelf?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    commentsJson?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fetchedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

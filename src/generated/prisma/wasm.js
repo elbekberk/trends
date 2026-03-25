@@ -105,8 +105,23 @@ exports.Prisma.PostScalarFieldEnum = {
   redditPool: 'redditPool',
   linkDomain: 'linkDomain',
   isSelf: 'isSelf',
+  commentsJson: 'commentsJson',
   createdAt: 'createdAt',
   fetchedAt: 'fetchedAt'
+};
+
+exports.Prisma.RedditIngestStateScalarFieldEnum = {
+  id: 'id',
+  cursorJson: 'cursorJson',
+  collectorJson: 'collectorJson',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.IngestSnapshotScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  bucketTime: 'bucketTime',
+  healthJson: 'healthJson'
 };
 
 exports.Prisma.TopicHitScalarFieldEnum = {
@@ -136,6 +151,8 @@ exports.Prisma.NullsOrder = {
 
 exports.Prisma.ModelName = {
   Post: 'Post',
+  RedditIngestState: 'RedditIngestState',
+  IngestSnapshot: 'IngestSnapshot',
   TopicHit: 'TopicHit'
 };
 /**
@@ -185,13 +202,13 @@ const config = {
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Post {\n  id            Int        @id @default(autoincrement())\n  source        String\n  externalId    String\n  title         String\n  /// Primary link: Reddit thread permalink for reddit; story URL for HN.\n  url           String?\n  externalUrl   String?\n  selftext      String?\n  redditScore   Int?\n  numComments   Int?\n  subreddit     String?\n  redditListing String?\n  redditPool    String?\n  linkDomain    String?\n  isSelf        Boolean?\n  createdAt     DateTime?\n  fetchedAt     DateTime   @default(now())\n  topicHits     TopicHit[]\n\n  @@unique([source, externalId])\n}\n\nmodel TopicHit {\n  id                   Int      @id @default(autoincrement())\n  bucketTime           DateTime\n  category             String\n  parentKey            String\n  parentLabel          String\n  canonicalParentKey   String?\n  canonicalParentLabel String?\n  childKey             String?\n  childLabel           String?\n  postId               Int\n  createdAt            DateTime @default(now())\n  post                 Post     @relation(fields: [postId], references: [id], onDelete: Cascade)\n\n  @@unique([bucketTime, postId])\n  @@index([bucketTime, category, parentKey])\n  @@index([bucketTime, canonicalParentKey])\n}\n",
-  "inlineSchemaHash": "c5d1f5cc6560d39dac98bacf9f8e2fac2589ac680307151acac997723fb4c96c",
+  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Post {\n  id            Int        @id @default(autoincrement())\n  source        String\n  externalId    String\n  title         String\n  /// Primary link: Reddit thread permalink for reddit; story URL for HN.\n  url           String?\n  externalUrl   String?\n  selftext      String?\n  redditScore   Int?\n  numComments   Int?\n  subreddit     String?\n  redditListing String?\n  redditPool    String?\n  linkDomain    String?\n  isSelf        Boolean?\n  /// JSON array of trimmed top-level comment bodies (enrichment only; not used for topic extraction).\n  commentsJson  String?\n  createdAt     DateTime?\n  fetchedAt     DateTime   @default(now())\n  topicHits     TopicHit[]\n\n  @@unique([source, externalId])\n}\n\n/// Singleton (id=1): interim adaptive Reddit collector — cursors + scheduling JSON (UTC timestamps in JSON).\n/// Replaceable when a fuller OAuth/API collector ships; see `collectorJson` docs in code.\nmodel RedditIngestState {\n  id            Int      @id @default(1)\n  cursorJson    String   @default(\"{}\")\n  /// Durable collector state: budgets, lanes, cycles, backoff (see `src/lib/reddit/collectorState.ts`).\n  collectorJson String?\n  updatedAt     DateTime @updatedAt\n}\n\n/// Append-only ingest runs: full health payload for UI / API.\nmodel IngestSnapshot {\n  id         Int      @id @default(autoincrement())\n  createdAt  DateTime @default(now())\n  bucketTime DateTime\n  healthJson String\n\n  @@index([createdAt])\n}\n\nmodel TopicHit {\n  id                   Int      @id @default(autoincrement())\n  bucketTime           DateTime\n  category             String\n  parentKey            String\n  parentLabel          String\n  canonicalParentKey   String?\n  canonicalParentLabel String?\n  childKey             String?\n  childLabel           String?\n  postId               Int\n  createdAt            DateTime @default(now())\n  post                 Post     @relation(fields: [postId], references: [id], onDelete: Cascade)\n\n  @@unique([bucketTime, postId])\n  @@index([bucketTime, category, parentKey])\n  @@index([bucketTime, canonicalParentKey])\n}\n",
+  "inlineSchemaHash": "c8d5052ade7437b2ff9f26515f736da6691e88b025ddab4598f92e6697da5539",
   "copyEngine": true
 }
 config.dirname = '/'
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"Post\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"source\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"externalId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"url\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"externalUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"selftext\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"redditScore\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"numComments\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"subreddit\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"redditListing\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"redditPool\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"linkDomain\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"isSelf\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"fetchedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"topicHits\",\"kind\":\"object\",\"type\":\"TopicHit\",\"relationName\":\"PostToTopicHit\"}],\"dbName\":null},\"TopicHit\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"bucketTime\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"category\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"parentKey\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"parentLabel\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"canonicalParentKey\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"canonicalParentLabel\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"childKey\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"childLabel\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"postId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"post\",\"kind\":\"object\",\"type\":\"Post\",\"relationName\":\"PostToTopicHit\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"Post\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"source\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"externalId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"url\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"externalUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"selftext\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"redditScore\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"numComments\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"subreddit\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"redditListing\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"redditPool\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"linkDomain\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"isSelf\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"commentsJson\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"fetchedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"topicHits\",\"kind\":\"object\",\"type\":\"TopicHit\",\"relationName\":\"PostToTopicHit\"}],\"dbName\":null},\"RedditIngestState\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"cursorJson\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"collectorJson\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"IngestSnapshot\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"bucketTime\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"healthJson\",\"kind\":\"scalar\",\"type\":\"String\"}],\"dbName\":null},\"TopicHit\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"bucketTime\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"category\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"parentKey\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"parentLabel\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"canonicalParentKey\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"canonicalParentLabel\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"childKey\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"childLabel\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"postId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"post\",\"kind\":\"object\",\"type\":\"Post\",\"relationName\":\"PostToTopicHit\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.engineWasm = {
   getRuntime: async () => require('./query_engine_bg.js'),

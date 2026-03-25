@@ -2,6 +2,7 @@ import styles from "./page.module.css";
 import { getRisingTopics } from "@/src/lib/ingest";
 import Link from "next/link";
 import { TopicCard } from "./TopicCard";
+import { IngestHealthPanel } from "./IngestHealthPanel";
 
 export const dynamic = "force-dynamic";
 
@@ -53,10 +54,12 @@ export default async function Home({ searchParams }: HomeProps) {
           ))}
         </nav>
 
+        <IngestHealthPanel />
+
         {empty ? (
           <div className={styles.empty}>
-            <p>No data yet.</p>
-            <p>Run a POST request to /api/ingest, then refresh this page.</p>
+            <p>No topics in the latest bucket yet.</p>
+            <p>Run <strong>Collect now</strong> in the health panel above, or POST <code>/api/ingest</code>.</p>
           </div>
         ) : activeCategory === "all" ? (
           <>

@@ -13,7 +13,7 @@
 }
 
 .subtitle {
-  color: #666;
+  color: color-mix(in oklab, var(--foreground) 58%, transparent);
   margin-bottom: 10px;
 }
 
@@ -25,7 +25,7 @@
   font-size: 1.15rem;
   margin-bottom: 10px;
   padding-bottom: 6px;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid color-mix(in oklab, var(--foreground) 14%, transparent);
 }
 
 .filters {
@@ -37,22 +37,597 @@
 
 .filter,
 .filterActive {
-  border: 1px solid #ccc;
+  border: 1px solid color-mix(in oklab, var(--foreground) 22%, transparent);
   border-radius: 999px;
   padding: 6px 10px;
   font-size: 0.85rem;
 }
 
 .filterActive {
-  border-color: #111;
+  border-color: color-mix(in oklab, var(--foreground) 55%, transparent);
   font-weight: 600;
 }
 
+/* —— Ingest health (dark-theme aligned; uses global --foreground / --background) —— */
+.healthPanel {
+  color: var(--foreground);
+  background: color-mix(in oklab, var(--foreground) 5%, var(--background));
+  border: 1px solid color-mix(in oklab, var(--foreground) 14%, transparent);
+  border-radius: 10px;
+  padding: 16px 18px;
+  margin-bottom: 20px;
+}
+
+.healthHeading {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin: 0 0 14px;
+  letter-spacing: -0.02em;
+  color: var(--foreground);
+}
+
+.healthPollNote {
+  margin: 0 0 12px;
+  font-size: 0.78rem;
+  color: color-mix(in oklab, var(--foreground) 55%, transparent);
+}
+
+.healthMonitor {
+  margin: 0 0 14px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid color-mix(in oklab, var(--foreground) 16%, transparent);
+  background: color-mix(in oklab, var(--foreground) 4%, var(--background));
+}
+
+.healthMonitorTitle {
+  margin: 0 0 10px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--foreground);
+}
+
+.healthMonitorGrid {
+  margin: 0;
+  display: grid;
+  grid-template-columns: minmax(140px, 200px) 1fr;
+  gap: 6px 14px;
+  font-size: 0.78rem;
+  color: color-mix(in oklab, var(--foreground) 88%, transparent);
+}
+
+.healthMonitorGrid dt {
+  margin: 0;
+  font-weight: 600;
+  color: color-mix(in oklab, var(--foreground) 62%, transparent);
+}
+
+.healthMonitorGrid dd {
+  margin: 0;
+  word-break: break-word;
+}
+
+.healthMonitorDelta {
+  line-height: 1.45;
+  color: color-mix(in oklab, var(--foreground) 92%, transparent);
+}
+
+.healthMonitorNote {
+  font-size: 0.76rem;
+  line-height: 1.45;
+  color: color-mix(in oklab, var(--foreground) 70%, transparent);
+}
+
+.healthMonitorWarn {
+  color: #fbbf24;
+}
+
+.healthMonitorErr {
+  margin: 0 0 12px;
+  font-size: 0.78rem;
+  color: #fca5a5;
+}
+
+@media (prefers-color-scheme: light) {
+  .healthMonitorWarn {
+    color: #b45309;
+  }
+
+  .healthMonitorErr {
+    color: #b91c1c;
+  }
+}
+
+.healthPanelHeader {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px 16px;
+  margin-bottom: 12px;
+}
+
+.healthPanelHeader .healthHeading {
+  margin: 0;
+  flex: 1 1 200px;
+}
+
+.healthDevControls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 10px;
+  font-size: 0.82rem;
+}
+
+.healthDevLabel {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+  color: color-mix(in oklab, var(--foreground) 55%, transparent);
+}
+
+.healthDevButton {
+  cursor: pointer;
+  border: 1px solid color-mix(in oklab, var(--foreground) 22%, transparent);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--foreground);
+  background: color-mix(in oklab, var(--foreground) 7%, var(--background));
+}
+
+.healthDevButton:hover:not(:disabled) {
+  border-color: color-mix(in oklab, var(--foreground) 40%, transparent);
+  background: color-mix(in oklab, var(--foreground) 10%, var(--background));
+}
+
+.healthDevButton:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.healthDevStatusOk {
+  color: #86efac;
+  max-width: 100%;
+}
+
+.healthDevStatusErr {
+  color: #fca5a5;
+  max-width: 100%;
+}
+
+@media (prefers-color-scheme: light) {
+  .healthDevStatusOk {
+    color: #166534;
+  }
+
+  .healthDevStatusErr {
+    color: #b91c1c;
+  }
+}
+
+.healthDevHint {
+  flex: 1 1 100%;
+  margin: 4px 0 0;
+  font-size: 0.75rem;
+  line-height: 1.45;
+  color: color-mix(in oklab, var(--foreground) 62%, transparent);
+  max-width: 42rem;
+}
+
+.healthNeutralBaseline {
+  margin: 0 0 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: color-mix(in oklab, var(--foreground) 88%, transparent);
+  background: color-mix(in oklab, var(--foreground) 10%, var(--background));
+  border: 1px solid color-mix(in oklab, var(--foreground) 14%, transparent);
+}
+
+.healthDetails {
+  margin: 0;
+}
+
+.healthDetails summary {
+  list-style: none;
+}
+
+.healthDetails summary::-webkit-details-marker {
+  display: none;
+}
+
+.healthSummary {
+  cursor: pointer;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 10px;
+  padding: 4px 0 8px;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  color: color-mix(in oklab, var(--foreground) 92%, transparent);
+  border-bottom: 1px solid color-mix(in oklab, var(--foreground) 12%, transparent);
+}
+
+.healthSummary::before {
+  content: "▸";
+  display: inline-block;
+  margin-right: 4px;
+  font-size: 0.75rem;
+  color: color-mix(in oklab, var(--foreground) 50%, transparent);
+  transition: transform 0.15s ease;
+}
+
+.healthDetails[open] > .healthSummary::before {
+  transform: rotate(90deg);
+}
+
+.healthSummaryTitle {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.healthSummaryMeta {
+  font-weight: 400;
+  font-size: 0.82rem;
+  color: color-mix(in oklab, var(--foreground) 58%, transparent);
+}
+
+.healthSummaryBaseline {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: color-mix(in oklab, var(--foreground) 72%, transparent);
+}
+
+.healthSummaryOk {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #86efac;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: rgba(34, 197, 94, 0.15);
+}
+
+.healthSummaryWarn {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #fde68a;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: rgba(245, 158, 11, 0.2);
+}
+
+.healthDetailsInner {
+  margin-top: 14px;
+  padding-top: 4px;
+}
+
+@media (prefers-color-scheme: light) {
+  .healthSummaryOk {
+    color: #166534;
+    background: rgba(34, 197, 94, 0.2);
+  }
+
+  .healthSummaryWarn {
+    color: #92400e;
+    background: rgba(245, 158, 11, 0.25);
+  }
+}
+
+.healthSection {
+  margin-bottom: 18px;
+}
+
+.healthSection:last-child {
+  margin-bottom: 0;
+}
+
+.healthSectionTitle {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  margin: 0 0 10px;
+  color: color-mix(in oklab, var(--foreground) 72%, transparent);
+}
+
+.healthMuted {
+  margin: 0 0 6px;
+  font-size: 0.86rem;
+  line-height: 1.45;
+  color: color-mix(in oklab, var(--foreground) 68%, transparent);
+}
+
+.healthMutedOk {
+  margin: 0;
+  font-size: 0.86rem;
+  color: color-mix(in oklab, var(--foreground) 55%, transparent);
+  font-style: italic;
+}
+
+.healthLabel {
+  display: inline-block;
+  min-width: 4.5rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: color-mix(in oklab, var(--foreground) 50%, transparent);
+}
+
+.healthValueNum {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.healthValueWarn {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  color: #fb923c;
+}
+
+.healthInlineCode {
+  font-family: var(--font-geist-mono, ui-monospace, monospace);
+  font-size: 0.8rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: color-mix(in oklab, var(--foreground) 8%, var(--background));
+  border: 1px solid color-mix(in oklab, var(--foreground) 12%, transparent);
+  color: color-mix(in oklab, var(--foreground) 92%, transparent);
+}
+
+.healthMonoLine {
+  margin: 0;
+  font-family: var(--font-geist-mono, ui-monospace, monospace);
+  font-size: 0.8rem;
+  line-height: 1.5;
+  word-break: break-word;
+  color: color-mix(in oklab, var(--foreground) 88%, transparent);
+}
+
+.healthError {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  border: 1px solid rgba(248, 113, 113, 0.45);
+  background: rgba(248, 113, 113, 0.12);
+  color: #fecaca;
+}
+
+.healthWarnings {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 8px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.healthWarnings li {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border-left: 4px solid;
+}
+
+.healthWarningLow {
+  border-left-color: #eab308;
+  background: rgba(234, 179, 8, 0.12);
+  color: #fef08a;
+}
+
+.healthWarningFail {
+  border-left-color: #fb923c;
+  background: rgba(251, 146, 60, 0.12);
+  color: #fed7aa;
+}
+
+.healthWarningRate {
+  border-left-color: #f59e0b;
+  background: rgba(245, 158, 11, 0.14);
+  color: #fde68a;
+}
+
+.healthWarningAuth {
+  border-left-color: #ef4444;
+  background: rgba(239, 68, 68, 0.14);
+  color: #fecaca;
+}
+
+.healthGrid {
+  display: grid;
+  grid-template-columns: minmax(130px, 170px) 1fr;
+  gap: 8px 14px;
+  font-size: 0.83rem;
+  margin: 0;
+  align-items: start;
+}
+
+.healthGrid dt {
+  margin: 0;
+  color: color-mix(in oklab, var(--foreground) 58%, transparent);
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.healthGrid dd {
+  margin: 0;
+  font-family: var(--font-geist-mono, ui-monospace, monospace);
+  font-size: 0.8rem;
+  word-break: break-word;
+  line-height: 1.45;
+  color: color-mix(in oklab, var(--foreground) 90%, transparent);
+}
+
+.healthPreLabel {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 12px 0 6px;
+  color: color-mix(in oklab, var(--foreground) 55%, transparent);
+}
+
+.healthPreLabel:first-of-type {
+  margin-top: 0;
+}
+
+.healthPre {
+  margin: 0 0 10px;
+  padding: 12px 14px;
+  background: color-mix(in oklab, var(--foreground) 6%, #0a0a0a);
+  border: 1px solid color-mix(in oklab, var(--foreground) 14%, transparent);
+  border-radius: 8px;
+  font-family: var(--font-geist-mono, ui-monospace, monospace);
+  font-size: 0.74rem;
+  line-height: 1.45;
+  color: color-mix(in oklab, var(--foreground) 92%, transparent);
+  overflow: auto;
+  overflow-x: auto;
+  max-height: 200px;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (prefers-color-scheme: light) {
+  .healthPre {
+    background: color-mix(in oklab, var(--foreground) 4%, var(--background));
+    color: #1a1a1a;
+  }
+
+  .healthError {
+    color: #991b1b;
+    background: rgba(254, 202, 202, 0.5);
+  }
+
+  .healthWarningLow {
+    color: #713f12;
+  }
+
+  .healthWarningFail {
+    color: #9a3412;
+  }
+
+  .healthWarningRate {
+    color: #92400e;
+  }
+
+  .healthWarningAuth {
+    color: #991b1b;
+  }
+}
+
+/* —— Analytics (debug) inside topic cards —— */
+.analyticsPanel {
+  margin-top: 10px;
+  padding: 14px 16px;
+  background: color-mix(in oklab, var(--foreground) 5%, var(--background));
+  border: 1px solid color-mix(in oklab, var(--foreground) 12%, transparent);
+  border-radius: 10px;
+  font-size: 0.84rem;
+  color: var(--foreground);
+}
+
+.analyticsSubhead {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  margin: 18px 0 10px;
+  color: color-mix(in oklab, var(--foreground) 72%, transparent);
+}
+
+.analyticsSubhead:first-child {
+  margin-top: 0;
+}
+
+.analyticsPre {
+  margin: 0 0 8px;
+  padding: 12px 14px;
+  background: color-mix(in oklab, var(--foreground) 7%, #0a0a0a);
+  border: 1px solid color-mix(in oklab, var(--foreground) 14%, transparent);
+  border-radius: 8px;
+  font-family: var(--font-geist-mono, ui-monospace, monospace);
+  font-size: 0.76rem;
+  line-height: 1.45;
+  color: color-mix(in oklab, var(--foreground) 92%, transparent);
+  overflow: auto;
+  overflow-x: auto;
+  max-height: 220px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.analyticsList {
+  margin: 0;
+  padding-left: 18px;
+  line-height: 1.55;
+  color: color-mix(in oklab, var(--foreground) 88%, transparent);
+}
+
+.analyticsMuted {
+  margin: 8px 0;
+  color: color-mix(in oklab, var(--foreground) 62%, transparent);
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.analyticsNote {
+  margin: 6px 0 0;
+  font-size: 0.76rem;
+  line-height: 1.45;
+  color: color-mix(in oklab, var(--foreground) 52%, transparent);
+}
+
+.analyticsComments {
+  margin: 8px 0 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.sampleComment {
+  margin: 8px 0;
+  padding: 10px 12px;
+  border-left: 3px solid color-mix(in oklab, var(--foreground) 28%, transparent);
+  background: color-mix(in oklab, var(--foreground) 6%, var(--background));
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: color-mix(in oklab, var(--foreground) 88%, transparent);
+}
+
+.detailsAnalytics summary {
+  font-weight: 600;
+  color: color-mix(in oklab, var(--foreground) 88%, transparent);
+}
+
+@media (prefers-color-scheme: light) {
+  .analyticsPre {
+    background: #f4f4f5;
+    color: #18181b;
+    border-color: #d4d4d8;
+  }
+
+  .sampleComment {
+    background: #fafafa;
+    color: #27272a;
+  }
+}
+
 .empty {
-  border: 1px solid #ddd;
+  border: 1px solid color-mix(in oklab, var(--foreground) 14%, transparent);
   border-radius: 10px;
   padding: 14px;
   line-height: 1.5;
+  color: color-mix(in oklab, var(--foreground) 85%, transparent);
 }
 
 .list {
@@ -61,9 +636,10 @@
 }
 
 .card {
-  border: 1px solid #ddd;
+  border: 1px solid color-mix(in oklab, var(--foreground) 14%, transparent);
   border-radius: 10px;
   padding: 12px;
+  background: color-mix(in oklab, var(--foreground) 3%, var(--background));
 }
 
 .cardHeader {
@@ -104,6 +680,23 @@
   color: #616161;
 }
 
+@media (prefers-color-scheme: dark) {
+  .confidenceHigh {
+    background: rgba(34, 197, 94, 0.18);
+    color: #86efac;
+  }
+
+  .confidenceMedium {
+    background: rgba(245, 158, 11, 0.18);
+    color: #fde68a;
+  }
+
+  .confidenceLow {
+    background: color-mix(in oklab, var(--foreground) 10%, transparent);
+    color: color-mix(in oklab, var(--foreground) 75%, transparent);
+  }
+}
+
 .scoreRow {
   display: flex;
   flex-wrap: wrap;
@@ -119,7 +712,7 @@
 
 .scoreHint {
   font-size: 0.78rem;
-  color: #777;
+  color: color-mix(in oklab, var(--foreground) 52%, transparent);
 }
 
 .metrics {
@@ -134,7 +727,7 @@
   display: grid;
   gap: 4px;
   font-size: 0.85rem;
-  color: #555;
+  color: color-mix(in oklab, var(--foreground) 62%, transparent);
   margin-bottom: 8px;
 }
 
@@ -157,6 +750,7 @@
   cursor: pointer;
   font-size: 0.9rem;
   margin-bottom: 8px;
+  color: color-mix(in oklab, var(--foreground) 88%, transparent);
 }
 
 .children {
@@ -165,7 +759,7 @@
 }
 
 .childBlock {
-  border-top: 1px dashed #ddd;
+  border-top: 1px dashed color-mix(in oklab, var(--foreground) 18%, transparent);
   padding-top: 8px;
 }
 
@@ -175,19 +769,19 @@
 }
 
 .childCount {
-  color: #555;
+  color: color-mix(in oklab, var(--foreground) 58%, transparent);
   font-size: 0.82rem;
   margin-bottom: 6px;
 }
 
 .timestamp {
-  color: #666;
+  color: color-mix(in oklab, var(--foreground) 52%, transparent);
   font-size: 0.8rem;
 }
 
 .noChildren {
   font-size: 0.88rem;
-  color: #555;
+  color: color-mix(in oklab, var(--foreground) 58%, transparent);
 }
 
 @media (max-width: 640px) {

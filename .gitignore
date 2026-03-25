@@ -42,3 +42,6 @@ next-env.d.ts
 
 # local sqlite database
 prisma/dev.db
+
+# Prisma generate temporary engine files (Windows)
+**/query_engine*.tmp*

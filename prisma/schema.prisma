@@ -24,11 +24,33 @@ model Post {
   redditPool    String?
   linkDomain    String?
   isSelf        Boolean?
+  /// JSON array of trimmed top-level comment bodies (enrichment only; not used for topic extraction).
+  commentsJson  String?
   createdAt     DateTime?
   fetchedAt     DateTime   @default(now())
   topicHits     TopicHit[]
 
   @@unique([source, externalId])
+}
+
+/// Singleton (id=1): interim adaptive Reddit collector — cursors + scheduling JSON (UTC timestamps in JSON).
+/// Replaceable when a fuller OAuth/API collector ships; see `collectorJson` docs in code.
+model RedditIngestState {
+  id            Int      @id @default(1)
+  cursorJson    String   @default("{}")
+  /// Durable collector state: budgets, lanes, cycles, backoff (see `src/lib/reddit/collectorState.ts`).
+  collectorJson String?
+  updatedAt     DateTime @updatedAt
+}
+
+/// Append-only ingest runs: full health payload for UI / API.
+model IngestSnapshot {
+  id         Int      @id @default(autoincrement())
+  createdAt  DateTime @default(now())
+  bucketTime DateTime
+  healthJson String
+
+  @@index([createdAt])
 }
 
 model TopicHit {

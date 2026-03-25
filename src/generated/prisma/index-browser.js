@@ -133,8 +133,23 @@ exports.Prisma.PostScalarFieldEnum = {
   redditPool: 'redditPool',
   linkDomain: 'linkDomain',
   isSelf: 'isSelf',
+  commentsJson: 'commentsJson',
   createdAt: 'createdAt',
   fetchedAt: 'fetchedAt'
+};
+
+exports.Prisma.RedditIngestStateScalarFieldEnum = {
+  id: 'id',
+  cursorJson: 'cursorJson',
+  collectorJson: 'collectorJson',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.IngestSnapshotScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  bucketTime: 'bucketTime',
+  healthJson: 'healthJson'
 };
 
 exports.Prisma.TopicHitScalarFieldEnum = {
@@ -164,6 +179,8 @@ exports.Prisma.NullsOrder = {
 
 exports.Prisma.ModelName = {
   Post: 'Post',
+  RedditIngestState: 'RedditIngestState',
+  IngestSnapshot: 'IngestSnapshot',
   TopicHit: 'TopicHit'
 };
 

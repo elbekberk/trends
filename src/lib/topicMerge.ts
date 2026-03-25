@@ -1,4 +1,5 @@
 import { matchMajorTheme } from "@/src/lib/canonicalParents";
+import { buildAggressiveParentMergeMap } from "@/src/lib/topicNormalize";
 
 export type TopicCategory = "geopolitics" | "technology" | "economy" | "general";
 
@@ -139,6 +140,31 @@ export function groupRowsByDisplayParent<Row extends TopicHitRowForMerge>(
   for (const row of rows) {
     const { key } = displayParentForRow(row);
     map.set(key, [...(map.get(key) ?? []), row]);
+  }
+  return map;
+}
+
+/**
+ * Same as `groupRowsByDisplayParent`, then aggressively merges similar display keys
+ * (normalized token overlap / shared roots) under the stronger label key.
+ */
+export function groupRowsByMergedDisplayParent<Row extends TopicHitRowForMerge>(
+  rows: Row[],
+): Map<string, Row[]> {
+  if (rows.length === 0) return new Map();
+  const keyToLabel = new Map<string, string>();
+  const displayKeys: string[] = [];
+  for (const row of rows) {
+    const d = displayParentForRow(row);
+    displayKeys.push(d.key);
+    if (!keyToLabel.has(d.key)) keyToLabel.set(d.key, d.label);
+  }
+  const mergeMap = buildAggressiveParentMergeMap([...new Set(displayKeys)], keyToLabel);
+  const map = new Map<string, Row[]>();
+  for (const row of rows) {
+    const d = displayParentForRow(row);
+    const merged = mergeMap.get(d.key) ?? d.key;
+    map.set(merged, [...(map.get(merged) ?? []), row]);
   }
   return map;
 }
